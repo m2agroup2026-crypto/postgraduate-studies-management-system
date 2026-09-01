@@ -1,0 +1,1 @@
+{"expo":{"name":"الدراسات العليا","slug":"pgms-mobile","scheme":"pgms","orientation":"portrait","userInterfaceStyle":"light","ios":{"supportsTablet":true,"bundleIdentifier":"edu.aun.med.pgms"},"android":{"package":"edu.aun.med.pgms"},"plugins":["expo-router"]}}

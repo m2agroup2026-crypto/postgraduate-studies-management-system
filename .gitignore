@@ -1,0 +1,10 @@
+**/node_modules/
+**/dist/
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.coverage
+*.sqlite3
+.env
+branding-reference/
+mobile-legacy-reference/
