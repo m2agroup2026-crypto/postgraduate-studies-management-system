@@ -30,3 +30,19 @@ npm start
 ```
 
 بعدها اختر Android أو iOS من Expo. معرف الحزمة: `edu.aun.med.pgms`.
+
+## تشغيل Production
+
+انسخ `.env.example` إلى `.env` وعيّن القيم الآمنة والدومين، ثم شغّل:
+
+```bash
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+يخدم Nginx الواجهة على المنفذ `80` ويوجه `/api/` إلى Django/Gunicorn داخليًا. استخدم Reverse Proxy يدعم HTTPS قبل فتح النظام للمستخدمين.
+
+## الربط الفعلي
+
+- الويب يستخدم `VITE_API_URL`، أو `/api/v1` في حاوية Production.
+- الموبايل يستخدم `EXPO_PUBLIC_API_URL` ويخزن JWT داخل Secure Store.
+- مؤشرات اللوحات والمساعد الذكي تُقرأ من Django API وفق صلاحية الحساب.

@@ -28,7 +28,7 @@ services:
       db: {condition: service_healthy}
   web:
     build: ./web
-    ports: ["5173:5173"]
+    ports: ["5173:80"]
     depends_on: [backend]
 volumes:
   pgms_data:
