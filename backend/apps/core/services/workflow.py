@@ -1,25 +1,5 @@
 from apps.core.models import ApprovalAction
-
-
-WORKFLOW_TRANSITIONS = {
-    "REGISTERED": {
-        "SUBMIT": "SUBMITTED",
-    },
-    "DRAFT": {
-        "SUBMIT": "SUBMITTED",
-    },
-    "SUBMITTED": {
-        "REVIEW": "UNDER_REVIEW",
-    },
-    "UNDER_REVIEW": {
-        "APPROVE": "APPROVED",
-        "REJECT": "REJECTED",
-        "RETURN": "RETURNED",
-    },
-    "RETURNED": {
-        "SUBMIT": "SUBMITTED",
-    },
-}
+from apps.core.workflow.rules import WORKFLOW_TRANSITIONS
 
 
 def get_next_status(current_status, action):
