@@ -63,3 +63,53 @@ class Permission(models.Model):
 
     def __str__(self):
         return self.name_ar
+
+
+class ApprovalAction(models.Model):
+    class ActionType(models.TextChoices):
+        SUBMIT = "SUBMIT", "تقديم"
+        REVIEW = "REVIEW", "مراجعة"
+        APPROVE = "APPROVE", "اعتماد"
+        REJECT = "REJECT", "رفض"
+        RETURN = "RETURN", "إعادة للتعديل"
+
+    request_type = models.CharField(
+        max_length=100
+    )
+
+    object_id = models.PositiveBigIntegerField()
+
+    action = models.CharField(
+        max_length=20,
+        choices=ActionType.choices
+    )
+
+    from_status = models.CharField(
+        max_length=50,
+        blank=True
+    )
+
+    to_status = models.CharField(
+        max_length=50,
+        blank=True
+    )
+
+    performed_by = models.ForeignKey(
+        "accounts.User",
+        on_delete=models.PROTECT,
+        related_name="approval_actions"
+    )
+
+    notes = models.TextField(
+        blank=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.request_type} - {self.action}"
