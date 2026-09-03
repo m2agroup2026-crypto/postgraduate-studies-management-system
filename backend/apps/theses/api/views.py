@@ -32,3 +32,28 @@ class ThesisSubmitView(APIView):
             },
             status=status.HTTP_200_OK,
         )
+
+
+class ThesisReviewView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        thesis = get_object_or_404(
+            Thesis,
+            pk=pk
+        )
+
+        transition(
+            obj=thesis,
+            action="REVIEW",
+            user=request.user,
+            notes="Thesis sent for review",
+        )
+
+        return Response(
+            {
+                "id": thesis.id,
+                "status": thesis.status,
+            },
+            status=status.HTTP_200_OK,
+        )
