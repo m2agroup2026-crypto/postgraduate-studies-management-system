@@ -17,6 +17,12 @@ class User(AbstractUser):
     display_name_ar = models.CharField(max_length=180, blank=True)
     job_title_ar = models.CharField(max_length=220, blank=True)
 
+    def has_role(self, role_name):
+        return self.roles.filter(name=role_name).exists()
+
+    def has_permission(self, permission_code):
+        return self.roles.filter(permissions__code=permission_code).exists()
+
     @property
     def effective_name(self):
         return self.display_name_ar or self.get_full_name() or self.username
