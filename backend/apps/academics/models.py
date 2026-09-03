@@ -18,7 +18,7 @@ class University(models.Model):
 
     is_active = models.BooleanField(default=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -38,7 +38,7 @@ class Faculty(models.Model):
 
     is_active = models.BooleanField(default=True)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     class Meta:
         unique_together = ("university", "code")
@@ -51,7 +51,9 @@ class Department(models.Model):
     faculty = models.ForeignKey(
         Faculty,
         on_delete=models.PROTECT,
-        related_name="departments"
+        related_name="departments",
+        null=True,
+        blank=True
     )
 
     code = models.CharField(max_length=20)
@@ -59,7 +61,7 @@ class Department(models.Model):
     name_en = models.CharField(max_length=150, blank=True)
 
     is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
     class Meta:
         unique_together = ("faculty", "code")
@@ -90,7 +92,9 @@ class AcademicDegree(models.Model):
 
     level = models.CharField(
         max_length=20,
-        choices=DegreeLevel.choices
+        choices=DegreeLevel.choices,
+        null=True,
+        blank=True
     )
 
     created_at = models.DateTimeField(
@@ -138,7 +142,9 @@ class Program(models.Model):
     )
 
     created_at = models.DateTimeField(
-        auto_now_add=True
+        auto_now_add=True,
+        null=True,
+        blank=True
     )
 
     class Meta:
