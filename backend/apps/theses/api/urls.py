@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import ThesisSubmitView, ThesisReviewView
+from .views import ThesisSubmitView, ThesisReviewView, ThesisApproveView
 
 
 urlpatterns = [
@@ -14,5 +14,11 @@ urlpatterns = [
         "<int:pk>/review/",
         ThesisReviewView.as_view(),
         name="thesis-review",
+    ),
+
+    path(
+        "<int:pk>/approve/",
+        ThesisApproveView.as_view(),
+        name="thesis-approve",
     ),
 ]

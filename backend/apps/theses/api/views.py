@@ -57,3 +57,28 @@ class ThesisReviewView(APIView):
             },
             status=status.HTTP_200_OK,
         )
+
+
+class ThesisApproveView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        thesis = get_object_or_404(
+            Thesis,
+            pk=pk
+        )
+
+        transition(
+            obj=thesis,
+            action="APPROVE",
+            user=request.user,
+            notes="Thesis approved",
+        )
+
+        return Response(
+            {
+                "id": thesis.id,
+                "status": thesis.status,
+            },
+            status=status.HTTP_200_OK,
+        )
