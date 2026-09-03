@@ -12,6 +12,7 @@ class User(AbstractUser):
         STUDENT = "STUDENT", "طالب"
 
     role = models.CharField(max_length=32, choices=Role.choices, default=Role.STAFF)
+    roles = models.ManyToManyField("core.Role", blank=True, related_name="users")
     preferred_language = models.CharField(max_length=2, choices=(("ar", "العربية"), ("en", "English")), default="ar")
     display_name_ar = models.CharField(max_length=180, blank=True)
     job_title_ar = models.CharField(max_length=220, blank=True)
