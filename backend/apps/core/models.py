@@ -113,3 +113,37 @@ class ApprovalAction(models.Model):
 
     def __str__(self):
         return f"{self.request_type} - {self.action}"
+
+
+class WorkflowStatus(models.Model):
+    code = models.CharField(
+        max_length=50,
+        unique=True
+    )
+
+    name_ar = models.CharField(
+        max_length=150
+    )
+
+    name_en = models.CharField(
+        max_length=150,
+        blank=True
+    )
+
+    description_ar = models.TextField(
+        blank=True
+    )
+
+    is_active = models.BooleanField(
+        default=True
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        ordering = ["code"]
+
+    def __str__(self):
+        return self.name_ar
