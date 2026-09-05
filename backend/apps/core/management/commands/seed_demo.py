@@ -16,9 +16,10 @@ class Command(BaseCommand):
         if not demo_password:
             raise RuntimeError("PGMS_DEMO_PASSWORD must be set before creating demo users")
         users = [
-            ("director", User.Role.PROGRAM_DIRECTOR, "مدير البرنامج", "مدير برنامج الدراسات العليا"),
+            ("vp_postgraduate", User.Role.VP_POSTGRADUATE_RESEARCH, "الأستاذ الدكتور جمال بدر", "نائب رئيس الجامعة لشئون الدراسات العليا والبحوث"),
+            ("director", User.Role.POSTGRADUATE_DIRECTOR, "مدير الدراسات العليا", "مدير إدارة الدراسات العليا"),
             ("dean", User.Role.DEAN, "الأستاذ الدكتور علاء عطية", "عميد كلية الطب"),
-            ("vice_dean", User.Role.VICE_DEAN, "الأستاذ الدكتور محمد عبد الباسط خلاف", "وكيل الكلية لشؤون الدراسات العليا والبحوث"),
+            ("vice_dean", User.Role.VICE_DEAN_POSTGRADUATE, "الأستاذ الدكتور محمد عبد الباسط خلاف", "وكيل الكلية لشؤون الدراسات العليا والبحوث"),
         ]
         for username, role, name, title in users:
             user, _ = User.objects.get_or_create(username=username)

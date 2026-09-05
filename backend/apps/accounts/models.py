@@ -5,8 +5,11 @@ from django.db import models
 class User(AbstractUser):
     class Role(models.TextChoices):
         PROGRAM_DIRECTOR = "PROGRAM_DIRECTOR", "مدير البرنامج"
+        POSTGRADUATE_DIRECTOR = "POSTGRADUATE_DIRECTOR", "مدير الدراسات العليا"
         DEAN = "DEAN", "عميد الكلية"
         VICE_DEAN = "VICE_DEAN", "وكيل الكلية"
+        VICE_DEAN_POSTGRADUATE = "VICE_DEAN_POSTGRADUATE", "وكيل الدراسات العليا والبحوث"
+        VP_POSTGRADUATE_RESEARCH = "VP_POSTGRADUATE_RESEARCH", "نائب رئيس الجامعة لشئون الدراسات العليا والبحوث"
         STAFF = "STAFF", "موظف"
         SUPERVISOR = "SUPERVISOR", "مشرف"
         STUDENT = "STUDENT", "طالب"
