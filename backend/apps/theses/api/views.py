@@ -9,6 +9,13 @@ from apps.theses.models import Thesis
 from apps.core.services.workflow import transition
 
 
+def thesis_response(thesis):
+    return {
+        "id": thesis.id,
+        "status": thesis.status,
+    }
+
+
 class ThesisSubmitView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -26,10 +33,7 @@ class ThesisSubmitView(APIView):
         )
 
         return Response(
-            {
-                "id": thesis.id,
-                "status": thesis.status,
-            },
+            thesis_response(thesis),
             status=status.HTTP_200_OK,
         )
 
@@ -51,15 +55,12 @@ class ThesisReviewView(APIView):
         )
 
         return Response(
-            {
-                "id": thesis.id,
-                "status": thesis.status,
-            },
+            thesis_response(thesis),
             status=status.HTTP_200_OK,
         )
 
 
-class ThesisApproveView(APIView):
+class ThesisDirectorApproveView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
@@ -70,15 +71,78 @@ class ThesisApproveView(APIView):
 
         transition(
             obj=thesis,
-            action="APPROVE",
+            action="DIRECTOR_APPROVE",
             user=request.user,
-            notes="Thesis approved",
+            notes="Approved by postgraduate director",
         )
 
         return Response(
-            {
-                "id": thesis.id,
-                "status": thesis.status,
-            },
+            thesis_response(thesis),
+            status=status.HTTP_200_OK,
+        )
+
+
+class ThesisViceDeanApproveView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        thesis = get_object_or_404(
+            Thesis,
+            pk=pk
+        )
+
+        transition(
+            obj=thesis,
+            action="VICE_DEAN_APPROVE",
+            user=request.user,
+            notes="Approved by vice dean postgraduate",
+        )
+
+        return Response(
+            thesis_response(thesis),
+            status=status.HTTP_200_OK,
+        )
+
+
+class ThesisDeanApproveView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        thesis = get_object_or_404(
+            Thesis,
+            pk=pk
+        )
+
+        transition(
+            obj=thesis,
+            action="DEAN_APPROVE",
+            user=request.user,
+            notes="Approved by dean",
+        )
+
+        return Response(
+            thesis_response(thesis),
+            status=status.HTTP_200_OK,
+        )
+
+
+class ThesisFinalApproveView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        thesis = get_object_or_404(
+            Thesis,
+            pk=pk
+        )
+
+        transition(
+            obj=thesis,
+            action="FINAL_APPROVE",
+            user=request.user,
+            notes="Final approval by VP postgraduate research",
+        )
+
+        return Response(
+            thesis_response(thesis),
             status=status.HTTP_200_OK,
         )
