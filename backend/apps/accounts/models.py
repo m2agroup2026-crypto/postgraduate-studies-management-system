@@ -11,6 +11,7 @@ class User(AbstractUser):
         VICE_DEAN_POSTGRADUATE = "VICE_DEAN_POSTGRADUATE", "وكيل الدراسات العليا والبحوث"
         VP_POSTGRADUATE_RESEARCH = "VP_POSTGRADUATE_RESEARCH", "نائب رئيس الجامعة لشئون الدراسات العليا والبحوث"
         STAFF = "STAFF", "موظف"
+        REVIEWER = "REVIEWER", "مراجع"
         SUPERVISOR = "SUPERVISOR", "مشرف"
         STUDENT = "STUDENT", "طالب"
 

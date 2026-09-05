@@ -1,4 +1,5 @@
 WORKFLOW_TRANSITIONS = {
+
     "REGISTERED": {
         "SUBMIT": "SUBMITTED",
     },
@@ -12,7 +13,25 @@ WORKFLOW_TRANSITIONS = {
     },
 
     "UNDER_REVIEW": {
-        "APPROVE": "APPROVED",
+        "DIRECTOR_APPROVE": "DIRECTOR_APPROVED",
+        "REJECT": "REJECTED",
+        "RETURN": "RETURNED",
+    },
+
+    "DIRECTOR_APPROVED": {
+        "VICE_DEAN_APPROVE": "VICE_DEAN_APPROVED",
+        "REJECT": "REJECTED",
+        "RETURN": "RETURNED",
+    },
+
+    "VICE_DEAN_APPROVED": {
+        "DEAN_APPROVE": "DEAN_APPROVED",
+        "REJECT": "REJECTED",
+        "RETURN": "RETURNED",
+    },
+
+    "DEAN_APPROVED": {
+        "FINAL_APPROVE": "FINAL_APPROVED",
         "REJECT": "REJECTED",
         "RETURN": "RETURNED",
     },
