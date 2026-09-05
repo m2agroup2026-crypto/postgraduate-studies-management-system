@@ -44,6 +44,21 @@ class Command(BaseCommand):
             permission_map[code] = permission
 
         roles = {
+            "POSTGRADUATE_DIRECTOR": {
+                "name_ar": "مدير الدراسات العليا",
+                "permissions": list(permission_map.keys()),
+            },
+
+            "VP_POSTGRADUATE_RESEARCH": {
+                "name_ar": "نائب رئيس الجامعة لشئون الدراسات العليا والبحوث",
+                "permissions": [
+                    "registration.approve",
+                    "committee.approve",
+                    "reports.view",
+                    "reports.export",
+                ],
+            },
+
             "PROGRAM_DIRECTOR": {
                 "name_ar": "مدير البرنامج",
                 "permissions": list(permission_map.keys()),
