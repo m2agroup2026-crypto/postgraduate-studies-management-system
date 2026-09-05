@@ -1,6 +1,13 @@
 from django.urls import path
 
-from .views import ThesisSubmitView, ThesisReviewView, ThesisApproveView
+from .views import (
+    ThesisSubmitView,
+    ThesisReviewView,
+    ThesisDirectorApproveView,
+    ThesisViceDeanApproveView,
+    ThesisDeanApproveView,
+    ThesisFinalApproveView,
+)
 
 
 urlpatterns = [
@@ -17,8 +24,26 @@ urlpatterns = [
     ),
 
     path(
-        "<int:pk>/approve/",
-        ThesisApproveView.as_view(),
-        name="thesis-approve",
+        "<int:pk>/director-approve/",
+        ThesisDirectorApproveView.as_view(),
+        name="thesis-director-approve",
+    ),
+
+    path(
+        "<int:pk>/vice-dean-approve/",
+        ThesisViceDeanApproveView.as_view(),
+        name="thesis-vice-dean-approve",
+    ),
+
+    path(
+        "<int:pk>/dean-approve/",
+        ThesisDeanApproveView.as_view(),
+        name="thesis-dean-approve",
+    ),
+
+    path(
+        "<int:pk>/final-approve/",
+        ThesisFinalApproveView.as_view(),
+        name="thesis-final-approve",
     ),
 ]
