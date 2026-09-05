@@ -1,11 +1,8 @@
 """
 Workflow Approval Policies
 
-Defines who can perform workflow actions
-based on administrative hierarchy.
-
-This file contains business rules only.
-No database operations here.
+Defines administrative approval stages
+for postgraduate workflows.
 """
 
 
@@ -21,7 +18,7 @@ WORKFLOW_POLICIES = {
             "REVIEWER",
         ],
 
-        "APPROVE": [
+        "DIRECTOR_APPROVE": [
             "POSTGRADUATE_DIRECTOR",
         ],
 
