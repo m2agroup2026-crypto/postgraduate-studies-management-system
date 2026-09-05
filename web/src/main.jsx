@@ -1,5 +1,194 @@
-import React,{useEffect,useState}from'react';import{createRoot}from'react-dom/client';import{BookOpen,Bot,CalendarDays,GraduationCap,Languages,LogOut,Search,Users}from'lucide-react';import{api,hasSession,login,logout}from'./api';import'./styles.css';import'./auth.css';
-const icons=[Users,BookOpen,CalendarDays,GraduationCap],labels=['الطلاب النشطون','الرسائل المسجلة','المناقشات القادمة','ملفات تحتاج متابعة'];
-function Login({onSuccess}){const[u,setU]=useState('director'),[p,setP]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false);const submit=async e=>{e.preventDefault();setBusy(true);setError('');try{await login(u,p);onSuccess()}catch(x){setError(x.message)}finally{setBusy(false)}};return <main className="loginPage" dir="rtl"><form className="loginCard" onSubmit={submit}><div className="loginMark">PG</div><small>POSTGRADUATE STUDIES</small><h1>تسجيل الدخول</h1><p>منظومة إدارة الدراسات العليا – كلية الطب</p><label>اسم المستخدم<input value={u} onChange={e=>setU(e.target.value)} autoComplete="username"/></label><label>كلمة المرور<input type="password" value={p} onChange={e=>setP(e.target.value)} autoComplete="current-password"/></label>{error&&<div className="error">{error}</div>}<button disabled={busy}>{busy?'جارٍ التحقق...':'دخول آمن'}</button></form></main>}
-function Dashboard(){const[user,setUser]=useState(null),[data,setData]=useState(null),[lang,setLang]=useState('ar'),[error,setError]=useState(''),[open,setOpen]=useState(false),[messages,setMessages]=useState([{from:'bot',text:'مرحبًا، أنا مساعد الدراسات العليا. كيف أساعدك اليوم؟'}]),[q,setQ]=useState(''),[busy,setBusy]=useState(false);useEffect(()=>{Promise.all([api('/me/'),api('/dashboard/')]).then(([me,d])=>{setUser(me);setLang(me.language||'ar');setData(d)}).catch(e=>setError(e.message))},[]);const send=async()=>{if(!q.trim()||busy)return;const current=q;setQ('');setBusy(true);setMessages(m=>[...m,{from:'user',text:current}]);try{const r=await api('/assistant/',{method:'POST',body:JSON.stringify({message:current})});setMessages(m=>[...m,{from:'bot',text:r.answer}])}catch(e){setMessages(m=>[...m,{from:'bot',text:e.message}])}finally{setBusy(false)}};if(error)return <div className="fatal" dir="rtl"><h2>تعذر تحميل النظام</h2><p>{error}</p><button onClick={()=>{logout();location.reload()}}>العودة لتسجيل الدخول</button></div>;if(!user||!data)return <div className="loading" dir="rtl">جارٍ تحميل لوحة التحكم…</div>;const values=[data.metrics.students,data.metrics.theses,data.metrics.defenses,data.metrics.pending],ar=lang==='ar';return <main dir={ar?'rtl':'ltr'}><aside><div className="brand"><span>PG</span><div>الدراسات العليا<small>كلية الطب</small></div></div><nav>{['نظرة عامة','الطلاب','الرسائل العلمية','اللجان والمناقشات','التقارير','الإعدادات'].map((x,i)=><button className={i===0?'active':''} key={x}>{x}</button>)}</nav></aside><section className="workspace"><header><div><small>Postgraduate Studies Management System</small><h1>مركز قيادة الدراسات العليا</h1></div><div className="actions"><button onClick={()=>setLang(ar?'en':'ar')}><Languages size={18}/>{ar?'English':'العربية'}</button><button className="logout" onClick={()=>{logout();location.reload()}}><LogOut size={18}/></button><div className="profile"><b>{user.name}</b><small>{user.title}</small></div></div></header><div className="rolebar"><span>الصلاحية الحالية:</span><button className="selected">{user.title}</button></div><div className="welcome"><div><small>لوحة المتابعة التنفيذية</small><h2>مرحبًا، {user.name}</h2><p>صورة موحدة لحركة التسجيل والرسائل واللجان والقرارات الأكاديمية.</p></div><div className="pulse"><span>حالة النظام</span><b>جميع الخدمات تعمل</b></div></div><div className="metrics">{labels.map((label,i)=>{const Icon=icons[i];return <article key={label}><Icon/><span>{label}</span><strong>{values[i]}</strong><small>من قاعدة البيانات</small></article>})}</div><div className="grid"><article className="panel"><div className="paneltitle"><h3>توزيع الطلاب على الأقسام</h3><button><Search size={16}/> التفاصيل</button></div>{data.departments.length?data.departments.map(d=><div className="progress" key={d.department__name_ar}><span>{d.department__name_ar}</span><i><em style={{width:Math.min(100,d.total*10)+'%'}}/></i><b>{d.total}</b></div>):<p>لا توجد بيانات أقسام بعد.</p>}</article><article className="panel"><h3>تنبيهات تتطلب إجراء</h3><ul>{data.alerts.map((a,i)=><li key={i}><b>{i+1}</b><span>{a.text}</span></li>)}</ul></article></div></section><button className="assistantFab" onClick={()=>setOpen(!open)}><Bot/></button>{open&&<div className="assistant"><header><Bot/><div><b>المساعد الذكي</b><small>متصل ببياناتك المصرح بها</small></div></header><div className="chat">{messages.map((m,i)=><p className={m.from} key={i}>{m.text}</p>)}</div><footer><input value={q} onChange={e=>setQ(e.target.value)} onKeyDown={e=>e.key==='Enter'&&send()} placeholder="اسأل عن الطلاب أو الرسائل..."/><button onClick={send} disabled={busy}>{busy?'...':'إرسال'}</button></footer></div>}</main>}
-function App(){const[authenticated,setAuthenticated]=useState(hasSession());return authenticated?<Dashboard/>:<Login onSuccess={()=>setAuthenticated(true)}/>};createRoot(document.getElementById('root')).render(<App/>);
+import React, { useEffect, useState } from "react";
+import { createRoot } from "react-dom/client";
+
+import {
+  api,
+  hasSession,
+  login,
+  logout,
+} from "./api";
+
+import DashboardLayout from "./layouts/DashboardLayout";
+import Header from "./components/Header";
+import Dashboard from "./features/dashboard/Dashboard";
+import AIAssistant from "./features/assistant/AIAssistant";
+
+import "./styles.css";
+import "./auth.css";
+
+
+function Login({ onSuccess }) {
+  const [u, setU] = useState("director");
+  const [p, setP] = useState("");
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setBusy(true);
+    setError("");
+
+    try {
+      await login(u, p);
+      onSuccess();
+    } catch (x) {
+      setError(x.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <main className="loginPage" dir="rtl">
+      <form className="loginCard" onSubmit={submit}>
+        <div className="loginMark">PG</div>
+        <small>POSTGRADUATE STUDIES</small>
+
+        <h1>تسجيل الدخول</h1>
+
+        <p>
+          منظومة إدارة الدراسات العليا – كلية الطب
+        </p>
+
+        <label>
+          اسم المستخدم
+          <input
+            value={u}
+            onChange={(e)=>setU(e.target.value)}
+          />
+        </label>
+
+        <label>
+          كلمة المرور
+          <input
+            type="password"
+            value={p}
+            onChange={(e)=>setP(e.target.value)}
+          />
+        </label>
+
+        {error && (
+          <div className="error">
+            {error}
+          </div>
+        )}
+
+        <button disabled={busy}>
+          {busy ? "جارٍ التحقق..." : "دخول آمن"}
+        </button>
+
+      </form>
+    </main>
+  );
+}
+
+
+function DashboardPage(){
+
+  const [user,setUser] = useState(null);
+  const [data,setData] = useState(null);
+  const [lang,setLang] = useState("ar");
+  const [error,setError] = useState("");
+
+  useEffect(()=>{
+    Promise.all([
+      api("/me/"),
+      api("/dashboard/")
+    ])
+    .then(([me,d])=>{
+      setUser(me);
+      setLang(me.language || "ar");
+      setData(d);
+    })
+    .catch(e=>setError(e.message));
+
+  },[]);
+
+
+  if(error){
+    return (
+      <div className="fatal" dir="rtl">
+        <h2>تعذر تحميل النظام</h2>
+        <p>{error}</p>
+
+        <button onClick={()=>{
+          logout();
+          location.reload();
+        }}>
+          العودة لتسجيل الدخول
+        </button>
+
+      </div>
+    );
+  }
+
+
+  if(!user || !data){
+    return (
+      <div className="loading" dir="rtl">
+        جارٍ تحميل لوحة التحكم…
+      </div>
+    );
+  }
+
+
+  return (
+    <DashboardLayout
+      user={user}
+      language={lang}
+      onLanguageChange={()=>{
+        setLang(
+          lang === "ar" ? "en" : "ar"
+        );
+      }}
+      onLogout={()=>{
+        logout();
+        location.reload();
+      }}
+    >
+
+      <Header
+        user={user}
+        language={lang}
+        onLanguageChange={()=>{
+          setLang(
+            lang === "ar" ? "en" : "ar"
+          );
+        }}
+        onLogout={()=>{
+          logout();
+          location.reload();
+        }}
+      />
+
+      <Dashboard data={data}/>
+
+      <AIAssistant api={api}/>
+
+    </DashboardLayout>
+  );
+}
+
+
+
+function App(){
+
+  const [
+    authenticated,
+    setAuthenticated
+  ] = useState(hasSession());
+
+
+  return authenticated
+    ? <DashboardPage/>
+    : <Login onSuccess={()=>setAuthenticated(true)}/>;
+
+}
+
+
+createRoot(
+  document.getElementById("root")
+)
+.render(
+  <App/>
+);
