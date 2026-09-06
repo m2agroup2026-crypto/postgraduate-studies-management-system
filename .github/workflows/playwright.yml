@@ -1,0 +1,27 @@
+name: Playwright E2E Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  playwright:
+    name: Playwright E2E
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      - name: Run E2E tests
+        run: npx playwright test
