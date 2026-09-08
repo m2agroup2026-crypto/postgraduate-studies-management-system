@@ -1,8 +1,8 @@
 import pytest
 from rest_framework.test import APIClient
 
-from apps.accounts.models import User
 from apps.academics.models import Department
+from apps.accounts.models import User
 from apps.core.models import Permission, Role
 from apps.students.models import Student
 from apps.theses.models import Thesis
