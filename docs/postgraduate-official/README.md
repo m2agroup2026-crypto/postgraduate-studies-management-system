@@ -37,12 +37,29 @@ Examples that must remain configurable:
 - `professional-diplomas.json` — machine-readable professional diploma catalog, operational evidence, and reconciliation against the current official count.
 - `masters.md` — Master’s admission, duration, research, publication, thesis and exam requirements.
 - `doctorate.md` — Doctorate admission, duration, qualifying/research, publication, thesis and committee requirements.
+- `degree-rules.json` — machine-readable degree-level admission, duration, research, language and publication requirements.
 - `academic-programs.json` — machine-readable official 33-row / 94-program Master’s and Doctorate catalog from the university postgraduate sector.
 - `departments-reconciliation.md` — distinction and reconciliation between current organizational departments and historical academic catalog rows.
+- `regulation-versions.json` — machine-readable regulation/version registry, including the 2011 program-catalog authority and the credit-hours regulation applied from October 2024.
+- `faculty-postgraduate-hub-snapshot.json` — current Faculty postgraduate portal domains and their mapping to configurable platform modules.
 - `shared-rules.md` — common enrollment, documents, language, research registration, suspension/cancellation, supervision, publication and committee rules.
 - `official-decisions.json` — machine-readable key University decisions with dates and implementation mapping.
+- `current-2026-updates.md` — current operational evidence and changes that are newer than older regulation/catalog snapshots.
 - `sources.json` — official source manifest and verification metadata.
 - `implementation-mapping.md` — mapping from official requirements to configurable platform entities and implementation order.
+
+## Current regulation note
+
+The Faculty of Medicine published that its **new postgraduate credit-hours regulation was approved and began application from October 2024**. The Faculty also maintains a current postgraduate hub that, as verified on 2026-09-08, exposes separate areas for the credit-hours regulation, points-based regulation, professional diplomas, Master’s, Doctorate, study schedules, postgraduate surveys, research and the scientific journal.
+
+For implementation this means:
+
+- every `AcademicEnrollment` must preserve the `RegulationVersion` that governed that student;
+- historic enrollments must not be silently migrated to a later regulation;
+- curricula, course requirements, assessment rules and degree requirements must be versioned;
+- a published navigation item or regulation link is evidence of a domain, not permission to hard-code it as a universal module for every future faculty.
+
+See `regulation-versions.json` and `faculty-postgraduate-hub-snapshot.json`.
 
 ## Important academic catalog note
 
