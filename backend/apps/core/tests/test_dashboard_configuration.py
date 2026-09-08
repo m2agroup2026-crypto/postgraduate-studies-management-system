@@ -10,20 +10,25 @@ def client():
     return APIClient()
 
 
+def create_test_user(username, role):
+    user = User.objects.create(username=username, role=role)
+    user.set_unusable_password()
+    user.save(update_fields=["password"])
+    return user
+
+
 @pytest.fixture
 def manager(db):
-    return User.objects.create_user(
+    return create_test_user(
         username="dashboard_manager",
-        password="test-password",
         role=User.Role.POSTGRADUATE_DIRECTOR,
     )
 
 
 @pytest.fixture
 def regular_user(db):
-    return User.objects.create_user(
+    return create_test_user(
         username="dashboard_reader",
-        password="test-password",
         role=User.Role.STUDENT,
     )
 
