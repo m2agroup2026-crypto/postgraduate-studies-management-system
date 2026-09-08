@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "verified_on": "2026-09-08",
+  "scope": "Key Assiut University postgraduate decisions that should become versioned configurable rules, not hard-coded logic.",
+  "decisions": [
+    {
+      "id": "language-toefl-1998-03-22",
+      "authority": "Assiut University Council",
+      "decision_date": "1998-03-22",
+      "source_url": "https://b.aun.edu.eg/post/ar/node/27651",
+      "topic": "LANGUAGE_REQUIREMENT",
+      "applies_to": ["DOCTORATE"],
+      "rule_summary_ar": "يشترط الحصول على 400 درجة في TOEFL قبل الحصول على درجة الدكتوراه، مع تعديلات لاحقة منشورة على آليات الإعادة وبعض الحالات.",
+      "implementation": "LanguageRequirement with version/effective dates; do not hard-code one universal test rule."
+    },
+    {
+      "id": "research-digital-library-2015-05",
+      "authority": "Assiut University Council",
+      "decision_date": "2015-05-28",
+      "source_url": "https://b.aun.edu.eg/post/ar/%D9%86%D8%B8%D8%A7%D9%85%20%D8%A7%D9%84%D9%82%D9%8A%D8%AF%D9%84%D9%84%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D9%84%D9%8A%D8%A7/%D8%B4%D8%B1%D9%88%D8%B7%20%D8%AA%D8%B3%D8%AC%D9%8A%D9%84%20%D9%85%D9%88%D8%B6%D9%88%D8%B9%20%D8%A7%D9%84%D8%A8%D8%AD%D8%AB%20%D8%A8%D9%83%D9%84%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A9",
+      "topic": "RESEARCH_REGISTRATION_REQUIREMENT",
+      "applies_to": ["MASTER", "DOCTORATE"],
+      "rule_summary_ar": "إلزام الطالب بالتسجيل في المكتبة الرقمية وعمل حساب على قواعد البيانات العالمية كشرط لتسجيل موضوع البحث.",
+      "implementation": "ResearchRegistrationRequirement + evidence/verification."
+    },
+    {
+      "id": "research-ekb-2016-07-28",
+      "authority": "Assiut University Council",
+      "decision_date": "2016-07-28",
+      "source_url": "https://b.aun.edu.eg/post/ar/%D9%86%D8%B8%D8%A7%D9%85%20%D8%A7%D9%84%D9%82%D9%8A%D8%AF%D9%84%D9%84%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D9%84%D9%8A%D8%A7/%D8%B4%D8%B1%D9%88%D8%B7%20%D8%AA%D8%B3%D8%AC%D9%8A%D9%84%20%D9%85%D9%88%D8%B6%D9%88%D8%B9%20%D8%A7%D9%84%D8%A8%D8%AD%D8%AB%20%D8%A8%D9%83%D9%84%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A9",
+      "topic": "RESEARCH_REGISTRATION_REQUIREMENT",
+      "applies_to": ["MASTER", "DOCTORATE"],
+      "rule_summary_ar": "إلزام الطالب بعمل حساب على بوابة الباحثين ببنك المعرفة المصري من خلال المكتبة الرقمية كشرط للتسجيل.",
+      "implementation": "ResearchRegistrationRequirement + evidence/verification."
+    },
+    {
+      "id": "max-enrollment-2018-03-27",
+      "authority": "Assiut University Council",
+      "decision_date": "2018-03-27",
+      "source_url": "https://aun.edu.eg/post/ar/node/27737",
+      "topic": "MAXIMUM_ENROLLMENT_DURATION",
+      "rules": [
+        {"degree": "MASTER", "maximum_years": 6},
+        {"degree": "DOCTORATE", "maximum_years": 8}
+      ],
+      "extension_after_committee_months_max": 6,
+      "rule_summary_ar": "لا يجوز المد بعد الحد الأقصى إلا بعد تشكيل لجنة الحكم والمناقشة ولمدة لا تزيد عن ستة أشهر أو موعد المناقشة أيهما أقرب.",
+      "implementation": "EnrollmentDurationRule + deadline alerts + decision version."
+    },
+    {
+      "id": "supervisor-progress-reports-2018-03-27",
+      "authority": "Assiut University Council",
+      "decision_date": "2018-03-27",
+      "source_url": "https://aun.edu.eg/post/ar/node/27737",
+      "topic": "SUPERVISION_PROGRESS_REPORT",
+      "rule_summary_ar": "تقديم المشرفين تقريرين سنوياً عن الرسائل: أول أكتوبر وأول أبريل وفق القرار المنشور.",
+      "implementation": "PeriodicProgressReportSchedule configurable by institution/regulation."
+    },
+    {
+      "id": "cancel-by-request-reenrollment-2016-09-25",
+      "authority": "Assiut University Postgraduate Studies & Research Council",
+      "decision_date": "2016-09-25",
+      "source_url": "https://www.aun.edu.eg/post/ar/%D9%86%D8%B8%D8%A7%D9%85%20%D8%A7%D9%84%D9%82%D9%8A%D8%AF%D9%84%D9%84%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D9%84%D9%8A%D8%A7/%D9%88%D9%82%D9%81%20%D8%A7%D9%84%D9%82%D9%8A%D8%AF%20%D9%88%D8%A5%D9%84%D8%BA%D8%A7%D8%A1%20%D8%A7%D9%84%D8%AA%D8%B3%D8%AC%D9%8A%D9%84",
+      "topic": "ENROLLMENT_CANCELLATION",
+      "rule_summary_ar": "عدم إعادة قيد الطالب الذي ألغي قيده بناء على طلبه إلا بعد مرور عام من إلغاء القيد من تاريخ موافقة مجلس الكلية، للحالات الخاضعة للقرار.",
+      "implementation": "AcademicEnrollmentEvent with cancellation reason and re-enrollment eligibility date."
+    },
+    {
+      "id": "absence-cancellation-2018-02-27",
+      "authority": "Assiut University Council",
+      "decision_date": "2018-02-27",
+      "source_url": "https://www.aun.edu.eg/post/ar/%D9%86%D8%B8%D8%A7%D9%85%20%D8%A7%D9%84%D9%82%D9%8A%D8%AF%D9%84%D9%84%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D9%84%D9%8A%D8%A7/%D9%88%D9%82%D9%81%20%D8%A7%D9%84%D9%82%D9%8A%D8%AF%20%D9%88%D8%A5%D9%84%D8%BA%D8%A7%D8%A1%20%D8%A7%D9%84%D8%AA%D8%B3%D8%AC%D9%8A%D9%84",
+      "topic": "ENROLLMENT_CANCELLATION",
+      "rule_summary_ar": "إلغاء قيد طالب الماجستير/الدكتوراه نهائياً إذا انقطع عن الدراسة أكثر من عام جامعي مع إمكان القيد كطالب مستجد وفق النص والاستثناءات المنشورة.",
+      "implementation": "Status transition rule; exemptions must remain configurable."
+    },
+    {
+      "id": "committee-article-104",
+      "authority": "Executive Regulations / Assiut University implementation",
+      "source_url": "https://b.aun.edu.eg/post/ar/%D8%AA%D8%B4%D9%83%D9%8A%D9%84%20%D9%84%D8%AC%D8%A7%D9%86%20%D8%A7%D9%84%D8%AD%D9%83%D9%85%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D8%B1%D8%B3%D8%A7%D8%A6%D9%84/%D8%AA%D8%B4%D9%83%D9%8A%D9%84%20%D9%84%D8%AC%D8%A7%D9%86%20%D8%A7%D9%84%D8%AD%D9%83%D9%85%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D8%B1%D8%B3%D8%A7%D8%A6%D9%84",
+      "topic": "THESIS_JUDGMENT_COMMITTEE",
+      "legal_reference": "Article 104",
+      "rule_summary_ar": "لجنة الحكم ثلاثة أعضاء؛ أحدهم المشرف والعضوان الآخران وفق الشروط القانونية، ويرأسها أقدم الأساتذة. عند تعدد المشرفين يكون لهم صوت واحد. ويشترط عضو خارجي وفق الدرجة: خارج الكلية للماجستير وخارج الجامعة للدكتوراه وفق النص المنشور.",
+      "implementation": "CommitteeRule + CommitteeMember validation; not a fixed UI-only rule."
+    },
+    {
+      "id": "committee-external-member-limit-2016",
+      "authority": "Assiut University Council",
+      "decision_date": "2016-09-29",
+      "source_url": "https://www.aun.edu.eg/post/index.php/ar/%D8%AA%D8%B4%D9%83%D9%8A%D9%84%20%D9%84%D8%AC%D8%A7%D9%86%20%D8%A7%D9%84%D8%AD%D9%83%D9%85%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D8%B1%D8%B3%D8%A7%D8%A6%D9%84/%D8%B9%D8%AF%D8%AF%20%D9%85%D8%B1%D8%A7%D8%AA%20%D9%85%D8%B4%D8%A7%D8%B1%D9%83%D8%A9%20%D8%A7%D9%84%D8%B9%D8%B6%D9%88%20%D8%A7%D9%84%D8%AE%D8%A7%D8%B1%D8%AC%D9%8A%20%D9%81%D9%89%20%D9%84%D8%AC%D8%A7%D9%86%20%D8%A7%D9%84%D8%AD%D9%83%D9%85%20%D8%B9%D9%84%D9%89%20%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D9%85%D8%A7%D8%AC%D8%B3%D8%AA%D9%8A%D8%B1%20%D9%88%D8%A7%D9%84%D8%AF%D9%83%D8%AA%D9%88%D8%B1%D8%A7%D8%A9",
+      "topic": "EXTERNAL_EXAMINER_CAPACITY",
+      "maximum_participations_per_academic_year": 4,
+      "exception": "international students according to the published decision",
+      "implementation": "ExternalExaminerParticipationRule with effective date."
+    },
+    {
+      "id": "committee-kinship-2011-09-19",
+      "authority": "Assiut University Postgraduate Studies & Research Council",
+      "decision_date": "2011-09-19",
+      "source_url": "https://b.aun.edu.eg/post/ar/%D8%AA%D8%B4%D9%83%D9%8A%D9%84%20%D9%84%D8%AC%D8%A7%D9%86%20%D8%A7%D9%84%D8%AD%D9%83%D9%85%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D8%B1%D8%B3%D8%A7%D8%A6%D9%84/%D8%A8%D8%B4%D8%A3%D9%86%20%D8%B5%D9%84%D8%A9%20%D8%A7%D9%84%D9%82%D8%B1%D8%A7%D8%A8%D8%A9%20%D8%A8%D9%8A%D9%86%20%D8%A3%D8%AD%D8%AF%20%D8%A7%D9%84%D9%85%D8%B4%D8%B1%D9%81%D9%8A%D9%86%20%D9%88%D8%A8%D8%B9%D8%B6%D9%87%D9%85",
+      "topic": "CONFLICT_OF_INTEREST",
+      "rule_summary_ar": "مراعاة عدم وجود صلة قرابة بين أعضاء هيئة الإشراف وكذلك أعضاء لجان الحكم على رسائل الماجستير والدكتوراه.",
+      "implementation": "ConflictOfInterestDeclaration / validation rule."
+    }
+  ]
+}

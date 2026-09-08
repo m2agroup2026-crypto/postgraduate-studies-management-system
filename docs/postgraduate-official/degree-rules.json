@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "verified_on": "2026-09-08",
+  "activation_policy": "REFERENCE_ONLY_UNTIL_IMPORTED_AND_ADMIN_APPROVED",
+  "degrees": {
+    "DIPLOMA": {
+      "rule_scope_note": "الشروط التفصيلية ومدد الدراسة تختلف حسب الدبلوم واللائحة الخاصة به؛ لا تعمم قواعد برنامج بعينه على جميع الدبلومات.",
+      "base_qualification": "BACHELOR_OR_EQUIVALENT_AS_DEFINED_BY_PROGRAM_REGULATION",
+      "required_documents_source": "https://www.aun.edu.eg/post/ar/%D9%86%D8%B8%D8%A7%D9%85%20%D8%A7%D9%84%D9%82%D9%8A%D8%AF%D9%84%D9%84%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D9%84%D9%8A%D8%A7/%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D9%86%D8%AF%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%B7%D9%84%D9%88%D8%A8%D8%A9%20%D9%84%D9%84%D9%82%D9%8A%D8%AF%20%D8%A8%D8%A7%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D9%84%D9%8A%D8%A7",
+      "program_catalog_file": "professional-diplomas.json"
+    },
+    "MASTER": {
+      "sources": [
+        "https://www.aun.edu.eg/medicine/ar/postgrad/master/degree",
+        "https://www.aun.edu.eg/medicine/ar/postgrad/Credit%20Hours",
+        "https://www.aun.edu.eg/medicine/ar/unit/scientific/documentation"
+      ],
+      "admission": {
+        "base_degree": "Bachelor of Medicine or equivalent from a source recognized by the Supreme Council of Universities",
+        "minimum_overall_grade": "GOOD",
+        "published_exception": "The Faculty page permits registration below Good when the candidate has a recognized postgraduate medical diploma with grade Good; implementation must be tied to the applicable regulation version.",
+        "configurable": true
+      },
+      "duration": {
+        "faculty_published_minimum_years": 2,
+        "faculty_page_detail": "one year from enrollment and one year from research-topic registration",
+        "university_maximum_years_decision": 6,
+        "maximum_decision_date": "2018-03-27",
+        "maximum_source": "https://aun.edu.eg/post/ar/node/27737",
+        "configurable": true
+      },
+      "research_registration_requirements": [
+        {
+          "code": "DIGITAL_LIBRARY_GLOBAL_DATABASE_ACCOUNT",
+          "decision_date": "2015-05-28",
+          "required": true
+        },
+        {
+          "code": "EGYPTIAN_KNOWLEDGE_BANK_RESEARCHER_ACCOUNT",
+          "decision_date": "2016-07-28",
+          "required": true
+        }
+      ],
+      "common_credit_hour_topics_visible_on_faculty_page": [
+        "كتابة البحث العلمي",
+        "طرق البحث",
+        "الإحصاء الطبي",
+        "الجوانب الأخلاقية والقانونية في الممارسة الطبية والبحث العلمي"
+      ],
+      "current_requirements_2026": [
+        {
+          "code": "AI_COURSE",
+          "type": "COURSE",
+          "required": true,
+          "delivery_mode": "ONLINE",
+          "effective_from_enrollment_cycle": "2026-04",
+          "source": "https://b.aun.edu.eg/main/ar/node/85022"
+        }
+      ],
+      "publication_requirement": {
+        "required": true,
+        "minimum_derived_papers": 1,
+        "summary": "One paper derived from the Master's thesis in Assiut Medical Journal or a higher specialized online journal according to the Faculty Scientific Documentation Office page; predatory venues are prohibited.",
+        "source": "https://www.aun.edu.eg/medicine/ar/unit/scientific/documentation",
+        "configurable": true
+      }
+    },
+    "PHD": {
+      "sources": [
+        "https://b.aun.edu.eg/medicine/postgrad/phd",
+        "https://www.aun.edu.eg/medicine/ar/postgrad/Credit%20Hours",
+        "https://www.aun.edu.eg/medicine/ar/unit/scientific/documentation",
+        "https://b.aun.edu.eg/post/ar/node/27651"
+      ],
+      "admission": {
+        "required_prior_degree": "MASTER",
+        "same_specialized_field_required": true,
+        "equivalent_degree_allowed_if_recognized_by_scu": true,
+        "configurable": true
+      },
+      "admission_cycles_published": ["JANUARY", "SEPTEMBER"],
+      "qualifying_exam": {
+        "required": true,
+        "name": "Comprehensive qualifying examination"
+      },
+      "duration": {
+        "faculty_published_minimum_years_from_registration_stage": 2,
+        "university_maximum_years_decision": 8,
+        "maximum_decision_date": "2018-03-27",
+        "maximum_source": "https://aun.edu.eg/post/ar/node/27737",
+        "configurable": true
+      },
+      "research_registration_requirements": [
+        {
+          "code": "DIGITAL_LIBRARY_GLOBAL_DATABASE_ACCOUNT",
+          "decision_date": "2015-05-28",
+          "required": true
+        },
+        {
+          "code": "EGYPTIAN_KNOWLEDGE_BANK_RESEARCHER_ACCOUNT",
+          "decision_date": "2016-07-28",
+          "required": true
+        }
+      ],
+      "language_requirement_reference": {
+        "test": "TOEFL",
+        "published_minimum_score": 400,
+        "must_be_completed_before": "DEGREE_AWARD",
+        "original_decision_date": "1998-03-22",
+        "source": "https://b.aun.edu.eg/post/ar/node/27651",
+        "caveat": "The University sector also publishes ELPT as an alternative. Do not invent an equivalency score; store language rules as versioned configuration and verify the current applicable rule before production activation."
+      },
+      "current_requirements_2026": [
+        {
+          "code": "AI_COURSE",
+          "type": "COURSE",
+          "required": true,
+          "delivery_mode": "ONLINE",
+          "effective_from_enrollment_cycle": "2026-04",
+          "source": "https://b.aun.edu.eg/main/ar/node/85022"
+        }
+      ],
+      "publication_requirement": {
+        "required": true,
+        "alternatives": [
+          "A paper derived from the doctorate thesis in an international journal with a recognized impact factor",
+          "A paper derived from the thesis in a specialized journal rated 7 points by the Supreme Council of Universities promotion committees for the specialty",
+          "A paper derived from the thesis in a specialized journal indexed in Scopus or Web of Science"
+        ],
+        "predatory_venues_prohibited": true,
+        "source": "https://www.aun.edu.eg/medicine/ar/unit/scientific/documentation",
+        "configurable": true
+      }
+    }
+  },
+  "shared_files": [
+    "shared-rules.md",
+    "official-decisions.json",
+    "academic-programs.json",
+    "professional-diplomas.json"
+  ]
+}
