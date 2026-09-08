@@ -1,0 +1,54 @@
+name: Dashboard CI
+
+on:
+  pull_request:
+    branches:
+      - enterprise-development
+    paths:
+      - "backend/**"
+      - "web/**"
+      - ".github/workflows/dashboard-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - name: Install backend dependencies
+        run: uv sync --group dev
+      - name: Check migrations
+        run: uv run python manage.py makemigrations --check --dry-run
+      - name: Lint changed backend modules
+        run: uv run ruff check apps/core/api_views.py apps/core/models.py apps/core/tests/test_dashboard_configuration.py
+      - name: Run dashboard configuration tests
+        run: uv run pytest apps/core/tests/test_dashboard_configuration.py -q
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install frontend dependencies
+        run: npm ci
+      - name: Build web dashboard
+        run: npm run build
