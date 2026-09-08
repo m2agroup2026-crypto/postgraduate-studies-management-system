@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.db.models import Count
 from rest_framework.response import Response
@@ -36,6 +37,8 @@ def serialize_navigation(user, include_inactive=False):
 
     items = []
     for item in queryset:
+        if item.key == "settings" and not can_manage_dashboard(user):
+            continue
         if item.required_permission and not user.has_permission(item.required_permission):
             continue
         items.append({
@@ -66,6 +69,14 @@ def serialize_metrics(include_inactive=False):
         }
         for item in queryset
     ]
+
+
+def apply_configuration(item, payload, allowed_fields):
+    for field in allowed_fields:
+        if field in payload:
+            setattr(item, field, payload[field])
+    item.full_clean()
+    item.save()
 
 
 class MeView(APIView):
@@ -140,31 +151,29 @@ class DashboardConfigurationView(APIView):
         }
         metric_fields = {"label_ar", "label_en", "icon", "sort_order", "is_active"}
 
-        for payload in navigation:
-            key = payload.get("key")
-            if not key:
-                return Response({"error": "كل عنصر قائمة يجب أن يحتوي على key"}, status=400)
-            try:
-                item = DashboardNavigationItem.objects.get(key=key)
-            except DashboardNavigationItem.DoesNotExist:
-                return Response({"error": f"عنصر القائمة غير معروف: {key}"}, status=400)
-            for field in nav_fields:
-                if field in payload:
-                    setattr(item, field, payload[field])
-            item.save()
+        try:
+            for payload in navigation:
+                key = payload.get("key")
+                if not key:
+                    return Response({"error": "كل عنصر قائمة يجب أن يحتوي على key"}, status=400)
+                try:
+                    item = DashboardNavigationItem.objects.get(key=key)
+                except DashboardNavigationItem.DoesNotExist:
+                    return Response({"error": f"عنصر القائمة غير معروف: {key}"}, status=400)
+                apply_configuration(item, payload, nav_fields)
 
-        for payload in metrics:
-            key = payload.get("key")
-            if not key:
-                return Response({"error": "كل بطاقة مؤشر يجب أن تحتوي على key"}, status=400)
-            try:
-                item = DashboardMetricCard.objects.get(key=key)
-            except DashboardMetricCard.DoesNotExist:
-                return Response({"error": f"بطاقة المؤشر غير معروفة: {key}"}, status=400)
-            for field in metric_fields:
-                if field in payload:
-                    setattr(item, field, payload[field])
-            item.save()
+            for payload in metrics:
+                key = payload.get("key")
+                if not key:
+                    return Response({"error": "كل بطاقة مؤشر يجب أن تحتوي على key"}, status=400)
+                try:
+                    item = DashboardMetricCard.objects.get(key=key)
+                except DashboardMetricCard.DoesNotExist:
+                    return Response({"error": f"بطاقة المؤشر غير معروفة: {key}"}, status=400)
+                apply_configuration(item, payload, metric_fields)
+        except ValidationError as exc:
+            transaction.set_rollback(True)
+            return Response({"error": "بعض القيم غير صالحة", "details": exc.message_dict}, status=400)
 
         return Response({
             "navigation": serialize_navigation(request.user, include_inactive=True),
