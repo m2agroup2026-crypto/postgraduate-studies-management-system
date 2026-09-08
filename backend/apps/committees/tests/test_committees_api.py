@@ -194,7 +194,7 @@ def test_dynamic_manage_role_overrides_student_legacy_role(client, theses):
 
     assert response.status_code == 200
     assert response.data["capabilities"]["can_manage"] is True
-    assert response.data["record"]["defense"]["defense_date"] == target_date.isoformat()
+    assert str(response.data["record"]["defense"]["defense_date"]) == target_date.isoformat()
     assert DefenseScheduleEvent.objects.filter(
         committee__thesis=theses[1],
         performed_by=user,
