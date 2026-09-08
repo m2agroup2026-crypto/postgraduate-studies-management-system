@@ -1,4 +1,5 @@
 import React from "react";
+import logo from "../assets/logo.webp";
 import {
   BarChart3,
   BookOpen,
@@ -30,10 +31,11 @@ export default function DashboardLayout({
     <main dir={ar ? "rtl" : "ltr"}>
       <aside>
         <div className="brand">
-          <span>PG</span>
+          <img src={logo} alt="Faculty of Medicine - Assiut University" />
           <div>
-            الدراسات العليا
-            <small>كلية الطب</small>
+            كلية الطب
+            <small>جامعة أسيوط</small>
+            <small>إدارة الدراسات العليا والبحوث</small>
           </div>
         </div>
 

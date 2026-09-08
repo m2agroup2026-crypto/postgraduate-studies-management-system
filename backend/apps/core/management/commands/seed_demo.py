@@ -2,8 +2,8 @@ import os
 
 from django.core.management.base import BaseCommand
 
-from apps.accounts.models import User
 from apps.academics.models import AcademicDegree, Department
+from apps.accounts.models import User
 from apps.students.models import Student
 from apps.theses.models import Thesis
 
@@ -16,12 +16,32 @@ class Command(BaseCommand):
         if not demo_password:
             raise RuntimeError("PGMS_DEMO_PASSWORD must be set before creating demo users")
         users = [
-            ("staff_demo", User.Role.STAFF, "موظف الدراسات العليا", "موظف إدخال بيانات الدراسات العليا"),
-            ("reviewer_demo", User.Role.REVIEWER, "مراجع الدراسات العليا", "مراجع طلبات الدراسات العليا"),
-            ("vp_postgraduate", User.Role.VP_POSTGRADUATE_RESEARCH, "الأستاذ الدكتور جمال بدر", "نائب رئيس الجامعة لشئون الدراسات العليا والبحوث"),
-            ("director", User.Role.POSTGRADUATE_DIRECTOR, "مدير الدراسات العليا", "مدير إدارة الدراسات العليا"),
+            (
+                "staff_demo",
+                User.Role.STAFF,
+                "موظف الدراسات العليا",
+                "موظف إدخال بيانات الدراسات العليا",
+            ),
+            (
+                "reviewer_demo",
+                User.Role.REVIEWER,
+                "مراجع الدراسات العليا",
+                "مراجع طلبات الدراسات العليا",
+            ),
+            (
+                "vp_postgraduate",
+                User.Role.VP_POSTGRADUATE_RESEARCH,
+                "الأستاذ الدكتور جمال بدر",
+                "نائب رئيس الجامعة لشئون الدراسات العليا والبحوث",
+            ),
+            ("director", User.Role.PROGRAM_DIRECTOR, "مدير البرنامج", "مدير البرنامج الأكاديمي"),
             ("dean", User.Role.DEAN, "الأستاذ الدكتور علاء عطية", "عميد كلية الطب"),
-            ("vice_dean", User.Role.VICE_DEAN_POSTGRADUATE, "الأستاذ الدكتور محمد عبد الباسط خلاف", "وكيل الكلية لشؤون الدراسات العليا والبحوث"),
+            (
+                "vice_dean",
+                User.Role.VICE_DEAN_POSTGRADUATE,
+                "الأستاذ الدكتور محمد عبد الباسط خلاف",
+                "وكيل الكلية لشؤون الدراسات العليا والبحوث",
+            ),
         ]
         for username, role, name, title in users:
             user, _ = User.objects.get_or_create(username=username)
@@ -29,9 +49,17 @@ class Command(BaseCommand):
             user.set_password(demo_password)
             user.save()
 
-        department, _ = Department.objects.get_or_create(code="MED", defaults={"name_ar": "الباطنة", "name_en": "Internal Medicine"})
+        department, _ = Department.objects.get_or_create(
+            code="MED", defaults={"name_ar": "الباطنة", "name_en": "Internal Medicine"}
+        )
         AcademicDegree.objects.get_or_create(code="MSC", defaults={"name_ar": "الماجستير"})
         for index in range(1, 9):
-            student, _ = Student.objects.get_or_create(university_id=f"PG{index:04}", defaults={"name_ar": f"طالب دراسات عليا {index}", "department": department})
-            Thesis.objects.get_or_create(student=student, defaults={"title_ar": f"رسالة علمية تجريبية رقم {index}", "status": "REGISTERED"})
+            student, _ = Student.objects.get_or_create(
+                university_id=f"PG{index:04}",
+                defaults={"name_ar": f"طالب دراسات عليا {index}", "department": department},
+            )
+            Thesis.objects.get_or_create(
+                student=student,
+                defaults={"title_ar": f"رسالة علمية تجريبية رقم {index}", "status": "REGISTERED"},
+            )
         self.stdout.write(self.style.SUCCESS("Demo data created"))
