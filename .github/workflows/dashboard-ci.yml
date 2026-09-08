@@ -33,7 +33,7 @@ jobs:
         run: uv sync --group dev
       - name: Check migrations
         run: uv run python manage.py makemigrations --check --dry-run
-      - name: Lint dashboard, students, and theses modules
+      - name: Lint dashboard, students, theses, and committees modules
         run: >-
           uv run ruff check
           apps/core/api_views.py
@@ -49,13 +49,18 @@ jobs:
           apps/theses/api_views.py
           apps/theses/api_urls.py
           apps/theses/tests/test_theses_api.py
+          apps/committees/models.py
+          apps/committees/api_views.py
+          apps/committees/api_urls.py
+          apps/committees/tests/test_committees_api.py
           config/urls.py
-      - name: Run dashboard, students, and theses tests
+      - name: Run dashboard, students, theses, and committees tests
         run: >-
           uv run pytest
           apps/core/tests/test_dashboard_configuration.py
           apps/students/tests/test_students_api.py
           apps/theses/tests/test_theses_api.py
+          apps/committees/tests/test_committees_api.py
           -q
 
   frontend:
