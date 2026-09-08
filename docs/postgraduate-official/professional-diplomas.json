@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "verified_on": "2026-09-08",
+  "authority": {
+    "institution_ar": "جامعة أسيوط",
+    "faculty_ar": "كلية الطب",
+    "catalog_source_url": "https://www.aun.edu.eg/post/ar/bramj-aldrasat-allya-lklyt-altb",
+    "current_count_source_url": "https://www.aun.edu.eg/main/ar/node/85818"
+  },
+  "status_semantics": {
+    "CATALOG_ACTIVE": "منشور في كتالوج قطاع الدراسات العليا دون عبارة انتظار القرار الوزاري في لقطة المصدر التي تم التحقق منها.",
+    "CATALOG_PENDING_APPROVAL": "منشور في الكتالوج مع عبارة انتظار صدور القرار الوزاري في لقطة المصدر التي تم التحقق منها.",
+    "OPERATIONAL_EVIDENCE": "توجد صفحة/إعلان/نتيجة أو تخرج رسمي لاحق يثبت أن البرنامج يعمل أو فُتح له التقديم، لكن يجب الاحتفاظ بقرار الاعتماد الرسمي في المنصة عند توفره.",
+    "NEEDS_RECONCILIATION": "يوجد تعارض أو نقص بين الكتالوج الأقدم والمصادر الرسمية الأحدث ويجب توثيق القرار/القائمة الأحدث قبل اعتبار السجل نهائياً."
+  },
+  "catalog_snapshot": {
+    "catalog_last_verified": "2026-09-08",
+    "enumerated_count": 17,
+    "programs": [
+      {"catalog_index": 1, "name_ar": "الدبلوم المهنى فى مكافحة العدوى", "catalog_status": "CATALOG_ACTIVE"},
+      {"catalog_index": 2, "name_ar": "الدبلوم المهنى فى طب الجنين", "catalog_status": "CATALOG_ACTIVE"},
+      {"catalog_index": 3, "name_ar": "الدبلوم المهنى فى التعليم الطبى", "catalog_status": "CATALOG_ACTIVE"},
+      {"catalog_index": 4, "name_ar": "الدبلوم المهنى فى جراحة الكبد والبنكرياس والجهاز المرارى", "catalog_status": "CATALOG_ACTIVE"},
+      {"catalog_index": 5, "name_ar": "الدبلوم المهنى فى طب الكبد والبنكرياس والجهاز المرارى", "catalog_status": "CATALOG_ACTIVE"},
+      {"catalog_index": 6, "name_ar": "الدبلوم المهنى فى التخدير والعناية المركزة الجراحية لحالات الكبد والبنكرياس والجهاز المرارى", "catalog_status": "CATALOG_ACTIVE", "associated_departments_ar": ["التخدير والعناية المركزة", "الجراحة العامة", "طب المناطق الحارة والجهاز الهضمى", "الأمراض الباطنة"]},
+      {"catalog_index": 7, "name_ar": "الدبلوم المهنى فى جراحات اليد", "catalog_status": "CATALOG_ACTIVE"},
+      {"catalog_index": 8, "name_ar": "الدبلوم المهنى فى التغذية العلاجية", "catalog_status": "CATALOG_ACTIVE"},
+      {"catalog_index": 9, "name_ar": "الدبلوم المهنى فى الجراحات الميكروسكوبية بالأطراف وجراحات الضفيرة العصبية للطرف العلوى والأعصاب الطرفية", "catalog_status": "CATALOG_ACTIVE"},
+      {"catalog_index": 10, "name_ar": "الدبلوم المهنى فى علاج الألم", "catalog_status": "CATALOG_ACTIVE"},
+      {"catalog_index": 11, "name_ar": "الدبلوم المهنى فى السموم التحليلية", "catalog_status": "CATALOG_PENDING_APPROVAL"},
+      {"catalog_index": 12, "name_ar": "الدبلوم المهنى فى علاج إصابات الحق والحوض", "catalog_status": "CATALOG_PENDING_APPROVAL", "source_wording_note": "الاسم محفوظ كما ظهر في المصدر المرجعي؛ يجب مراجعة القرار الأصلي قبل اعتماد التسمية النهائية في واجهة الإنتاج."},
+      {"catalog_index": 13, "name_ar": "الدبلوم المهنى فى المناظير النسائية", "catalog_status": "CATALOG_PENDING_APPROVAL"},
+      {"catalog_index": 14, "name_ar": "الدبلوم المهنى فى الإحصاء الطبى", "catalog_status": "CATALOG_PENDING_APPROVAL", "current_status_evidence": "OPERATIONAL_EVIDENCE", "evidence_url": "https://www.aun.edu.eg/hospitals/main/ar/node/49502", "evidence_note": "فتح باب التقديم رسمياً للعام الأكاديمي 2026/2027؛ لا يُستنتج من ذلك وحده رقم قرار الاعتماد."},
+      {"catalog_index": 15, "name_ar": "الدبلوم المهنى فى رعاية مرضى الشفة الأرنبية وشق سقف الحلق", "catalog_status": "CATALOG_PENDING_APPROVAL", "current_status_evidence": "OPERATIONAL_EVIDENCE", "evidence_url": "https://aun.edu.eg/medicine/ar/node/39056", "evidence_note": "الكلية أعلنت بدء الدراسة في البرنامج خلال 2025."},
+      {"catalog_index": 16, "name_ar": "الدبلوم المهنى فى طب الفترة المحيطة بالجراحة", "catalog_status": "CATALOG_PENDING_APPROVAL"},
+      {"catalog_index": 17, "name_ar": "الدبلوم المهنى فى الإخصاب المساعد", "catalog_status": "CATALOG_PENDING_APPROVAL", "current_status_evidence": "OPERATIONAL_EVIDENCE", "evidence_url": "https://aun.edu.eg/main/index.php/ar/jamt-asywt-thtfl-btkhryj-aldft-alawly-mn-aldblwmt-almhnyt-fy-tqnyat-alakhsab-almsad-bklyt-altb", "evidence_note": "جامعة أسيوط أعلنت تخريج الدفعة الأولى في أكتوبر 2025."}
+    ]
+  },
+  "additional_current_official_evidence": [
+    {
+      "name_ar": "الدبلومة المهنية في جراحة العمود الفقري",
+      "status": "OPERATIONAL_EVIDENCE",
+      "source_url": "https://aun.edu.eg/medicine/ar/node/38922",
+      "evidence": "مجلس كلية الطب اعتمد نتيجة الدور الأول للعام الجامعي 2024/2025 في يناير 2026.",
+      "catalog_relation": "غير موجودة ضمن قائمة الـ17 في لقطة الكتالوج المرجعي، لذلك تُعامل كسجل إضافي يحتاج ربطاً بقرار/إصدار الكتالوج الأحدث."
+    },
+    {
+      "name_ar": "الدبلومة المهنية في الإحصاء الطبي",
+      "status": "OPERATIONAL_EVIDENCE",
+      "source_url": "https://www.aun.edu.eg/hospitals/main/ar/node/49502",
+      "evidence": "فتح باب التقديم للعام الأكاديمي 2026/2027 في أغسطس 2026."
+    },
+    {
+      "name_ar": "الدبلومة المهنية في تقنيات الإخصاب المساعد",
+      "status": "OPERATIONAL_EVIDENCE",
+      "source_url": "https://aun.edu.eg/main/index.php/ar/jamt-asywt-thtfl-btkhryj-aldft-alawly-mn-aldblwmt-almhnyt-fy-tqnyat-alakhsab-almsad-bklyt-altb",
+      "evidence": "تخريج الدفعة الأولى في أكتوبر 2025."
+    },
+    {
+      "name_ar": "الدبلومة المهنية في التغذية العلاجية",
+      "status": "OPERATIONAL_EVIDENCE",
+      "source_url": "https://www.aun.edu.eg/medicine/ar/myd-klyt-altb-yshhd-alahtfal-btkhryj-aldft-alawly-mn-khryjy-aldblwmt-almhnyt-fy-altghdhyt-allajyt",
+      "evidence": "تخريج الدفعة الأولى؛ الصفحة الرسمية تذكر أنها معتمدة من المجلس الأعلى للجامعات ونقابة الأطباء وجامعة أسيوط، ومدتها سنة دراسية/30 أسبوعاً للأطباء فقط."
+    }
+  ],
+  "current_reconciliation": {
+    "reported_total_professional_diplomas": 24,
+    "reported_on": "2026-09-08",
+    "source_url": "https://www.aun.edu.eg/main/ar/node/85818",
+    "source_statement_summary": "وكيل كلية الطب لشئون الدراسات العليا والبحوث أعلن أن العام الجامعي الجديد يشهد وصول عدد الدبلومات المهنية إلى 24 بعد تفعيل 4 دبلومات جديدة هذا العام.",
+    "enumerated_catalog_count": 17,
+    "known_catalog_plus_additional_named_records_are_not_treated_as_complete_24": true,
+    "reconciliation_status": "NEEDS_RECONCILIATION",
+    "rule": "لا تُخترع أسماء البرامج السبعة/الفروق غير المنشورة في قائمة رسمية مكتملة. تُستكمل الأسماء فقط من قرار/كتالوج/صفحة رسمية أحدث."
+  },
+  "implementation_notes": [
+    "يمثل كل دبلوم Program مستقل بدرجة AcademicDegree(level=DIPLOMA).",
+    "حالة الاعتماد منفصلة عن حالة التشغيل الفعلي؛ وجود إعلان تقديم أو نتيجة امتحان لا يغني عن حفظ رقم وتاريخ قرار الاعتماد عندما يتوفر.",
+    "يجب الاحتفاظ بتاريخ إصدارات الكتالوج وعدم استبدال اللقطة القديمة؛ يتم إنهاء سريانها وربط الإصدار الأحدث.",
+    "العدد الحالي 24 يُخزن كبيان رسمي مؤرخ، لكن قائمة البرامج لا تعتبر مكتملة حتى تتوافر قائمة رسمية حديثة بكل الأسماء."
+  ]
+}
