@@ -45,7 +45,7 @@ Examples that must remain configurable:
 - `shared-rules.md` — common enrollment, documents, language, research registration, suspension/cancellation, supervision, publication and committee rules.
 - `official-decisions.json` — machine-readable key University decisions with dates and implementation mapping.
 - `current-2026-updates.md` — current operational evidence and changes that are newer than older regulation/catalog snapshots.
-- `sources.json` — official source manifest and verification metadata.
+- `sources.json` — refreshed official source manifest with verification metadata and current regulation rollout evidence.
 - `implementation-mapping.md` — mapping from official requirements to configurable platform entities and implementation order.
 
 ## Current regulation note
