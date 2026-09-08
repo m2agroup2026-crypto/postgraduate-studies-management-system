@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Search, ShieldCheck, UserRound, X } from "lucide-react";
 
+import "./students.css";
+
 const STATUS_LABELS = {
   REGISTERED: { ar: "مسجلة", en: "Registered" },
   COMPLETED: { ar: "مكتملة", en: "Completed" },
