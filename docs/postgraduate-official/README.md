@@ -11,7 +11,8 @@ When sources differ, use this precedence and record the effective date before ch
 1. **Current Faculty of Medicine postgraduate bylaw / credit-hours regulations and attached official documents.**
 2. **Current Faculty of Medicine postgraduate pages** for Master’s, Doctorate, department-specific programs, forms, and examination guidance.
 3. **Assiut University Postgraduate Studies & Research Sector** for university-wide rules: enrollment documents, research registration, language requirements, suspension/cancellation, supervision, thesis committees, and the official Faculty of Medicine program catalog.
-4. Older faculty/archive pages are supporting evidence only. They must not override a newer regulation without verification.
+4. **Current official University/Faculty announcements and council news** may prove that a program is operational, enrollment opened, results were approved, or a current count changed. They do not replace a ministerial/university approval decision when that legal evidence is required.
+5. Older faculty/archive pages are supporting evidence only. They must not override a newer regulation without verification.
 
 ## Implementation rule
 
@@ -21,29 +22,56 @@ Examples that must remain configurable:
 
 - admission requirements and required documents;
 - degree/program availability;
-- program approval status;
+- program approval and operational status;
 - credit hours and course requirements;
 - minimum/maximum enrollment periods;
 - language requirements;
 - research/publication requirements;
+- supervision and committee validation rules;
 - workflow and approval steps;
 - fees, dates, schedules, and currently responsible officials.
 
 ## Files
 
-- `diplomas.md` — professional/postgraduate diploma rules and Faculty of Medicine professional diploma catalog.
-- `masters.md` — Master’s admission, duration, research, publication, and thesis rules.
-- `doctorate.md` — Doctorate admission, duration, qualifying/research, publication, and thesis rules.
-- `academic-programs.json` — machine-readable official 33-row academic program catalog from the university postgraduate sector.
-- `shared-rules.md` — common enrollment, language, research registration, suspension/cancellation, supervision and committee rules.
+- `diplomas.md` — professional/postgraduate diploma rules, catalog snapshot, and current-status reconciliation.
+- `professional-diplomas.json` — machine-readable professional diploma catalog, operational evidence, and reconciliation against the current official count.
+- `masters.md` — Master’s admission, duration, research, publication, thesis and exam requirements.
+- `doctorate.md` — Doctorate admission, duration, qualifying/research, publication, thesis and committee requirements.
+- `academic-programs.json` — machine-readable official 33-row / 94-program Master’s and Doctorate catalog from the university postgraduate sector.
+- `departments-reconciliation.md` — distinction and reconciliation between current organizational departments and historical academic catalog rows.
+- `shared-rules.md` — common enrollment, documents, language, research registration, suspension/cancellation, supervision, publication and committee rules.
+- `official-decisions.json` — machine-readable key University decisions with dates and implementation mapping.
 - `sources.json` — official source manifest and verification metadata.
+- `implementation-mapping.md` — mapping from official requirements to configurable platform entities and implementation order.
 
-## Important catalog note
+## Important academic catalog note
 
-The university postgraduate-sector page publishes a **33-row Faculty of Medicine academic program catalog** based on Ministerial Decree **1098 dated 24/05/2011**, with later programs marked where ministerial approval is still pending. The current Faculty of Medicine departments page may show a different/current departmental structure because departments and services evolve over time. The application must therefore separate:
+The university postgraduate-sector page publishes a **33-row Faculty of Medicine academic program catalog** based on Ministerial Decree **1098 dated 24/05/2011**. The machine-readable transcription currently contains **94 Master’s/Doctorate programs**, including programs explicitly marked as waiting for ministerial approval.
 
-- `Department` (current organizational structure),
-- `Program` (degree-granting academic program), and
-- `ProgramApproval/RegulationVersion` (legal/academic authority and effective dates).
+The current Faculty of Medicine departments pages may show a different/current departmental structure because departments and services evolve over time. The application must therefore separate:
+
+- `Department` — current organizational structure;
+- `Program` — degree-granting academic program;
+- `ProgramApproval` — legal/academic approval evidence and status;
+- `RegulationVersion` — governing bylaw/rule version and effective dates.
 
 Do not assume that every current department automatically has every degree, or that a catalog entry marked “pending ministerial decision” is active.
+
+## Important professional-diploma reconciliation note
+
+The enumerated postgraduate-sector catalog snapshot contains **17 named professional diploma entries**. A newer official Assiut University announcement dated **2026-09-08** states that the Faculty of Medicine reaches **24 professional diplomas** with the new academic year after activation of four new diplomas during the year.
+
+Because that current announcement does not enumerate all 24 names, the project intentionally does **not** invent missing program names. `professional-diplomas.json` preserves the older named catalog, records newer program-level evidence, stores the current total count, and marks the remaining difference for official reconciliation.
+
+## Production-data rule
+
+Reference files are evidence/input, not an automatic production seed. Before a program or rule becomes active in production:
+
+1. identify the applicable institution/faculty/program;
+2. identify the governing regulation/decision and effective date;
+3. preserve the source/evidence;
+4. review conflicting/newer sources;
+5. import through configurable platform data;
+6. log the administrative approval in the audit trail.
+
+This prevents a future regulation update, faculty rollout, or university rollout from requiring a code rewrite.
