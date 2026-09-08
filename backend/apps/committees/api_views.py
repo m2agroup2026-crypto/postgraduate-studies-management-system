@@ -247,7 +247,10 @@ class CommitteeCollectionView(APIView):
             "department": "student__department__name_ar",
             "-department": "-student__department__name_ar",
         }
-        queryset = queryset.order_by(ordering_map.get(ordering, "defensecommittee__defense_date"), "id")
+        queryset = queryset.order_by(
+            ordering_map.get(ordering, "defensecommittee__defense_date"),
+            "id",
+        )
 
         page = parse_positive_int(request.query_params.get("page"), 1)
         page_size = parse_positive_int(request.query_params.get("page_size"), 20, 100)

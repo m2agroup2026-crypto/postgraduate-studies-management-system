@@ -8,6 +8,9 @@ class DefenseCommittee(models.Model):
     defense_date = models.DateField(null=True, blank=True)
     status = models.CharField(max_length=50, default="SCHEDULED")
 
+    def __str__(self):
+        return f"Defense Committee - {self.thesis_id}"
+
 
 class DefenseScheduleEvent(models.Model):
     class EventType(models.TextChoices):
