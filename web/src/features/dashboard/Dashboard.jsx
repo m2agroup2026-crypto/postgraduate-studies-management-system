@@ -1,22 +1,21 @@
 import React from "react";
 
-import MetricsCards from "./MetricsCards";
-import DepartmentOverview from "./DepartmentOverview";
 import AlertsPanel from "./AlertsPanel";
+import DepartmentOverview from "./DepartmentOverview";
+import MetricsCards from "./MetricsCards";
 
-export default function Dashboard({ data }) {
+export default function Dashboard({ data, language }) {
   return (
     <>
-      <MetricsCards metrics={data.metrics} />
+      <MetricsCards
+        metrics={data.metrics}
+        config={data.ui?.metrics}
+        language={language}
+      />
 
       <div className="grid">
-        <DepartmentOverview
-          departments={data.departments}
-        />
-
-        <AlertsPanel
-          alerts={data.alerts}
-        />
+        <DepartmentOverview departments={data.departments} />
+        <AlertsPanel alerts={data.alerts} />
       </div>
     </>
   );
