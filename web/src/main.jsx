@@ -5,6 +5,7 @@ import { api, hasSession, login, logout } from "./api";
 
 import Header from "./components/Header";
 import AIAssistant from "./features/assistant/AIAssistant";
+import CommitteesModule from "./features/committees/CommitteesModule";
 import Dashboard from "./features/dashboard/Dashboard";
 import DashboardSettings from "./features/settings/DashboardSettings";
 import StudentsModule from "./features/students/StudentsModule";
@@ -13,6 +14,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 
 import "./styles.css";
 import "./auth.css";
+import "./features/committees/committees.css";
 
 
 function Login({ onSuccess }) {
@@ -136,6 +138,8 @@ function DashboardPage() {
     content = <StudentsModule api={api} language={lang} />;
   } else if (activeSection === "theses") {
     content = <ThesesModule api={api} language={lang} />;
+  } else if (activeSection === "committees") {
+    content = <CommitteesModule api={api} language={lang} />;
   } else if (activeSection === "overview" || !activeNavigation) {
     content = <Dashboard data={data} language={lang} />;
   } else {
