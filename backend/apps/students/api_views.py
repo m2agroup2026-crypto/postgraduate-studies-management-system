@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.theses.models import Thesis
+from apps.committees.models import DefenseCommittee
+from .models import AcademicEnrollment, AcademicEnrollmentEvent, Student
 
 from .models import Student
 
@@ -227,6 +229,66 @@ class StudentCollectionView(APIView):
         )
 
 
+def serialize_academic_history(student):
+    enrollments = []
+
+    for enrollment in student.academic_enrollments.select_related(
+        "program",
+        "program__degree",
+        "academic_year",
+    ).prefetch_related("history"):
+        events = [
+            {
+                "event_type": event.event_type,
+                "from_status": event.from_status,
+                "to_status": event.to_status,
+                "notes": event.notes,
+                "performed_by": (
+                    event.performed_by.get_full_name()
+                    if event.performed_by
+                    else None
+                ),
+                "created_at": event.created_at,
+            }
+            for event in enrollment.history.all()
+        ]
+
+        enrollments.append(
+            {
+                "program": enrollment.program.name_ar,
+                "degree": enrollment.program.degree.name_ar,
+                "academic_year": (
+                    enrollment.academic_year.name
+                    if enrollment.academic_year
+                    else None
+                ),
+                "status": enrollment.status,
+                "enrollment_date": enrollment.enrollment_date,
+                "completion_date": enrollment.completion_date,
+                "events": events,
+            }
+        )
+
+    return enrollments
+
+
+def serialize_defense_history(student):
+    thesis = get_thesis(student)
+
+    if not thesis:
+        return None
+
+    try:
+        committee = thesis.defensecommittee
+    except DefenseCommittee.DoesNotExist:
+        return None
+
+    return {
+        "defense_date": committee.defense_date,
+        "status": committee.status,
+    }
+
+
 class StudentDetailView(APIView):
     def get(self, request, student_id):
         if not can_view_students(request.user):
@@ -241,6 +303,8 @@ class StudentDetailView(APIView):
         return Response(
             {
                 "student": serialize_student(student, include_sensitive=can_manage),
+                "academic_history": serialize_academic_history(student),
+                "defense_history": serialize_defense_history(student),
                 "capabilities": {
                     "can_view": True,
                     "can_manage": can_manage,
