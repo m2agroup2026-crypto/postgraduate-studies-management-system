@@ -1,11 +1,28 @@
 import React from "react";
+import {
+  BarChart3,
+  BookOpen,
+  CalendarDays,
+  LayoutDashboard,
+  Settings as SettingsIcon,
+  Users,
+} from "lucide-react";
+
+const iconMap = {
+  LayoutDashboard,
+  Users,
+  BookOpen,
+  CalendarDays,
+  BarChart3,
+  Settings: SettingsIcon,
+};
 
 export default function DashboardLayout({
   children,
-  user,
   language,
-  onLanguageChange,
-  onLogout,
+  navigation = [],
+  activeSection = "overview",
+  onNavigate,
 }) {
   const ar = language === "ar";
 
@@ -21,21 +38,21 @@ export default function DashboardLayout({
         </div>
 
         <nav>
-          {[
-            "نظرة عامة",
-            "الطلاب",
-            "الرسائل العلمية",
-            "اللجان والمناقشات",
-            "التقارير",
-            "الإعدادات",
-          ].map((item, index) => (
-            <button
-              className={index === 0 ? "active" : ""}
-              key={item}
-            >
-              {item}
-            </button>
-          ))}
+          {navigation.map((item) => {
+            const Icon = iconMap[item.icon] || LayoutDashboard;
+            const label = ar ? item.label_ar : (item.label_en || item.label_ar);
+            return (
+              <button
+                className={activeSection === item.key ? "active" : ""}
+                key={item.key}
+                onClick={() => onNavigate?.(item.key)}
+                type="button"
+              >
+                <Icon size={18} />
+                <span>{label}</span>
+              </button>
+            );
+          })}
         </nav>
       </aside>
 
