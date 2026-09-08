@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "apps.theses",
     "apps.committees",
     "apps.documents",
+    "apps.academic_history",
 ]
 
 MIDDLEWARE = [

@@ -109,3 +109,7 @@ class WorkflowStatus(models.Model):
 
     def __str__(self):
         return self.name_ar
+
+
+# Academic History Engine
+from .history.models import AcademicHistoryEvent
