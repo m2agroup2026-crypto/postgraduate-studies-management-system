@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "verified_on": "2026-09-08",
+  "activation_policy": "REFERENCE_ONLY_UNTIL_ADMIN_APPROVED",
+  "faculty": {
+    "university": "Assiut University",
+    "faculty": "Faculty of Medicine"
+  },
+  "regulations": [
+    {
+      "id": "MED-PG-2011-MD-1098",
+      "name_ar": "كتالوج برامج الدراسات العليا لكلية الطب الصادر بالقرار الوزاري رقم 1098",
+      "system": "LEGACY_PROGRAM_CATALOG",
+      "authority_type": "MINISTERIAL_DECISION",
+      "authority_reference": "1098",
+      "authority_date": "2011-05-24",
+      "status": "REFERENCE_CATALOG",
+      "effective_from": "2011-05-24",
+      "effective_to": null,
+      "source": "https://b.aun.edu.eg/post/ar/bramj-aldrasat-allya-lklyt-altb",
+      "implementation_note": "Use as the legal/catalog provenance for the published 33-row postgraduate program catalog. Do not infer that every current organizational department maps one-to-one to every degree program. Program approval status must be represented separately."
+    },
+    {
+      "id": "MED-PG-CREDIT-HOURS-2024",
+      "name_ar": "لائحة الدراسات العليا الجديدة بنظام الساعات المعتمدة",
+      "system": "CREDIT_HOURS",
+      "authority_type": "FACULTY_APPROVED_REGULATION",
+      "authority_reference": null,
+      "authority_date": null,
+      "status": "APPLIED",
+      "effective_from": "2024-10-01",
+      "effective_to": null,
+      "source": "https://www.aun.edu.eg/medicine/ar/alajtma-althany-lltryf-blayht-aldrasat-allya-aljdydt-alsaat-almtmdt-llsadt-rwsa-wmnsqy-alaqsam",
+      "supporting_source": "https://www.aun.edu.eg/medicine/ar/postgrad/Credit%20Hours",
+      "verification_note_ar": "نشرت كلية الطب في 9 أكتوبر 2024 أن اللائحة الجديدة تم اعتمادها بعد تعديلات وأن الكلية تبدأ تطبيقها من شهر أكتوبر 2024. كما توجد صفحة رسمية مخصصة للائحة الساعات المعتمدة ومرفقاتها.",
+      "implementation_note": "Enrollment must store the regulation version that governed the student at the time of enrollment. Do not migrate historic students automatically to this regulation. Curriculum, courses, assessment, duration and degree requirements must be versioned data."
+    },
+    {
+      "id": "MED-PG-POINTS-PUBLISHED",
+      "name_ar": "لائحة الدراسات العليا بالنقاط المعتمدة",
+      "system": "POINTS",
+      "authority_type": "FACULTY_PUBLISHED_REGULATION_REFERENCE",
+      "authority_reference": null,
+      "authority_date": null,
+      "status": "PUBLISHED_REFERENCE_REQUIRES_EFFECTIVE_DATE_VERIFICATION",
+      "effective_from": null,
+      "effective_to": null,
+      "source": "https://www.aun.edu.eg/medicine/ar/department/postgraduates",
+      "verification_note_ar": "بوابة الدراسات العليا الحالية بكلية الطب تعرض رابطاً مستقلاً للائحة الدراسات العليا بالنقاط المعتمدة إلى جانب لائحة الساعات المعتمدة. لم يتم اعتماد تاريخ سريان من صفحة الفهرس وحدها.",
+      "implementation_note": "Keep this as a distinct RegulationVersion family. Do not activate for a student/program until the applicable effective period and source document are verified."
+    }
+  ],
+  "required_runtime_fields": [
+    "regulation_version_id",
+    "effective_from",
+    "effective_to",
+    "degree_level",
+    "program_id",
+    "approval_status",
+    "curriculum_version",
+    "admission_rule_set",
+    "degree_requirement_set"
+  ],
+  "migration_rule": "Historic enrollments retain the regulation version under which they were admitted. A later regulation does not overwrite prior enrollment history."
+}
