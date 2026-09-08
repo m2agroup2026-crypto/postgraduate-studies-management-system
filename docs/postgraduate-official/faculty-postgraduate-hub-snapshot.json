@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "verified_on": "2026-09-08",
+  "source": "https://www.aun.edu.eg/medicine/ar/department/postgraduates",
+  "source_last_modified": "2026-09-08",
+  "authority": "Faculty of Medicine, Assiut University",
+  "navigation_sections": [
+    "نظرة عامة على كلية الطب",
+    "الرضا الطلابى",
+    "لائحة الدراسات العليا بالساعات المعتمدة",
+    "لائحه الدراسات العليا بالنقاط المعتمده",
+    "الدبلومات المهنية",
+    "درجة الماجستير",
+    "درجة الدكتوراه",
+    "الجداول الدراسية لطلاب الدراسات العليا",
+    "استبيان طلاب الدراسات العليا",
+    "نظرة عامة على الأبحاث",
+    "المجلة العلمية"
+  ],
+  "related_operational_items_visible_on_faculty_pages": [
+    "إحصائية بأعداد طلاب الدراسات العليا",
+    "دليل الدراسات العليا",
+    "جداول امتحانات الدراسات العليا",
+    "دليل تعريفي للباحثين",
+    "نماذج وخطط البحث",
+    "نموذج تحديد موعد مناقشة رسالة علمية"
+  ],
+  "implementation_mapping": {
+    "regulations": "RegulationVersion + CurriculumVersion",
+    "professional_diplomas": "AcademicDegree(DIPLOMA) + Program",
+    "masters": "AcademicDegree(MASTER) + Program + AcademicEnrollment",
+    "doctorate": "AcademicDegree(PHD) + Program + AcademicEnrollment",
+    "study_schedules": "TeachingSchedule",
+    "exam_schedules": "ExamCycle + ExamSchedule",
+    "student_satisfaction": "SurveyDefinition + SurveyResponse",
+    "research": "ResearchProtocol + Thesis + PublicationRequirement",
+    "statistics": "Dashboard/reporting views computed from operational data",
+    "guides_and_forms": "VersionedDocument/Template registry"
+  },
+  "governance_note": "The site navigation is evidence of the operational domains that the platform should support, but labels and modules must remain configurable. Do not hard-code the faculty navigation as the universal platform structure."
+}
