@@ -8,6 +8,7 @@ import AIAssistant from "./features/assistant/AIAssistant";
 import Dashboard from "./features/dashboard/Dashboard";
 import DashboardSettings from "./features/settings/DashboardSettings";
 import StudentsModule from "./features/students/StudentsModule";
+import ThesesModule from "./features/theses/ThesesModule";
 import DashboardLayout from "./layouts/DashboardLayout";
 
 import "./styles.css";
@@ -133,6 +134,8 @@ function DashboardPage() {
     );
   } else if (activeSection === "students") {
     content = <StudentsModule api={api} language={lang} />;
+  } else if (activeSection === "theses") {
+    content = <ThesesModule api={api} language={lang} />;
   } else if (activeSection === "overview" || !activeNavigation) {
     content = <Dashboard data={data} language={lang} />;
   } else {

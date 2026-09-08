@@ -69,6 +69,10 @@ class ApprovalAction(models.Model):
         SUBMIT = "SUBMIT", "تقديم"
         REVIEW = "REVIEW", "مراجعة"
         APPROVE = "APPROVE", "اعتماد"
+        DIRECTOR_APPROVE = "DIRECTOR_APPROVE", "اعتماد مدير الدراسات العليا"
+        VICE_DEAN_APPROVE = "VICE_DEAN_APPROVE", "اعتماد وكيل الدراسات العليا"
+        DEAN_APPROVE = "DEAN_APPROVE", "اعتماد العميد"
+        FINAL_APPROVE = "FINAL_APPROVE", "الاعتماد النهائي"
         REJECT = "REJECT", "رفض"
         RETURN = "RETURN", "إعادة للتعديل"
 
@@ -80,7 +84,7 @@ class ApprovalAction(models.Model):
     performed_by = models.ForeignKey(
         "accounts.User",
         on_delete=models.PROTECT,
-        related_name="approval_actions"
+        related_name="approval_actions",
     )
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
