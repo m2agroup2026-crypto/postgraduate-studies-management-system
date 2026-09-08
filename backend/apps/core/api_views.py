@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.db.models import Count
+from apps.academics.models import AcademicDegree, Program
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -38,6 +39,7 @@ DASHBOARD_MANAGER_ROLES = {
     "VICE_DEAN",
     "VICE_DEAN_POSTGRADUATE",
     "POSTGRADUATE_DIRECTOR",
+    "PROGRAM_DIRECTOR",
 }
 
 
@@ -127,6 +129,25 @@ class DashboardView(APIView):
             .annotate(total=Count("id"))
             .order_by("-total")[:6]
         )
+
+        degrees = list(
+            AcademicDegree.objects.values(
+                "code",
+                "name_ar",
+                "level",
+            ).annotate(
+                programs_count=Count("programs")
+            )
+        )
+
+        programs = list(
+            Program.objects.values(
+                "code",
+                "name_ar",
+                "department__name_ar",
+                "degree__name_ar",
+            )
+        )
         return Response(
             {
                 "identity": identity,
@@ -142,6 +163,10 @@ class DashboardView(APIView):
                     "metrics": serialize_metrics(),
                 },
                 "departments": departments,
+                "academic_structure": {
+                    "degrees": degrees,
+                    "programs": programs,
+                },
                 "alerts": [
                     {
                         "level": "warning",
