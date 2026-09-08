@@ -95,4 +95,4 @@ This prevents a future regulation update, faculty rollout, or university rollout
 
 ## Reference-pack status
 
-The 2026-09-08 reference pack is considered **implementation-ready as a reviewed working baseline**, with two explicit caveats: (1) the current 24 professional-diploma total is newer than the fully enumerated historical catalog and therefore missing names must not be guessed; (2) any rule or fee that changes over time must remain versioned/configurable and be re-verified before production activation.
+The 2026-09-08 reference pack is considered **implementation-ready as a reviewed working baseline**, with two explicit caveats: (1) the current 24 professional-diploma total is newer than the fully enumerated historical catalog and therefore missing names must not be guessed; (2) any rule, fee, schedule or official appointment that changes over time must remain versioned/configurable and be re-verified before production activation.
