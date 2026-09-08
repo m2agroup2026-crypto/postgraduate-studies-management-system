@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import AIAssistant from "./features/assistant/AIAssistant";
 import Dashboard from "./features/dashboard/Dashboard";
 import DashboardSettings from "./features/settings/DashboardSettings";
+import StudentsModule from "./features/students/StudentsModule";
 import DashboardLayout from "./layouts/DashboardLayout";
 
 import "./styles.css";
@@ -130,6 +131,8 @@ function DashboardPage() {
         onSaved={refreshDashboard}
       />
     );
+  } else if (activeSection === "students") {
+    content = <StudentsModule api={api} language={lang} />;
   } else if (activeSection === "overview" || !activeNavigation) {
     content = <Dashboard data={data} language={lang} />;
   } else {

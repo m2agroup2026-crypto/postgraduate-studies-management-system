@@ -33,10 +33,22 @@ jobs:
         run: uv sync --group dev
       - name: Check migrations
         run: uv run python manage.py makemigrations --check --dry-run
-      - name: Lint changed backend modules
-        run: uv run ruff check apps/core/api_views.py apps/core/models.py apps/core/tests/test_dashboard_configuration.py
-      - name: Run dashboard configuration tests
-        run: uv run pytest apps/core/tests/test_dashboard_configuration.py -q
+      - name: Lint dashboard and students modules
+        run: >-
+          uv run ruff check
+          apps/core/api_views.py
+          apps/core/models.py
+          apps/core/tests/test_dashboard_configuration.py
+          apps/students/api_views.py
+          apps/students/api_urls.py
+          apps/students/tests/test_students_api.py
+          config/urls.py
+      - name: Run dashboard and students tests
+        run: >-
+          uv run pytest
+          apps/core/tests/test_dashboard_configuration.py
+          apps/students/tests/test_students_api.py
+          -q
 
   frontend:
     runs-on: ubuntu-latest
