@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "verified_on": "2026-09-08",
   "policy": {
     "primary_authorities": ["كلية الطب - جامعة أسيوط", "قطاع الدراسات العليا والبحوث - جامعة أسيوط"],
@@ -12,34 +12,19 @@
       "url": "https://www.aun.edu.eg/medicine/ar/department/postgraduates",
       "authority": "Faculty of Medicine, Assiut University",
       "source_type": "official_hub",
-      "scope": ["regulations", "professional_diplomas", "master", "doctorate", "schedules", "research"],
+      "scope": ["regulations", "professional_diplomas", "master", "doctorate", "schedules", "research", "surveys", "scientific_journal"],
+      "last_modified_visible": "2026-09-08",
       "priority": 1
     },
     {
-      "id": "faculty-postgraduate-overview",
-      "title_ar": "نظرة عامة على الدراسات العليا بكلية الطب",
-      "url": "https://aun.edu.eg/medicine/ar/postgrad/overview",
+      "id": "faculty-credit-hours-rollout-2024",
+      "title_ar": "الاجتماع الثاني للتعريف بلائحة الدراسات العليا الجديدة بالساعات المعتمدة",
+      "url": "https://www.aun.edu.eg/medicine/ar/alajtma-althany-lltryf-blayht-aldrasat-allya-aljdydt-llsadt-rwsa-wmnsqy-alaqsam",
       "authority": "Faculty of Medicine, Assiut University",
-      "source_type": "official_overview",
-      "scope": ["guide", "forms", "postgraduate_structure"],
-      "priority": 1
-    },
-    {
-      "id": "faculty-master-degree",
-      "title_ar": "درجة الماجستير - كلية الطب",
-      "url": "https://www.aun.edu.eg/medicine/ar/postgrad/master/degree",
-      "authority": "Faculty of Medicine, Assiut University",
-      "source_type": "official_degree_page",
-      "scope": ["master_admission", "master_duration", "master_exams", "master_program_specs"],
-      "priority": 1
-    },
-    {
-      "id": "faculty-doctorate-degree",
-      "title_ar": "درجة الدكتوراه - كلية الطب",
-      "url": "https://b.aun.edu.eg/medicine/postgrad/phd",
-      "authority": "Faculty of Medicine, Assiut University",
-      "source_type": "official_degree_page",
-      "scope": ["doctorate_admission", "doctorate_cycles", "qualifying_exam", "doctorate_duration"],
+      "source_type": "official_regulation_rollout_evidence",
+      "published_on": "2024-10-09",
+      "scope": ["credit_hours_regulation", "effective_date", "curriculum_descriptions", "assessment"],
+      "fact": "The Faculty states that the new postgraduate credit-hours regulation was approved after amendments and application begins in October 2024.",
       "priority": 1
     },
     {
@@ -52,9 +37,48 @@
       "priority": 1
     },
     {
+      "id": "faculty-postgraduate-overview",
+      "title_ar": "نظرة عامة على الدراسات العليا بكلية الطب",
+      "url": "https://aun.edu.eg/medicine/ar/postgrad/overview",
+      "authority": "Faculty of Medicine, Assiut University",
+      "source_type": "official_overview",
+      "scope": ["guide", "forms", "postgraduate_structure", "research_protocol", "defense_scheduling"],
+      "last_modified_visible": "2026-05-12",
+      "priority": 1
+    },
+    {
+      "id": "faculty-master-degree",
+      "title_ar": "درجة الماجستير - كلية الطب",
+      "url": "https://www.aun.edu.eg/medicine/ar/postgrad/master/degree",
+      "authority": "Faculty of Medicine, Assiut University",
+      "source_type": "official_degree_page",
+      "scope": ["master_admission", "master_duration", "master_exams", "master_program_specs"],
+      "last_modified_visible": "2025-02-12",
+      "priority": 1
+    },
+    {
+      "id": "faculty-doctorate-degree",
+      "title_ar": "درجة الدكتوراه - كلية الطب",
+      "url": "https://www.aun.edu.eg/medicine/index.php/ar/postgrad/phd",
+      "authority": "Faculty of Medicine, Assiut University",
+      "source_type": "official_degree_page",
+      "scope": ["doctorate_admission", "doctorate_cycles", "qualifying_exam", "doctorate_duration", "doctorate_forms", "doctorate_program_specs"],
+      "last_modified_visible": "2025-02-12",
+      "priority": 1
+    },
+    {
+      "id": "faculty-publication-rules",
+      "title_ar": "قرارات ولوائح - شروط النشر لمنح الماجستير والدكتوراه",
+      "url": "https://b.aun.edu.eg/medicine/ar/SDO/Resolutions_regulations",
+      "authority": "Faculty of Medicine, Assiut University",
+      "source_type": "official_faculty_decisions",
+      "scope": ["master_publication", "doctorate_publication", "predatory_journals", "shared_research_restriction", "supervisor_publication_followup"],
+      "priority": 1
+    },
+    {
       "id": "medicine-academic-program-catalog",
       "title_ar": "برامج الدراسات العليا لكلية الطب",
-      "url": "https://www.aun.edu.eg/post/ar/bramj-aldrasat-allya-lklyt-altb",
+      "url": "https://b.aun.edu.eg/post/ar/bramj-aldrasat-allya-lklyt-altb",
       "authority": "Postgraduate Studies & Research Sector, Assiut University",
       "source_type": "official_program_catalog",
       "scope": ["33_catalog_rows", "master_programs", "doctorate_programs", "professional_diplomas", "approval_notes"],
@@ -80,15 +104,6 @@
       "priority": 2
     },
     {
-      "id": "research-topic-registration",
-      "title_ar": "شروط تسجيل موضوع البحث بكليات الجامعة",
-      "url": "https://b.aun.edu.eg/post/ar/%D9%86%D8%B8%D8%A7%D9%85%20%D8%A7%D9%84%D9%82%D9%8A%D8%AF%D9%84%D9%84%D9%84%D8%AF%D8%B1%D8%A7%D8%B3%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D9%84%D9%8A%D8%A7/%D8%B4%D8%B1%D9%88%D8%B7%20%D8%AA%D8%B3%D8%AC%D9%8A%D9%84%20%D9%85%D9%88%D8%B6%D9%88%D8%B9%20%D8%A7%D9%84%D8%A8%D8%AD%D8%AB%20%D8%A8%D9%83%D9%84%D9%8A%D8%A7%D8%AA%20%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D8%A9",
-      "authority": "Postgraduate Studies & Research Sector, Assiut University",
-      "source_type": "official_decision_page",
-      "scope": ["digital_library", "global_databases", "egyptian_knowledge_bank"],
-      "priority": 2
-    },
-    {
       "id": "maximum-enrollment-duration",
       "title_ar": "الحد الأقصى للقيد لدرجة الماجستير والدكتوراة",
       "url": "https://aun.edu.eg/post/ar/node/27737",
@@ -108,25 +123,6 @@
       "priority": 2
     },
     {
-      "id": "thesis-supervision",
-      "title_ar": "الإشراف على الرسائل الجامعية",
-      "url": "https://www.aun.edu.eg/post/ar/%D8%A7%D9%84%D8%A5%D8%B4%D8%B1%D8%A7%D9%81%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D8%B1%D8%B3%D8%A7%D8%A6%D9%84%20%D8%A7%D9%84%D8%AC%D8%A7%D9%85%D8%B9%D9%8A%D8%A9/%D8%A7%D9%84%D8%B3%D9%84%D8%B7%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%AE%D9%88%D9%84%D8%A9%20%D8%A8%D8%AA%D8%B9%D9%8A%D9%8A%D9%86%20%D8%A7%D9%84%D9%85%D8%B4%D8%B1%D9%81%D9%8A%D9%86%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D8%B1%D8%B3%D8%A7%D8%A6%D9%84",
-      "authority": "Postgraduate Studies & Research Sector, Assiut University",
-      "source_type": "official_rule_page",
-      "scope": ["supervisor_appointment", "supervision_capacity"],
-      "priority": 2
-    },
-    {
-      "id": "thesis-judgment-committee",
-      "title_ar": "تشكيل لجان الحكم على الرسائل",
-      "url": "https://b.aun.edu.eg/post/ar/%D8%AA%D8%B4%D9%83%D9%8A%D9%84%20%D9%84%D8%AC%D8%A7%D9%86%20%D8%A7%D9%84%D8%AD%D9%83%D9%85%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D8%B1%D8%B3%D8%A7%D8%A6%D9%84/%D8%AA%D8%B4%D9%83%D9%8A%D9%84%20%D9%84%D8%AC%D8%A7%D9%86%20%D8%A7%D9%84%D8%AD%D9%83%D9%85%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D8%B1%D8%B3%D8%A7%D8%A6%D9%84",
-      "authority": "Postgraduate Studies & Research Sector, Assiut University",
-      "source_type": "official_law_and_rule_page",
-      "scope": ["committee_members", "external_examiner", "approval", "public_defense", "validity"],
-      "legal_reference": "Executive Regulations Article 104",
-      "priority": 2
-    },
-    {
       "id": "faculty-scientific-documentation",
       "title_ar": "مكتب التوثيق العلمي - شروط النشر",
       "url": "https://www.aun.edu.eg/medicine/ar/unit/scientific/documentation",
@@ -134,6 +130,16 @@
       "source_type": "official_faculty_unit_rules",
       "scope": ["master_publication", "doctorate_publication", "predatory_journals", "research_documentation"],
       "priority": 1
+    },
+    {
+      "id": "ai-course-2026",
+      "title_ar": "إضافة دورة الذكاء الاصطناعي كمتطلب للماجستير والدكتوراه بكلية الطب",
+      "url": "https://b.aun.edu.eg/main/ar/node/85022",
+      "authority": "Assiut University",
+      "source_type": "official_current_decision_announcement",
+      "scope": ["master_requirement", "doctorate_requirement"],
+      "effective_from_enrollment_cycle": "2026-04",
+      "priority": 2
     },
     {
       "id": "professional-diplomas-current-count-2026-09-08",
@@ -158,33 +164,12 @@
       "priority": 3
     },
     {
-      "id": "assisted-reproduction-first-cohort",
-      "title_ar": "تخريج الدفعة الأولى من الدبلومة المهنية في تقنيات الإخصاب المساعد",
-      "url": "https://aun.edu.eg/main/index.php/ar/jamt-asywt-thtfl-btkhryj-aldft-alawly-mn-aldblwmt-almhnyt-fy-tqnyat-alakhsab-almsad-bklyt-altb",
-      "authority": "Assiut University",
-      "source_type": "official_operational_evidence",
-      "scope": ["professional_diploma_operational_evidence"],
-      "published_on": "2025-10-07",
-      "priority": 3
-    },
-    {
-      "id": "spine-surgery-result-2026",
-      "title_ar": "اعتماد نتائج دبلومة جراحة العمود الفقري",
-      "url": "https://aun.edu.eg/medicine/ar/node/38922",
-      "authority": "Faculty of Medicine, Assiut University",
-      "source_type": "official_faculty_council_news",
-      "scope": ["professional_diploma_operational_evidence"],
-      "published_on": "2026-01-19",
-      "priority": 3
-    },
-    {
       "id": "clinical-nutrition-first-cohort",
       "title_ar": "تخريج الدفعة الأولى من الدبلومة المهنية في التغذية العلاجية",
       "url": "https://www.aun.edu.eg/medicine/ar/myd-klyt-altb-yshhd-alahtfal-btkhryj-aldft-alawly-mn-khryjy-aldblwmt-almhnyt-fy-altghdhyt-allajyt",
       "authority": "Faculty of Medicine, Assiut University",
-      "source_type": "official_operational_and_program_evidence",
-      "scope": ["professional_diploma", "duration", "eligibility", "approval_statement"],
-      "published_on": "2023-10-31",
+      "source_type": "official_program_operational_evidence",
+      "scope": ["professional_diploma_duration", "target_group", "approval_evidence"],
       "priority": 3
     }
   ]
