@@ -8,3 +8,9 @@
 .env
 branding-reference/
 mobile-legacy-reference/
+
+# Legacy migration data
+data/legacy/
+
+# Local migration tools output
+tools/__pycache__/
