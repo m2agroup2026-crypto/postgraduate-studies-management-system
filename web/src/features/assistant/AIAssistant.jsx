@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Bot } from "lucide-react";
+import { Bot, Sparkles, Send, X } from "lucide-react";
 
 export default function AIAssistant({ api }) {
   const [open, setOpen] = useState(false);
@@ -9,14 +9,20 @@ export default function AIAssistant({ api }) {
   const [messages, setMessages] = useState([
     {
       from: "bot",
-      text: "مرحبًا، أنا مساعد الدراسات العليا. كيف أساعدك اليوم؟",
+      text: "مرحبًا، أنا مساعد الدراسات العليا الذكي. كيف يمكنني مساعدتك؟",
     },
   ]);
 
-  const send = async () => {
-    if (!q.trim() || busy) return;
+  const quickActions = [
+    "اعرض ملخص النظام",
+    "ما الملفات التي تحتاج متابعة؟",
+    "حلل بيانات الطلاب",
+  ];
 
-    const current = q;
+  const send = async (value = q) => {
+    if (!value.trim() || busy) return;
+
+    const current = value;
     setQ("");
 
     setMessages((m) => [
@@ -51,24 +57,37 @@ export default function AIAssistant({ api }) {
   return (
     <>
       <button
-        className="assistantFab"
+        className="assistantFab premiumAI"
         onClick={() => setOpen(!open)}
+        aria-label="AI Assistant"
       >
-        <Bot />
+        {open ? <X size={24} /> : <Sparkles size={24} />}
       </button>
 
       {open && (
-        <div className="assistant">
+        <div className="assistant premiumAssistant">
           <header>
-            <Bot />
+            <div className="assistantIcon">
+              <Bot size={22} />
+            </div>
 
             <div>
-              <b>المساعد الذكي</b>
-              <small>
-                متصل ببياناتك المصرح بها
-              </small>
+              <b>AI Governance Assistant</b>
+              <small>متصل ببياناتك المصرح بها</small>
             </div>
           </header>
+
+          <div className="quickActions">
+            {quickActions.map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => send(item)}
+              >
+                {item}
+              </button>
+            ))}
+          </div>
 
           <div className="chat">
             {messages.map((message, index) => (
@@ -79,6 +98,12 @@ export default function AIAssistant({ api }) {
                 {message.text}
               </p>
             ))}
+
+            {busy && (
+              <p className="bot">
+                جاري التحليل...
+              </p>
+            )}
           </div>
 
           <footer>
@@ -92,10 +117,11 @@ export default function AIAssistant({ api }) {
             />
 
             <button
-              onClick={send}
+              onClick={() => send()}
               disabled={busy}
+              aria-label="send"
             >
-              {busy ? "..." : "إرسال"}
+              <Send size={17} />
             </button>
           </footer>
         </div>

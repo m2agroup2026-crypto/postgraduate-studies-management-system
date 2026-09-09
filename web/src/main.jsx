@@ -4,6 +4,7 @@ import { createRoot } from "react-dom/client";
 import { api, hasSession, login, logout } from "./api";
 
 import Header from "./components/Header";
+import logo from "./assets/logo.webp";
 import AIAssistant from "./features/assistant/AIAssistant";
 import CommitteesModule from "./features/committees/CommitteesModule";
 import Dashboard from "./features/dashboard/Dashboard";
@@ -41,7 +42,7 @@ function Login({ onSuccess }) {
   return (
     <main className="loginPage" dir="rtl">
       <form className="loginCard" onSubmit={submit}>
-        <div className="loginMark">PG</div>
+        <div className="loginLogo"><img src={logo} alt="Faculty of Medicine - Assiut University" /></div>
         <small>POSTGRADUATE STUDIES</small>
         <h1>تسجيل الدخول</h1>
         <p>منظومة إدارة الدراسات العليا – كلية الطب</p>

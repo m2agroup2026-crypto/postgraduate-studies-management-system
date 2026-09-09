@@ -9,6 +9,7 @@ class Command(BaseCommand):
 
         permissions = [
             ("users.manage", "إدارة المستخدمين"),
+            ("dashboard.manage", "إدارة إعدادات المنصة"),
 
             ("students.view", "عرض الطلاب"),
             ("students.create", "إضافة الطلاب"),
@@ -27,6 +28,14 @@ class Command(BaseCommand):
             ("committee.create", "إنشاء لجنة"),
             ("committee.approve", "اعتماد اللجنة"),
 
+            ("theses.view", "عرض الرسائل العلمية"),
+
+            ("committees.view", "عرض اللجان والمناقشات"),
+
+            ("committees.manage", "إدارة جدول اللجان والمناقشات"),
+
+            ("students.manage", "إدارة بيانات الطلاب"),
+
             ("reports.view", "عرض التقارير"),
             ("reports.export", "تصدير التقارير"),
         ]
@@ -44,6 +53,11 @@ class Command(BaseCommand):
             permission_map[code] = permission
 
         roles = {
+            "PLATFORM_ADMIN": {
+                "name_ar": "مدير المنصة",
+                "permissions": list(permission_map.keys()),
+            },
+
             "POSTGRADUATE_DIRECTOR": {
                 "name_ar": "مدير الدراسات العليا",
                 "permissions": list(permission_map.keys()),
@@ -75,8 +89,11 @@ class Command(BaseCommand):
             },
 
             "VICE_DEAN_POSTGRADUATE": {
-                "name_ar": "وكيل الدراسات العليا والبحوث",
+                "name_ar": "وكيل الكلية لشئون الدراسات العليا والبحوث",
                 "permissions": [
+                    "students.view",
+                    "theses.view",
+                    "committees.view",
                     "registration.approve",
                     "committee.approve",
                     "reports.view",
