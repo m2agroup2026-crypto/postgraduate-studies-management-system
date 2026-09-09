@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "apps.committees",
     "apps.documents",
     "apps.academic_history",
+    "apps.data_migration",
 ]
 
 MIDDLEWARE = [
