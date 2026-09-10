@@ -1,4 +1,5 @@
 import React from "react";
+import MetricCard from "../../components/ui/MetricCard";
 import {
   BookOpen,
   CalendarDays,
@@ -23,14 +24,15 @@ export default function MetricsCards({ metrics, config = [], definitions = {}, l
         const Icon = iconMap[card.icon] || GraduationCap;
         const label = ar ? card.label_ar : (card.label_en || card.label_ar);
         return (
-          <article key={card.key}>
-            <Icon />
-            <span>{label}</span>
-            <strong>{metrics?.[card.key] ?? 0}</strong>
-            <small title={definitions[card.key]}>
-              {ar ? "بيانات مباشرة" : "Live system data"}
-            </small>
-          </article>
+          <MetricCard
+            key={card.key}
+            icon={Icon}
+            label={label}
+            value={metrics?.[card.key] ?? 0}
+            description={
+              ar ? "بيانات مباشرة" : "Live system data"
+            }
+          />
         );
       })}
     </div>

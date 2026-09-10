@@ -1,10 +1,11 @@
 import React from "react";
+import Panel from "../../components/ui/Panel";
 
 export default function AlertsPanel({ alerts = [], language = "ar" }) {
   const ar = language === "ar";
 
   return (
-    <section className="panel alertsPanel alertsUnified">
+    <Panel className="alertsPanel alertsUnified">
       <div className="paneltitle">
         <h3>{ar ? "تنبيهات تتطلب إجراء" : "Actionable Alerts"}</h3>
       </div>
@@ -34,6 +35,6 @@ export default function AlertsPanel({ alerts = [], language = "ar" }) {
           </div>
         )}
       </div>
-    </section>
+    </Panel>
   );
 }
