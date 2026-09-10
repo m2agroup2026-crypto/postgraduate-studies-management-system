@@ -1,4 +1,5 @@
 import React from "react";
+import DepartmentDistributionCard from "../../components/ui/DepartmentDistributionCard";
 
 const ARABIC_RE = /[\u0600-\u06FF]/;
 
@@ -61,15 +62,12 @@ export default function DepartmentDistributionPanel({
           const width = `${Math.max((total / max) * 100, 8)}%`;
 
           return (
-            <div className="departmentRow" key={index}>
-              <span className="departmentLabel" title={label}>{label}</span>
-
-              <div className="departmentTrack">
-                <div className="departmentFill" style={{ width }} />
-              </div>
-
-              <strong>{total}</strong>
-            </div>
+            <DepartmentDistributionCard
+              key={index}
+              label={label}
+              total={total}
+              width={width}
+            />
           );
         })}
       </div>
