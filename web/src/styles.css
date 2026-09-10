@@ -907,3 +907,15 @@ body,
 
 }
 
+
+
+/* ===== Dashboard Section Layout Foundation ===== */
+
+.dashboardSection{
+    width:100%;
+}
+
+.dashboardSection + .dashboardSection{
+    margin-top:24px;
+}
+

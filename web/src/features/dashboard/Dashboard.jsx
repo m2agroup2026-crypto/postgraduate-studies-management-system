@@ -5,37 +5,52 @@ import MetricsCards from "./MetricsCards";
 import AcademicStructurePanel from "./AcademicStructurePanel";
 import RecentStudentFiles from "./RecentStudentFiles";
 import ExecutiveHero from "../../components/ui/ExecutiveHero";
+import DashboardSection from "../../components/ui/DashboardSection";
 
 export default function Dashboard({ data, language, onNavigate }) {
   return (
     <div className="executiveDashboard">
-      <ExecutiveHero
-        data={data}
-        language={language}
-      />
+      <DashboardSection className="executiveOverview">
+        <ExecutiveHero
+          data={data}
+          language={language}
+        />
 
-      <MetricsCards
-        metrics={data.metrics}
-        config={data.ui?.metrics}
-        definitions={data.metric_definitions}
-        language={language}
-      />
+        <MetricsCards
+          metrics={data.metrics}
+          config={data.ui?.metrics}
+          language={language}
+        />
+      </DashboardSection>
 
-      <AcademicStructurePanel
-        structure={data.academic_structure}
-        language={language}
-      />
+      <DashboardSection className="academicIntelligence">
+        <AcademicStructurePanel
+          structure={data.academic_structure}
+          language={language}
+        />
+      </DashboardSection>
 
-      <RecentStudentFiles
-        records={data.recent_students || []}
-        language={language}
-        onOpenAll={() => onNavigate?.("students")}
-      />
+      <DashboardSection className="studentRecords">
+        <RecentStudentFiles
+          records={data.recent_students || []}
+          language={language}
+          onOpenAll={() => onNavigate?.("students")}
+        />
+      </DashboardSection>
 
-      <div className="grid">
-        <DepartmentOverview departments={data.departments}  language={language} />
-        <AlertsPanel alerts={data.alerts}  language={language} />
-      </div>
+      <DashboardSection className="operationalOverview">
+        <div className="grid">
+          <DepartmentOverview
+            departments={data.departments}
+            language={language}
+          />
+
+          <AlertsPanel
+            alerts={data.alerts}
+            language={language}
+          />
+        </div>
+      </DashboardSection>
     </div>
   );
 }
