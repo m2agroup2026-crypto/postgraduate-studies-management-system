@@ -17,7 +17,7 @@ export default function Dashboard({ data, language, onNavigate }) {
         />
 
         <MetricsCards
-          metrics={data.metrics}
+          metrics={data.metrics || {}}
           config={data.ui?.metrics}
           language={language}
         />
@@ -25,7 +25,7 @@ export default function Dashboard({ data, language, onNavigate }) {
 
       <DashboardSection className="academicIntelligence">
         <AcademicStructurePanel
-          structure={data.academic_structure}
+          structure={data.academic_structure || {}}
           language={language}
         />
       </DashboardSection>
@@ -41,12 +41,12 @@ export default function Dashboard({ data, language, onNavigate }) {
       <DashboardSection className="operationalOverview">
         <div className="grid">
           <DepartmentOverview
-            departments={data.departments}
+            departments={data.departments || []}
             language={language}
           />
 
           <AlertsPanel
-            alerts={data.alerts}
+            alerts={data.alerts || []}
             language={language}
           />
         </div>
