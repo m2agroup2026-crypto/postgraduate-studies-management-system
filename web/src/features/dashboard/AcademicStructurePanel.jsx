@@ -5,6 +5,9 @@ import {
   Users,
   Layers,
 } from "lucide-react";
+import AcademicStatCard from "../../components/ui/AcademicStatCard";
+import AcademicDegreeCard from "../../components/ui/AcademicDegreeCard";
+import AcademicProgramCard from "../../components/ui/AcademicProgramCard";
 
 const ARABIC_RE = /[\u0600-\u06FF]/;
 
@@ -119,25 +122,25 @@ export default function AcademicStructurePanel({
 
   const stats = [
     {
-      icon: <Layers />,
+      icon: Layers,
       value: degrees.length,
       ar: "درجات أكاديمية",
       en: "Academic Degrees",
     },
     {
-      icon: <BookOpen />,
+      icon: BookOpen,
       value: programs.length,
       ar: "برامج أكاديمية",
       en: "Academic Programs",
     },
     {
-      icon: <GraduationCap />,
+      icon: GraduationCap,
       value: structure.theses || 0,
       ar: "رسائل علمية",
       en: "Theses",
     },
     {
-      icon: <Users />,
+      icon: Users,
       value: structure.students || 0,
       ar: "طلاب مسجلين",
       en: "Students",
@@ -152,11 +155,12 @@ export default function AcademicStructurePanel({
 
       <div className="academicStats">
         {stats.map((item, index) => (
-          <div className="academicStat" key={index}>
-            <div className="academicIcon">{item.icon}</div>
-            <strong>{item.value}</strong>
-            <span>{ar ? item.ar : item.en}</span>
-          </div>
+          <AcademicStatCard
+            key={index}
+            icon={item.icon}
+            value={item.value}
+            label={ar ? item.ar : item.en}
+          />
         ))}
       </div>
 
@@ -164,15 +168,12 @@ export default function AcademicStructurePanel({
 
       <div className="academicDegrees">
         {degrees.map((degree) => (
-          <div className="academicCard" key={degree.code}>
-            <strong title={ar ? degree.name_ar : pickText(degree.name_ar, degree.name_en)}>
-              {ar ? degree.name_ar : pickText(degree.name_ar, degree.name_en)}
-            </strong>
-
-            <span>
-              {degree.programs_count || 0} {ar ? "برامج" : "Programs"}
-            </span>
-          </div>
+          <AcademicDegreeCard
+            key={degree.code}
+            name={ar ? degree.name_ar : pickText(degree.name_ar, degree.name_en)}
+            programsCount={degree.programs_count || 0}
+            programsLabel={ar ? "برامج" : "Programs"}
+          />
         ))}
       </div>
 
@@ -193,19 +194,17 @@ export default function AcademicStructurePanel({
             : pickText(program.degree__name_ar, program.degree__name_en);
 
           return (
-            <article key={program.code} className="programCard">
-              <b title={programName}>{programName}</b>
-
-              <small title={program.code}>{program.code}</small>
-
-              <p title={ar ? `القسم: ${deptName}` : `Department: ${deptName}`}>
-                {ar ? `القسم: ${deptName}` : `Department: ${deptName}`}
-              </p>
-
-              <p title={ar ? `الدرجة: ${degreeName}` : `Degree: ${degreeName}`}>
-                {ar ? `الدرجة: ${degreeName}` : `Degree: ${degreeName}`}
-              </p>
-            </article>
+            <AcademicProgramCard
+              key={program.code}
+              name={programName}
+              code={program.code}
+              department={deptName}
+              degree={degreeName}
+              labels={{
+                department: ar ? "القسم" : "Department",
+                degree: ar ? "الدرجة" : "Degree",
+              }}
+            />
           );
         })}
       </div>
