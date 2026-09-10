@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { Bot, Sparkles, Send, X } from "lucide-react";
 
-export default function AIAssistant({ api, actions = [], onNavigate }) {
+export default function AIAssistant({ api, actions = [], onNavigate, language = "ar" }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const [busy, setBusy] = useState(false);
+  const ar = language === "ar";
 
   const [messages, setMessages] = useState([
     {
       from: "bot",
-      text: "مرحبًا، أنا مساعد الدراسات العليا الذكي. كيف يمكنني مساعدتك؟",
+      text: ar
+        ? "مرحبًا، أنا مساعد الذكاء الأكاديمي التنفيذي. يمكنني مساعدتك في متابعة بيانات الدراسات العليا واتخاذ القرار."
+        : "Welcome, I am the Executive Academic Intelligence Assistant. I can help you analyze postgraduate data and support decision making.",
     },
   ]);
 
@@ -75,8 +78,12 @@ export default function AIAssistant({ api, actions = [], onNavigate }) {
             </div>
 
             <div>
-              <b>AI Governance Assistant</b>
-              <small>متصل ببياناتك المصرح بها</small>
+              <b>
+                {ar ? "مساعد الذكاء الأكاديمي التنفيذي" : "Executive Academic Intelligence Assistant"}
+              </b>
+              <small>
+                {ar ? "متصل بالبيانات المصرح بها" : "Connected to authorized academic data"}
+              </small>
             </div>
           </header>
 
@@ -104,7 +111,7 @@ export default function AIAssistant({ api, actions = [], onNavigate }) {
 
             {busy && (
               <p className="bot">
-                جاري التحليل...
+                {ar ? "جاري التحليل..." : "Analyzing academic data..."}
               </p>
             )}
           </div>
@@ -116,7 +123,11 @@ export default function AIAssistant({ api, actions = [], onNavigate }) {
               onKeyDown={(e) =>
                 e.key === "Enter" && send()
               }
-              placeholder="اسأل عن الطلاب أو الرسائل..."
+              placeholder={
+              ar
+                ? "اسأل عن الطلاب أو الرسائل أو التقارير..."
+                : "Ask about students, theses, committees or reports..."
+            }
             />
 
             <button

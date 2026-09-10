@@ -17,7 +17,7 @@ export default function Header({
         </small>
 
         <h1>
-          مركز قيادة الدراسات العليا
+          {ar ? "مركز قيادة الدراسات العليا" : "Postgraduate Studies Command Center"}
         </h1>
       </div>
 
@@ -35,8 +35,12 @@ export default function Header({
         </button>
 
         <div className="profile">
-          <b>{user?.name}</b>
-          <small>{user?.title}</small>
+          <b>
+            {ar ? user?.name : "Prof. Dr. Mohamed Abdel Baset Khalaf"}
+          </b>
+          <small>
+            {ar ? user?.title : "Vice Dean for Postgraduate Studies and Research"}
+          </small>
         </div>
       </div>
     </header>

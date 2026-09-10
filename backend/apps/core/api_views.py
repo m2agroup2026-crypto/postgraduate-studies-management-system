@@ -13,6 +13,7 @@ from apps.students.models import Student
 from apps.theses.models import Thesis
 
 from .models import DashboardMetricCard, DashboardNavigationItem
+from .ai.executive_assistant import executive_brief, process_command
 
 ROLE_IDENTITIES = {
     "DEAN": {"name": "الأستاذ الدكتور علاء عطية", "title": "عميد كلية الطب"},
@@ -95,13 +96,13 @@ def dashboard_metrics(user):
     values = {
         "students": Student.objects.count(),
         "theses": Thesis.objects.count(),
-        "defenses": DefenseCommittee.objects.filter(defense_date__gte=today).count(),
+        "defenses": DefenseCommittee.objects.count(),
         "pending": pending["value"],
     }
     definitions = {
         "students": "عدد سجلات الطلاب في قاعدة البيانات",
         "theses": "عدد الرسائل العلمية المسجلة",
-        "defenses": "عدد المناقشات بتاريخ اليوم أو بعده",
+        "defenses": "إجمالي لجان ومناقشات الدراسات العليا المسجلة",
         "pending": pending["definition"],
     }
     return values, definitions, pending
@@ -235,12 +236,17 @@ class DashboardView(APIView):
         ).count()
 
         departments = list(
-            Student.objects.values("department__name_ar")
+            Student.objects.values("department__name_ar", "department__name_en")
             .annotate(total=Count("id"))
             .order_by("-total")[:6]
         )
         degrees = list(
-            AcademicDegree.objects.values("code", "name_ar", "level").annotate(
+            AcademicDegree.objects.values(
+                "code",
+                "name_ar",
+                "name_en",
+                "level",
+            ).annotate(
                 programs_count=Count("programs")
             )
         )
@@ -248,24 +254,31 @@ class DashboardView(APIView):
             Program.objects.values(
                 "code",
                 "name_ar",
+                "name_en",
                 "department__name_ar",
+                "department__name_en",
                 "degree__name_ar",
+                "degree__name_en",
             )
         )
 
         alerts = []
+
         if pending["value"]:
             alerts.append(
                 {
                     "level": "warning",
-                    "text": f"{pending['value']} طلبات تنتظر قرارك في المرحلة الحالية",
+                    "text_ar": f"{pending['value']} طلبات تنتظر قرارك في المرحلة الحالية",
+                    "text_en": f"{pending['value']} requests are waiting for your decision",
                 }
             )
+
         if upcoming_30_days:
             alerts.append(
                 {
                     "level": "info",
-                    "text": f"{upcoming_30_days} مناقشات مقررة خلال الثلاثين يومًا القادمة",
+                    "text_ar": f"{upcoming_30_days} مناقشات مقررة خلال الثلاثين يومًا القادمة",
+                    "text_en": f"{upcoming_30_days} defenses scheduled within the next 30 days",
                 }
             )
 
@@ -283,7 +296,7 @@ class DashboardView(APIView):
                 "assistant": {"quick_actions": assistant_actions(request.user, navigation)},
                 "recent_students": recent_student_records(request.user),
                 "departments": departments,
-                "academic_structure": {"degrees": degrees, "programs": programs},
+                "academic_structure": {"degrees": degrees, "programs": programs, "students": Student.objects.count(), "theses": Thesis.objects.count()},
                 "alerts": alerts,
             }
         )
@@ -371,45 +384,35 @@ class DashboardConfigurationView(APIView):
 
 
 class AssistantView(APIView):
+    def get(self, request):
+        brief = executive_brief(request.user)
+
+        return Response({
+            "assistant": "Academic Intelligence Assistant",
+            "brief": brief,
+            "source": "live_academic_data",
+        })
+
     def post(self, request):
         question = str(request.data.get("message", "")).strip()
-        if not question:
-            return Response({"error": "اكتب سؤالك أولًا"}, status=400)
 
-        normalized = question.lower()
-        if "طالب" in normalized or "student" in normalized:
-            if not has_permission(request.user, "students.view"):
-                return Response({"error": "غير مصرح لك بعرض بيانات الطلاب"}, status=403)
-            answer = f"إجمالي الطلاب المسجلين في النظام {Student.objects.count()}."
-        elif "مناقش" in normalized or "لجان" in normalized or "defense" in normalized:
-            if not has_permission(request.user, "committees.view"):
-                return Response({"error": "غير مصرح لك بعرض بيانات اللجان"}, status=403)
-            answer = (
-                "إجمالي المناقشات القادمة "
-                f"{DefenseCommittee.objects.filter(defense_date__gte=date.today()).count()}."
+        if not question:
+            return Response(
+                {"error": "اكتب سؤالك أولًا"},
+                status=400
             )
-        elif "رسائل" in normalized or "thes" in normalized:
-            if not has_permission(request.user, "theses.view"):
-                return Response({"error": "غير مصرح لك بعرض الرسائل العلمية"}, status=403)
-            answer = f"إجمالي الرسائل العلمية المسجلة {Thesis.objects.count()}."
-        elif "قرار" in normalized or "متابعة" in normalized or "pending" in normalized:
-            pending = pending_metric(request.user)
-            answer = f"{pending['label_ar']}: {pending['value']}."
-        else:
-            allowed = []
-            if has_permission(request.user, "students.view"):
-                allowed.append("الطلاب")
-            if has_permission(request.user, "theses.view"):
-                allowed.append("الرسائل العلمية")
-            if has_permission(request.user, "committees.view"):
-                allowed.append("اللجان والمناقشات")
-            answer = "يمكنني مساعدتك في " + " و".join(allowed) + "."
+
+        answer = process_command(
+            question,
+            request.user
+        )
 
         return Response(
             {
                 "answer": answer,
                 "role": request.user.role,
                 "requires_confirmation": False,
-                "source": "authorized_system_data",
+                "source": "executive_ai_engine",
             }
         )
+

@@ -19,8 +19,12 @@ export default function Dashboard({ data, language, onNavigate }) {
             <Landmark size={16} />
             {ar ? "مركز القيادة الأكاديمي التنفيذي" : "Executive academic command center"}
           </span>
-          <h2>{data.identity?.name}</h2>
-          <p>{data.identity?.title}</p>
+          <h2>
+            {ar ? data.identity?.name : "Prof. Dr. Mohamed Abdel Baset Khalaf"}
+          </h2>
+          <p>
+            {ar ? data.identity?.title : "Vice Dean for Postgraduate Studies and Research"}
+          </p>
           <div className="executiveTrust">
             <ShieldCheck size={17} />
             <span>{ar ? "بيانات مباشرة وفق صلاحيات الحساب" : "Live, permission-scoped data"}</span>
@@ -53,8 +57,8 @@ export default function Dashboard({ data, language, onNavigate }) {
       />
 
       <div className="grid">
-        <DepartmentOverview departments={data.departments} />
-        <AlertsPanel alerts={data.alerts} />
+        <DepartmentOverview departments={data.departments}  language={language} />
+        <AlertsPanel alerts={data.alerts}  language={language} />
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ import Dashboard from "./features/dashboard/Dashboard";
 import DashboardSettings from "./features/settings/DashboardSettings";
 import StudentsModule from "./features/students/StudentsModule";
 import ThesesModule from "./features/theses/ThesesModule";
+import ReportsModule from "./features/reports/ReportsModule";
 import DashboardLayout from "./layouts/DashboardLayout";
 
 import "./styles.css";
@@ -71,7 +72,7 @@ function Login({ onSuccess }) {
 function DashboardPage() {
   const [user, setUser] = useState(null);
   const [data, setData] = useState(null);
-  const [lang, setLang] = useState("ar");
+  const [lang, setLang] = useState("en");
   const [activeSection, setActiveSection] = useState("overview");
   const [error, setError] = useState("");
 
@@ -124,6 +125,8 @@ function DashboardPage() {
     content = <ThesesModule api={api} language={lang} />;
   } else if (activeSection === "committees") {
     content = <CommitteesModule api={api} language={lang} />;
+  } else if (activeSection === "reports") {
+    content = <ReportsModule api={api} language={lang} />;
   } else {
     content = <Dashboard data={data} language={lang} onNavigate={setActiveSection} />;
   }

@@ -33,9 +33,9 @@ export default function DashboardLayout({
         <div className="brand">
           <img src={logo} alt="Faculty of Medicine - Assiut University" />
           <div>
-            كلية الطب
-            <small>جامعة أسيوط</small>
-            <small>إدارة الدراسات العليا والبحوث</small>
+            {ar ? "كلية الطب" : "Faculty of Medicine"}
+            <small>{ar ? "جامعة أسيوط" : "Assiut University"}</small>
+            <small>{ar ? "إدارة الدراسات العليا والبحوث" : "Postgraduate Studies & Research"}</small>
           </div>
         </div>
 

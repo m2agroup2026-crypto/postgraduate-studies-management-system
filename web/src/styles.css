@@ -118,3 +118,849 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
+
+/* ===== Executive Dashboard Premium Refinement ===== */
+
+.executiveHero{
+  padding:30px 34px;
+  min-height:310px;
+}
+
+.executiveHero h2{
+  font-size:32px !important;
+  line-height:1.25;
+  letter-spacing:-0.5px;
+  max-width:620px;
+}
+
+.executiveHero p{
+  font-size:16px;
+  margin-top:12px;
+}
+
+.executiveEyebrow{
+  color:#d8bd7b;
+  text-transform:uppercase;
+}
+
+.decisionBrief{
+  background:linear-gradient(145deg,#ffffff18,#ffffff08);
+  border-color:#ffffff25;
+}
+
+.decisionBrief strong{
+  font-size:48px;
+  color:#ffffff;
+}
+
+.metrics article{
+  min-height:170px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  background:
+    linear-gradient(145deg,#ffffff,#f8fbfb);
+}
+
+.metrics article svg{
+  background:#e8f3f1;
+  color:#0f6b78;
+}
+
+.metrics strong{
+  font-size:38px;
+  font-weight:800;
+  letter-spacing:-1px;
+}
+
+.metrics span{
+  font-size:13px;
+}
+
+.assistantFab{
+  width:64px;
+  height:64px;
+  font-size:22px;
+  border:3px solid #ffffff;
+  box-shadow:
+    0 12px 30px #0003,
+    0 0 0 8px #cda64c20;
+}
+
+header h1{
+  font-size:26px;
+  font-weight:800;
+}
+
+.profile b{
+  font-size:16px;
+}
+
+.profile small{
+  font-size:12px;
+}
+
+nav button{
+  font-size:15px;
+}
+
+
+
+/* ===== Academic AI Assistant Premium ===== */
+
+.assistantFab{
+    width:68px;
+    height:68px;
+    border-radius:22px;
+    background:linear-gradient(145deg,#d8bd7b,#b8954f);
+    display:grid;
+    place-items:center;
+    font-weight:900;
+    font-size:24px;
+    transition:.25s ease;
+}
+
+.assistantFab:hover{
+    transform:translateY(-5px) scale(1.05);
+}
+
+.assistant{
+    width:390px;
+    border-radius:24px;
+    border:1px solid #dce5e8;
+    box-shadow:0 30px 80px #071a2c40;
+}
+
+.assistant>header{
+    padding:18px 20px;
+}
+
+.assistant>header::after{
+    content:"Academic AI Assistant";
+    margin-left:10px;
+    font-weight:800;
+    color:white;
+}
+
+.quickActions button{
+    background:#f7faf9;
+    border-color:#dce5e8;
+    font-size:12px;
+}
+
+.quickActions button:hover{
+    background:#0e5964;
+    color:white;
+}
+
+
+
+/* ===== AI Intelligence Interface Upgrade ===== */
+
+.assistant{
+    width:420px;
+    max-width:calc(100vw - 40px);
+    border-radius:26px;
+    overflow:hidden;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(20px);
+    border:1px solid #dce5e8;
+    box-shadow:
+      0 30px 90px rgba(7,26,44,.35);
+}
+
+
+/* RTL Arabic */
+[dir="rtl"] .assistant{
+    right:24px;
+    left:auto;
+}
+
+/* LTR English */
+[dir="ltr"] .assistant{
+    left:24px;
+    right:auto;
+}
+
+
+.assistant > header{
+    height:92px;
+    padding:18px 22px;
+    background:
+      linear-gradient(135deg,#071a2c,#0e5964);
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+
+.assistant > header .assistantIcon{
+    width:52px;
+    height:52px;
+    border-radius:18px;
+    background:
+      linear-gradient(145deg,#d8bd7b,#b8954f);
+}
+
+
+.assistant > header strong{
+    font-size:18px;
+    color:white;
+}
+
+
+.assistant > header small{
+    color:#b8dce0;
+    margin-top:4px;
+}
+
+
+/* online indicator */
+.assistant > header small::before{
+    content:"";
+    display:inline-block;
+    width:7px;
+    height:7px;
+    background:#39d98a;
+    border-radius:50%;
+    margin-inline-end:7px;
+}
+
+
+/* Welcome area */
+
+.chat{
+    height:330px;
+    background:
+    radial-gradient(circle at top,#eef7f7,#fff);
+    padding:24px;
+}
+
+
+.chat p{
+    background:#edf4f5;
+    border-radius:18px;
+    padding:18px;
+    line-height:1.8;
+    font-size:15px;
+}
+
+
+/* user message */
+
+.chat .user{
+    background:#0e5964;
+    color:white;
+}
+
+
+/* Quick actions */
+
+.quickActions{
+    padding:16px;
+    gap:10px;
+}
+
+
+.quickActions button{
+    border-radius:30px;
+    padding:10px 18px;
+    font-size:13px;
+    background:white;
+}
+
+
+.quickActions button:hover{
+    background:#0e5964;
+    color:white;
+}
+
+
+/* Input */
+
+.assistant footer{
+    padding:14px;
+    background:white;
+}
+
+
+.assistant input{
+    background:#f4f7f8;
+    border-radius:18px;
+    padding:14px 18px;
+}
+
+
+.assistant footer button{
+    border-radius:16px;
+}
+
+
+/* Floating AI Button */
+
+.assistantFab{
+    width:70px;
+    height:70px;
+    border-radius:24px;
+    background:
+    linear-gradient(145deg,#d8bd7b,#b8954f);
+    box-shadow:
+    0 20px 50px rgba(7,26,44,.35);
+}
+
+[dir="rtl"] .assistantFab{
+    right:24px;
+    left:auto;
+}
+
+[dir="ltr"] .assistantFab{
+    left:24px;
+    right:auto;
+}
+
+
+/* ===== Vice Dean Executive Hero Refinement ===== */
+
+.executiveHero{
+    min-height:240px !important;
+    padding:28px 34px !important;
+    border-radius:32px;
+}
+
+.executiveHero h2{
+    font-size:38px !important;
+    line-height:1.3;
+    max-width:700px;
+}
+
+.executiveHero p{
+    font-size:15px;
+    margin-top:8px;
+}
+
+.executiveHero .decisionBrief{
+    min-width:210px;
+    max-width:230px;
+    padding:22px !important;
+}
+
+.executiveHero .decisionBrief strong{
+    font-size:42px !important;
+}
+
+.metrics{
+    margin-top:24px;
+}
+
+.metrics article{
+    min-height:150px;
+    border-radius:24px;
+    padding:24px;
+}
+
+.metrics strong{
+    font-size:36px !important;
+}
+
+
+/* Executive spacing improvement */
+
+.dashboard main{
+    gap:20px;
+}
+
+
+/* ===== Final Executive Hero Size Correction ===== */
+
+.executiveHero{
+    min-height:190px !important;
+    height:190px !important;
+    padding:22px 30px !important;
+}
+
+.executiveHero h2{
+    font-size:30px !important;
+    line-height:1.35 !important;
+    max-width:520px !important;
+    margin:0 !important;
+}
+
+.executiveHero p{
+    font-size:14px !important;
+    margin-top:8px !important;
+}
+
+.executiveHero .decisionBrief{
+    width:180px !important;
+    min-width:180px !important;
+    height:140px !important;
+    padding:18px !important;
+}
+
+.executiveHero .decisionBrief strong{
+    font-size:36px !important;
+}
+
+.executiveHero .executiveEyebrow{
+    font-size:12px !important;
+}
+
+
+
+/* ===== Executive Academic Structure Premium ===== */
+
+
+.academicStructure{
+    border-radius:28px;
+    padding:28px;
+    background:
+      linear-gradient(145deg,#ffffff,#f7fafb);
+}
+
+
+/* Statistics */
+
+.academicStats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin:22px 0 30px;
+}
+
+
+.academicStat{
+    min-height:150px;
+    padding:22px;
+    border-radius:24px;
+    background:
+      linear-gradient(145deg,#ffffff,#f2f7f8);
+    border:1px solid #dce7ea;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:10px;
+    transition:.25s ease;
+}
+
+
+.academicStat:hover{
+    transform:translateY(-5px);
+    box-shadow:0 20px 40px rgba(7,26,44,.12);
+}
+
+
+.academicIcon{
+    width:44px;
+    height:44px;
+    display:grid;
+    place-items:center;
+    border-radius:16px;
+    background:#e8f3f1;
+    color:#0e5964;
+}
+
+
+.academicIcon svg{
+    width:22px;
+}
+
+
+.academicStat strong{
+    font-size:36px;
+    font-weight:900;
+    color:#071a2c;
+}
+
+
+.academicStat span{
+    font-size:13px;
+    color:#64748b;
+}
+
+
+/* Degree Cards */
+
+
+.academicDegrees{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-bottom:30px;
+}
+
+
+.academicCard{
+    padding:22px;
+    border-radius:22px;
+    background:
+      linear-gradient(135deg,#071a2c,#0e5964);
+    color:white;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+
+.academicCard strong{
+    font-size:20px;
+}
+
+
+.academicCard span{
+    color:#d8bd7b;
+    font-weight:700;
+}
+
+
+
+/* Programs */
+
+
+.programGrid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+
+.programCard{
+    padding:22px;
+    border-radius:22px;
+    border:1px solid #dce7ea;
+    background:white;
+    transition:.25s ease;
+}
+
+
+.programCard:hover{
+    box-shadow:0 18px 40px rgba(7,26,44,.10);
+    transform:translateY(-4px);
+}
+
+
+.programCard b{
+    display:block;
+    font-size:17px;
+    color:#071a2c;
+    margin-bottom:8px;
+}
+
+
+.programCard small{
+    color:#b8954f;
+    font-weight:800;
+}
+
+
+.programCard p{
+    margin:8px 0 0;
+    font-size:13px;
+    color:#64748b;
+}
+
+
+
+/* RTL */
+
+
+[dir="rtl"] .academicStructure{
+    text-align:right;
+}
+
+
+[dir="ltr"] .academicStructure{
+    text-align:left;
+}
+
+
+
+/* Mobile */
+
+@media(max-width:900px){
+
+    .academicStats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+
+    .academicDegrees{
+        grid-template-columns:1fr;
+    }
+
+
+    .programGrid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+
+
+
+/* ===== Academic Structure Compact Executive Layout ===== */
+
+.academicStats{
+    gap:14px;
+}
+
+.academicStat{
+    min-height:120px;
+    padding:18px;
+    border-radius:20px;
+}
+
+
+.academicStat strong{
+    font-size:30px;
+}
+
+
+.academicIcon{
+    width:38px;
+    height:38px;
+}
+
+
+.academicDegrees{
+    gap:14px;
+}
+
+
+.academicCard{
+    padding:16px;
+    border-radius:18px;
+    min-height:90px;
+}
+
+
+.academicCard strong{
+    font-size:17px;
+}
+
+
+.academicCard span{
+    font-size:13px;
+}
+
+
+.programGrid{
+    gap:14px;
+}
+
+
+.programCard{
+    padding:18px;
+    border-radius:18px;
+}
+
+
+
+
+/* ===== Alerts Compact Bilingual ===== */
+
+.alertsPanel p,
+.alertsPanel span,
+.alertText{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.alertsPanel{
+    min-height:110px;
+}
+
+
+
+/* ===== Final bilingual cleanup ===== */
+
+.programCard b,
+.programCard p,
+.programCard small,
+.departmentLabel,
+.alertsUnified .alertRow p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.departmentsPanel .departmentsList{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.departmentsPanel .departmentRow{
+    display:grid;
+    grid-template-columns:minmax(180px,260px) 1fr auto;
+    align-items:center;
+    gap:14px;
+}
+
+.departmentsPanel .departmentLabel{
+    font-weight:700;
+    color:#10263f;
+}
+
+.departmentsPanel .departmentTrack{
+    height:12px;
+    border-radius:999px;
+    background:#e8eff2;
+    overflow:hidden;
+}
+
+.departmentsPanel .departmentFill{
+    height:100%;
+    border-radius:999px;
+    background:#2f938b;
+}
+
+.departmentsPanel .departmentRow strong{
+    min-width:42px;
+    text-align:end;
+    color:#10263f;
+}
+
+.alertsUnified{
+    width:100%;
+}
+
+.alertsUnified .alertsList{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.alertsUnified .alertRow{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 16px;
+    border-radius:16px;
+    border:1px solid #dde6ea;
+    background:#ffffff;
+}
+
+.alertsUnified .alertDot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    flex:0 0 10px;
+    background:#0e5964;
+}
+
+.alertsUnified .alertRow.warning .alertDot{
+    background:#c79b3b;
+}
+
+.alertsUnified .alertRow.info .alertDot{
+    background:#0e5964;
+}
+
+.alertsUnified .alertRow.empty .alertDot{
+    background:#94a3b8;
+}
+
+.alertsUnified .alertRow p{
+    margin:0;
+    color:#10263f;
+}
+
+@media (max-width: 1100px){
+    .departmentsPanel .departmentRow{
+        grid-template-columns:1fr;
+        gap:10px;
+    }
+
+    .departmentsPanel .departmentRow strong{
+        text-align:start;
+    }
+}
+
+
+/* ===== Dashboard final layout cleanup ===== */
+
+html,
+body,
+#root{
+    overflow-x:hidden !important;
+}
+
+
+.dashboardGrid,
+.dashboard-content,
+.dashboardPanels{
+    overflow-x:hidden !important;
+}
+
+
+/* Remove horizontal overflow from panels */
+
+.panel{
+    max-width:100%;
+    overflow:hidden;
+}
+
+
+/* Departments + Alerts unified width */
+
+.departmentsPanel,
+.alertsPanel{
+    width:100%;
+}
+
+
+/* Make alerts compact inside card */
+
+.alertsUnified .alertsList{
+    min-height:auto;
+}
+
+
+.alertsUnified .alertRow{
+    width:100%;
+    box-sizing:border-box;
+}
+
+
+/* Remove huge empty alert height */
+
+.alertsPanel{
+    min-height:unset !important;
+    height:auto !important;
+}
+
+
+/* Department labels stay one line */
+
+.departmentLabel{
+    max-width:260px;
+}
+
+
+/* Fix long cards */
+
+.programCard,
+.academicCard{
+    min-width:0;
+}
+
+
+/* Dashboard grid correction */
+
+.dashboardGrid{
+    grid-template-columns:minmax(0,2fr) minmax(300px,1fr);
+    gap:22px;
+}
+
+
+/* Mobile */
+
+@media(max-width:1100px){
+
+.dashboardGrid{
+    grid-template-columns:1fr;
+}
+
+}
+
