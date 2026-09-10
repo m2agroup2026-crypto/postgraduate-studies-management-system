@@ -14,7 +14,7 @@ const iconMap = {
   GraduationCap,
 };
 
-export default function MetricsCards({ metrics, config = [], definitions = {}, language = "ar" }) {
+export default function MetricsCards({ metrics, config = [], language = "ar" }) {
   const cards = config;
   const ar = language === "ar";
 
