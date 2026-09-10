@@ -1,14 +1,15 @@
 import React from "react";
 import Panel from "../../components/ui/Panel";
+import SectionHeader from "../../components/ui/SectionHeader";
 
 export default function AlertsPanel({ alerts = [], language = "ar" }) {
   const ar = language === "ar";
 
   return (
     <Panel className="alertsPanel alertsUnified">
-      <div className="paneltitle">
-        <h3>{ar ? "تنبيهات تتطلب إجراء" : "Actionable Alerts"}</h3>
-      </div>
+      <SectionHeader
+        title={ar ? "تنبيهات تتطلب إجراء" : "Actionable Alerts"}
+      />
 
       <div className="alertsList">
         {alerts.length ? (

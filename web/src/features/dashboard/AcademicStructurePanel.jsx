@@ -8,6 +8,7 @@ import {
 import AcademicStatCard from "../../components/ui/AcademicStatCard";
 import AcademicDegreeCard from "../../components/ui/AcademicDegreeCard";
 import AcademicProgramCard from "../../components/ui/AcademicProgramCard";
+import SectionHeader from "../../components/ui/SectionHeader";
 
 const ARABIC_RE = /[\u0600-\u06FF]/;
 
@@ -149,9 +150,9 @@ export default function AcademicStructurePanel({
 
   return (
     <section className="panel academicStructure">
-      <div className="paneltitle">
-        <h3>{ar ? "الهيكل الأكاديمي" : "Academic Structure"}</h3>
-      </div>
+      <SectionHeader
+        title={ar ? "الهيكل الأكاديمي" : "Academic Structure"}
+      />
 
       <div className="academicStats">
         {stats.map((item, index) => (

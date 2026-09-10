@@ -1,5 +1,6 @@
 import React from "react";
 import DepartmentDistributionCard from "../../components/ui/DepartmentDistributionCard";
+import SectionHeader from "../../components/ui/SectionHeader";
 
 const ARABIC_RE = /[\u0600-\u06FF]/;
 
@@ -48,9 +49,9 @@ export default function DepartmentDistributionPanel({
 
   return (
     <section className="panel departmentsPanel">
-      <div className="paneltitle">
-        <h3>{ar ? "توزيع الطلاب على الأقسام" : "Student Distribution by Department"}</h3>
-      </div>
+      <SectionHeader
+        title={ar ? "توزيع الطلاب على الأقسام" : "Student Distribution by Department"}
+      />
 
       <div className="departmentsList">
         {departments.map((item, index) => {
