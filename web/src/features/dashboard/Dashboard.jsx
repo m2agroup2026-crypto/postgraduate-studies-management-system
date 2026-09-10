@@ -6,6 +6,9 @@ import AcademicStructurePanel from "./AcademicStructurePanel";
 import RecentStudentFiles from "./RecentStudentFiles";
 import ExecutiveHero from "../../components/ui/ExecutiveHero";
 import DashboardSection from "../../components/ui/DashboardSection";
+import SystemHealthPanel from "./intelligence/SystemHealthPanel";
+import AIInsightPanel from "./intelligence/AIInsightPanel";
+import WorkflowStatusPanel from "./intelligence/WorkflowStatusPanel";
 
 export default function Dashboard({ data, language, onNavigate }) {
   return (
@@ -20,6 +23,24 @@ export default function Dashboard({ data, language, onNavigate }) {
           metrics={data.metrics || {}}
           config={data.ui?.metrics}
           language={language}
+        />
+      </DashboardSection>
+
+      <DashboardSection className="commandIntelligence">
+        <div className="grid">
+          <SystemHealthPanel
+            language={language}
+          />
+
+          <AIInsightPanel
+            language={language}
+            insights={data.ai_insights || []}
+          />
+        </div>
+
+        <WorkflowStatusPanel
+          language={language}
+          workflow={data.workflow_status || []}
         />
       </DashboardSection>
 

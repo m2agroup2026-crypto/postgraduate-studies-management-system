@@ -5,16 +5,16 @@ import SectionHeader from "../../components/ui/SectionHeader";
 import StudentFileCard from "../../components/ui/StudentFileCard";
 
 const thesisLabels = {
-  REGISTERED: "مسجلة",
-  SUBMITTED: "مقدمة للمراجعة",
-  UNDER_REVIEW: "قيد المراجعة",
-  DIRECTOR_APPROVED: "بانتظار قرار الوكيل",
-  VICE_DEAN_APPROVED: "معتمدة من الوكيل",
-  DEAN_APPROVED: "معتمدة من العميد",
-  FINAL_APPROVED: "معتمدة نهائيًا",
-  RETURNED: "معادة للاستكمال",
-  REJECTED: "مرفوضة",
-  COMPLETED: "مكتملة",
+  REGISTERED: { ar: "مسجلة", en: "Registered" },
+  SUBMITTED: { ar: "مقدمة للمراجعة", en: "Submitted for review" },
+  UNDER_REVIEW: { ar: "قيد المراجعة", en: "Under review" },
+  DIRECTOR_APPROVED: { ar: "بانتظار قرار الوكيل", en: "Awaiting vice dean decision" },
+  VICE_DEAN_APPROVED: { ar: "معتمدة من الوكيل", en: "Approved by vice dean" },
+  DEAN_APPROVED: { ar: "معتمدة من العميد", en: "Approved by dean" },
+  FINAL_APPROVED: { ar: "معتمدة نهائيًا", en: "Final approved" },
+  RETURNED: { ar: "معادة للاستكمال", en: "Returned for completion" },
+  REJECTED: { ar: "مرفوضة", en: "Rejected" },
+  COMPLETED: { ar: "مكتملة", en: "Completed" },
 };
 
 export default function RecentStudentFiles({ records, language, onOpenAll }) {
@@ -42,8 +42,9 @@ export default function RecentStudentFiles({ records, language, onOpenAll }) {
             key={record.id}
             record={record}
             thesisStatus={
-              thesisLabels[record.thesis_status] ||
-              (ar ? "لا توجد رسالة مسجلة" : "No registered thesis")
+              thesisLabels[record.thesis_status]
+                ? thesisLabels[record.thesis_status][ar ? "ar" : "en"]
+                : (ar ? "لا توجد رسالة مسجلة" : "No registered thesis")
             }
             labels={{
               enrollments: ar ? "قيد أكاديمي" : "enrollments",

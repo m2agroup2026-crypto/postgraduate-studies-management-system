@@ -36,10 +36,10 @@ export default function Header({
 
         <div className="profile">
           <b>
-            {ar ? user?.name : "Prof. Dr. Mohamed Abdel Baset Khalaf"}
+            {user?.name}
           </b>
           <small>
-            {ar ? user?.title : "Vice Dean for Postgraduate Studies and Research"}
+            {user?.title}
           </small>
         </div>
       </div>
