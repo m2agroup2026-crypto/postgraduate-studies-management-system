@@ -1,4 +1,5 @@
 import React from "react";
+import Panel from "../../components/ui/Panel";
 import {
   GraduationCap,
   BookOpen,
@@ -149,7 +150,7 @@ export default function AcademicStructurePanel({
   ];
 
   return (
-    <section className="panel academicStructure">
+    <Panel className="academicStructure">
       <SectionHeader
         title={ar ? "الهيكل الأكاديمي" : "Academic Structure"}
       />
@@ -209,6 +210,6 @@ export default function AcademicStructurePanel({
           );
         })}
       </div>
-    </section>
+    </Panel>
   );
 }

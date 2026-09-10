@@ -1,4 +1,5 @@
 import React from "react";
+import Panel from "../../components/ui/Panel";
 import DepartmentDistributionCard from "../../components/ui/DepartmentDistributionCard";
 import SectionHeader from "../../components/ui/SectionHeader";
 
@@ -48,7 +49,7 @@ export default function DepartmentDistributionPanel({
   const max = Math.max(...departments.map((item) => Number(item.total) || 0), 1);
 
   return (
-    <section className="panel departmentsPanel">
+    <Panel className="departmentsPanel">
       <SectionHeader
         title={ar ? "توزيع الطلاب على الأقسام" : "Student Distribution by Department"}
       />
@@ -72,6 +73,6 @@ export default function DepartmentDistributionPanel({
           );
         })}
       </div>
-    </section>
+    </Panel>
   );
 }

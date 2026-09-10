@@ -1,4 +1,5 @@
 import React from "react";
+import Panel from "../../components/ui/Panel";
 import { ArrowLeft, FolderOpen } from "lucide-react";
 import SectionHeader from "../../components/ui/SectionHeader";
 import StudentFileCard from "../../components/ui/StudentFileCard";
@@ -22,7 +23,7 @@ export default function RecentStudentFiles({ records, language, onOpenAll }) {
   if (!records.length) return null;
 
   return (
-    <section className="panel studentFilesPanel" aria-labelledby="recent-student-files">
+    <Panel className="studentFilesPanel" aria-labelledby="recent-student-files">
       <SectionHeader
         icon={FolderOpen}
         eyebrow={ar ? "بيانات مباشرة" : "Live data"}
@@ -51,6 +52,6 @@ export default function RecentStudentFiles({ records, language, onOpenAll }) {
           />
         ))}
       </div>
-    </section>
+    </Panel>
   );
 }
