@@ -49,6 +49,7 @@ export default function DashboardLayout({
                 key={item.key}
                 onClick={() => onNavigate?.(item.key)}
                 type="button"
+                aria-current={activeSection === item.key ? "page" : undefined}
               >
                 <Icon size={18} />
                 <span>{label}</span>

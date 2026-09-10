@@ -19,7 +19,7 @@ import "./features/committees/committees.css";
 
 
 function Login({ onSuccess }) {
-  const [u, setU] = useState("director");
+  const [u, setU] = useState("vice_dean");
   const [p, setP] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -68,22 +68,6 @@ function Login({ onSuccess }) {
 }
 
 
-function SectionPlaceholder({ section, language }) {
-  const ar = language === "ar";
-  return (
-    <div className="panel sectionPlaceholder">
-      <small>{ar ? "وحدة مستقلة قابلة للتوسع" : "Modular workspace"}</small>
-      <h2>{section?.label_ar || section?.label_en || section?.key}</h2>
-      <p>
-        {ar
-          ? "تم تجهيز التنقل لهذه الوحدة، وسيتم ربط وظائفها وشاشاتها التشغيلية في مراحل التنفيذ التالية دون التأثير على لوحة القيادة الرئيسية."
-          : "Navigation is ready for this module. Its operational screens will be connected in the next implementation stages without affecting the main dashboard."}
-      </p>
-    </div>
-  );
-}
-
-
 function DashboardPage() {
   const [user, setUser] = useState(null);
   const [data, setData] = useState(null);
@@ -124,7 +108,6 @@ function DashboardPage() {
   }
 
   const navigation = data.ui?.navigation || [];
-  const activeNavigation = navigation.find((item) => item.key === activeSection);
 
   let content;
   if (activeSection === "settings" && user.can_manage_dashboard) {
@@ -141,10 +124,8 @@ function DashboardPage() {
     content = <ThesesModule api={api} language={lang} />;
   } else if (activeSection === "committees") {
     content = <CommitteesModule api={api} language={lang} />;
-  } else if (activeSection === "overview" || !activeNavigation) {
-    content = <Dashboard data={data} language={lang} />;
   } else {
-    content = <SectionPlaceholder section={activeNavigation} language={lang} />;
+    content = <Dashboard data={data} language={lang} onNavigate={setActiveSection} />;
   }
 
   return (
@@ -163,7 +144,11 @@ function DashboardPage() {
 
       {content}
 
-      <AIAssistant api={api} />
+      <AIAssistant
+        api={api}
+        actions={data.assistant?.quick_actions || []}
+        onNavigate={setActiveSection}
+      />
     </DashboardLayout>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Bot, Sparkles, Send, X } from "lucide-react";
 
-export default function AIAssistant({ api }) {
+export default function AIAssistant({ api, actions = [], onNavigate }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const [busy, setBusy] = useState(false);
@@ -12,12 +12,6 @@ export default function AIAssistant({ api }) {
       text: "مرحبًا، أنا مساعد الدراسات العليا الذكي. كيف يمكنني مساعدتك؟",
     },
   ]);
-
-  const quickActions = [
-    "اعرض ملخص النظام",
-    "ما الملفات التي تحتاج متابعة؟",
-    "حلل بيانات الطلاب",
-  ];
 
   const send = async (value = q) => {
     if (!value.trim() || busy) return;
@@ -54,6 +48,15 @@ export default function AIAssistant({ api }) {
     }
   };
 
+  const runQuickAction = (action) => {
+    if (action.type === "navigate") {
+      onNavigate?.(action.target);
+      setOpen(false);
+      return;
+    }
+    send(action.target);
+  };
+
   return (
     <>
       <button
@@ -78,13 +81,13 @@ export default function AIAssistant({ api }) {
           </header>
 
           <div className="quickActions">
-            {quickActions.map((item) => (
+            {actions.map((action) => (
               <button
-                key={item}
+                key={action.id}
                 type="button"
-                onClick={() => send(item)}
+                onClick={() => runQuickAction(action)}
               >
-                {item}
+                {action.label}
               </button>
             ))}
           </div>

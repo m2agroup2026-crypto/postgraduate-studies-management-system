@@ -4,55 +4,22 @@ from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.theses.models import Thesis
 from apps.committees.models import DefenseCommittee
-from .models import AcademicEnrollment, AcademicEnrollmentEvent, Student
+from apps.core.authorization import has_permission
+from apps.theses.models import Thesis
 
 from .models import Student
 
 VIEW_PERMISSION = "students.view"
 MANAGE_PERMISSION = "students.manage"
 
-LEGACY_VIEW_ROLES = {
-    "DEAN",
-    "VICE_DEAN",
-    "VICE_DEAN_POSTGRADUATE",
-    "VP_POSTGRADUATE_RESEARCH",
-    "POSTGRADUATE_DIRECTOR",
-    "PROGRAM_DIRECTOR",
-    "STAFF",
-    "REVIEWER",
-    "SUPERVISOR",
-}
-
-LEGACY_MANAGE_ROLES = {
-    "POSTGRADUATE_DIRECTOR",
-    "PROGRAM_DIRECTOR",
-    "STAFF",
-}
-
-
-def has_capability(user, permission_code, legacy_roles):
-    """Prefer database roles and fall back to the legacy enum during migration."""
-    if user.is_superuser or user.is_staff:
-        return True
-
-    active_roles = user.roles.filter(is_active=True)
-    if active_roles.exists():
-        return active_roles.filter(
-            permissions__code=permission_code,
-            permissions__is_active=True,
-        ).exists()
-
-    return user.role in legacy_roles
-
 
 def can_view_students(user):
-    return has_capability(user, VIEW_PERMISSION, LEGACY_VIEW_ROLES)
+    return has_permission(user, VIEW_PERMISSION)
 
 
 def can_manage_students(user):
-    return has_capability(user, MANAGE_PERMISSION, LEGACY_MANAGE_ROLES)
+    return has_permission(user, MANAGE_PERMISSION)
 
 
 def parse_positive_int(raw_value, default, maximum=None):
@@ -244,9 +211,7 @@ def serialize_academic_history(student):
                 "to_status": event.to_status,
                 "notes": event.notes,
                 "performed_by": (
-                    event.performed_by.get_full_name()
-                    if event.performed_by
-                    else None
+                    event.performed_by.get_full_name() if event.performed_by else None
                 ),
                 "created_at": event.created_at,
             }
@@ -258,9 +223,7 @@ def serialize_academic_history(student):
                 "program": enrollment.program.name_ar,
                 "degree": enrollment.program.degree.name_ar,
                 "academic_year": (
-                    enrollment.academic_year.name
-                    if enrollment.academic_year
-                    else None
+                    enrollment.academic_year.name if enrollment.academic_year else None
                 ),
                 "status": enrollment.status,
                 "enrollment_date": enrollment.enrollment_date,

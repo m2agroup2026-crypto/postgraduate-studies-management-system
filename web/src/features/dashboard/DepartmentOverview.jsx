@@ -1,6 +1,8 @@
 import React from "react";
 
 export default function DepartmentOverview({ departments = [] }) {
+  const maximum = Math.max(...departments.map((item) => item.total), 1);
+
   return (
     <article className="panel">
       <div className="paneltitle">
@@ -22,7 +24,7 @@ export default function DepartmentOverview({ departments = [] }) {
                 style={{
                   width: Math.min(
                     100,
-                    department.total * 10
+                    (department.total / maximum) * 100
                   ) + "%",
                 }}
               />

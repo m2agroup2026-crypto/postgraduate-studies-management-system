@@ -2,7 +2,7 @@ import pytest
 from rest_framework.test import APIClient
 
 from apps.accounts.models import User
-from apps.core.models import DashboardMetricCard, DashboardNavigationItem
+from apps.core.models import DashboardMetricCard, DashboardNavigationItem, Permission, Role
 
 
 @pytest.fixture
@@ -19,8 +19,29 @@ def create_test_user(username, role):
 
 @pytest.fixture
 def manager(db):
-    return create_test_user(
+    user = create_test_user(
         username="dashboard_manager",
+        role=User.Role.POSTGRADUATE_DIRECTOR,
+    )
+    permission = Permission.objects.create(
+        code="dashboard.manage",
+        name_ar="إدارة المنصة",
+        name_en="Manage platform",
+    )
+    role = Role.objects.create(
+        name="PLATFORM_ADMIN",
+        name_ar="مدير المنصة",
+        name_en="Platform administrator",
+    )
+    role.permissions.add(permission)
+    user.roles.add(role)
+    return user
+
+
+@pytest.fixture
+def academic_director(db):
+    return create_test_user(
+        username="academic_director",
         role=User.Role.POSTGRADUATE_DIRECTOR,
     )
 
@@ -36,6 +57,15 @@ def regular_user(db):
 @pytest.mark.django_db
 def test_regular_user_cannot_manage_dashboard_configuration(client, regular_user):
     client.force_authenticate(regular_user)
+
+    response = client.get("/api/v1/dashboard/configuration/")
+
+    assert response.status_code == 403
+
+
+@pytest.mark.django_db
+def test_academic_director_cannot_manage_platform_configuration(client, academic_director):
+    client.force_authenticate(academic_director)
 
     response = client.get("/api/v1/dashboard/configuration/")
 

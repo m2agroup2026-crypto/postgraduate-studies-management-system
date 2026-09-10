@@ -33,6 +33,7 @@ class DashboardNavigationItem(models.Model):
     route = models.CharField(max_length=180, default="/")
     icon = models.CharField(max_length=60, blank=True, default="LayoutDashboard")
     required_permission = models.CharField(max_length=100, blank=True)
+    is_operational = models.BooleanField(default=False)
     sort_order = models.PositiveSmallIntegerField(default=0)
     is_active = models.BooleanField(default=True)
 
@@ -109,4 +110,3 @@ class WorkflowStatus(models.Model):
 
     def __str__(self):
         return self.name_ar
-

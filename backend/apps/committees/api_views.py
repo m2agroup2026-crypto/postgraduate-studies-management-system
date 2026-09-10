@@ -6,6 +6,7 @@ from django.db.models import Q
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.core.authorization import has_permission
 from apps.theses.models import Thesis
 
 from .models import DefenseCommittee, DefenseScheduleEvent
@@ -13,51 +14,13 @@ from .models import DefenseCommittee, DefenseScheduleEvent
 VIEW_PERMISSION = "committees.view"
 MANAGE_PERMISSION = "committees.manage"
 
-LEGACY_VIEW_ROLES = {
-    "DEAN",
-    "VICE_DEAN",
-    "VICE_DEAN_POSTGRADUATE",
-    "VP_POSTGRADUATE_RESEARCH",
-    "POSTGRADUATE_DIRECTOR",
-    "PROGRAM_DIRECTOR",
-    "STAFF",
-    "REVIEWER",
-    "SUPERVISOR",
-}
-
-LEGACY_MANAGE_ROLES = {
-    "POSTGRADUATE_DIRECTOR",
-    "PROGRAM_DIRECTOR",
-    "STAFF",
-}
-
-
-def has_dynamic_permission(user, permission_codes):
-    active_roles = user.roles.filter(is_active=True)
-    if not active_roles.exists():
-        return None
-    return active_roles.filter(
-        permissions__code__in=permission_codes,
-        permissions__is_active=True,
-    ).exists()
-
 
 def can_view_committees(user):
-    if user.is_superuser or user.is_staff:
-        return True
-    dynamic = has_dynamic_permission(user, {VIEW_PERMISSION, MANAGE_PERMISSION})
-    if dynamic is not None:
-        return dynamic
-    return user.role in LEGACY_VIEW_ROLES
+    return has_permission(user, VIEW_PERMISSION)
 
 
 def can_manage_committees(user):
-    if user.is_superuser or user.is_staff:
-        return True
-    dynamic = has_dynamic_permission(user, {MANAGE_PERMISSION})
-    if dynamic is not None:
-        return dynamic
-    return user.role in LEGACY_MANAGE_ROLES
+    return has_permission(user, MANAGE_PERMISSION)
 
 
 def parse_positive_int(raw_value, default, maximum=None):

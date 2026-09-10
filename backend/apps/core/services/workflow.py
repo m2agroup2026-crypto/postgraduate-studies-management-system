@@ -1,5 +1,6 @@
 from django.db import transaction
 
+from apps.core.authorization import effective_roles
 from apps.core.models import ApprovalAction
 from apps.core.workflow.policy_checker import can_perform_action
 from apps.core.workflow.rules import WORKFLOW_TRANSITIONS
@@ -11,18 +12,8 @@ def get_next_status(current_status, action):
 
 
 def get_user_roles(user):
-    """Prefer active database roles; use the legacy enum only as a migration fallback."""
-    if hasattr(user, "roles"):
-        dynamic_roles = list(
-            user.roles.filter(is_active=True).values_list("name", flat=True)
-        )
-        if dynamic_roles:
-            return dynamic_roles
-
-    if getattr(user, "role", None):
-        return [user.role]
-
-    return []
+    """Return active database roles with the legacy field as fallback only."""
+    return list(effective_roles(user))
 
 
 @transaction.atomic
@@ -37,9 +28,7 @@ def transition(obj, action, user, notes=""):
         action,
         current_status=current_status,
     ):
-        raise PermissionError(
-            f"User is not allowed to perform {action} on {request_type}"
-        )
+        raise PermissionError(f"User is not allowed to perform {action} on {request_type}")
 
     next_status = get_next_status(current_status, action)
     if not next_status:

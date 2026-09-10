@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.committees.models import DefenseCommittee
+from apps.core.authorization import has_permission
 from apps.core.models import ApprovalAction
 from apps.core.services.workflow import get_user_roles, transition
 from apps.core.workflow.policy_checker import can_perform_action
@@ -14,31 +15,9 @@ from .models import Thesis
 
 VIEW_PERMISSION = "theses.view"
 
-LEGACY_VIEW_ROLES = {
-    "DEAN",
-    "VICE_DEAN",
-    "VICE_DEAN_POSTGRADUATE",
-    "VP_POSTGRADUATE_RESEARCH",
-    "POSTGRADUATE_DIRECTOR",
-    "PROGRAM_DIRECTOR",
-    "STAFF",
-    "REVIEWER",
-    "SUPERVISOR",
-}
-
 
 def can_view_theses(user):
-    if user.is_superuser or user.is_staff:
-        return True
-
-    active_roles = user.roles.filter(is_active=True)
-    if active_roles.exists():
-        return active_roles.filter(
-            permissions__code=VIEW_PERMISSION,
-            permissions__is_active=True,
-        ).exists()
-
-    return user.role in LEGACY_VIEW_ROLES
+    return has_permission(user, VIEW_PERMISSION)
 
 
 def parse_positive_int(raw_value, default, maximum=None):
