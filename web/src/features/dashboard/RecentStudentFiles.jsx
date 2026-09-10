@@ -1,5 +1,7 @@
 import React from "react";
-import { ArrowLeft, FolderOpen, GraduationCap } from "lucide-react";
+import { ArrowLeft, FolderOpen } from "lucide-react";
+import SectionHeader from "../../components/ui/SectionHeader";
+import StudentFileCard from "../../components/ui/StudentFileCard";
 
 const thesisLabels = {
   REGISTERED: "مسجلة",
@@ -21,31 +23,32 @@ export default function RecentStudentFiles({ records, language, onOpenAll }) {
 
   return (
     <section className="panel studentFilesPanel" aria-labelledby="recent-student-files">
-      <div className="paneltitle">
-        <div>
-          <span className="panelEyebrow"><FolderOpen size={15} /> بيانات مباشرة</span>
-          <h3 id="recent-student-files">{ar ? "أحدث ملفات الطلاب" : "Recent student records"}</h3>
-        </div>
-        <button type="button" onClick={onOpenAll}>
-          {ar ? "عرض كل الطلاب" : "View all students"}
-          <ArrowLeft size={16} aria-hidden="true" />
-        </button>
-      </div>
+      <SectionHeader
+        icon={FolderOpen}
+        eyebrow={ar ? "بيانات مباشرة" : "Live data"}
+        title={ar ? "أحدث ملفات الطلاب" : "Recent student records"}
+        action={
+          <button type="button" onClick={onOpenAll}>
+            {ar ? "عرض كل الطلاب" : "View all students"}
+            <ArrowLeft size={16} aria-hidden="true" />
+          </button>
+        }
+      />
 
       <div className="studentFilesTable" role="table" aria-label={ar ? "أحدث ملفات الطلاب" : "Recent student records"}>
         {records.map((record) => (
-          <article className="studentFileRow" role="row" key={record.id}>
-            <span className="studentFileIcon"><GraduationCap size={19} /></span>
-            <div className="studentFileIdentity">
-              <strong>{record.name_ar}</strong>
-              <small>
-                {record.university_id} · {record.enrollments_count} {ar ? "قيد أكاديمي" : "enrollments"}
-              </small>
-            </div>
-            <span>{record.department}</span>
-            <span>{thesisLabels[record.thesis_status] || (ar ? "لا توجد رسالة مسجلة" : "No registered thesis")}</span>
-            <span className="recordSource">{ar ? "من قاعدة البيانات" : "Database record"}</span>
-          </article>
+          <StudentFileCard
+            key={record.id}
+            record={record}
+            thesisStatus={
+              thesisLabels[record.thesis_status] ||
+              (ar ? "لا توجد رسالة مسجلة" : "No registered thesis")
+            }
+            labels={{
+              enrollments: ar ? "قيد أكاديمي" : "enrollments",
+              source: ar ? "من قاعدة البيانات" : "Database record",
+            }}
+          />
         ))}
       </div>
     </section>
