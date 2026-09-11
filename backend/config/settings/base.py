@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "apps.academics",
     "apps.students",
     "apps.theses",
+    "apps.supervision",
     "apps.committees",
     "apps.documents",
     "apps.academic_history",
