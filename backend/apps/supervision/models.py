@@ -39,3 +39,74 @@ class SupervisorProfile(models.Model):
 
     def __str__(self):
         return self.name_ar
+
+class ThesisSupervisorAssignment(models.Model):
+    class SupervisorRole(models.TextChoices):
+        PRIMARY_SUPERVISOR = "PRIMARY_SUPERVISOR", "مشرف رئيسي"
+        CO_SUPERVISOR = "CO_SUPERVISOR", "مشرف مشارك"
+        EXTERNAL_SUPERVISOR = "EXTERNAL_SUPERVISOR", "مشرف خارجي"
+        ASSISTANT_SUPERVISOR = "ASSISTANT_SUPERVISOR", "مشرف مساعد"
+
+    class AssignmentStatus(models.TextChoices):
+        PENDING_APPROVAL = "PENDING_APPROVAL", "بانتظار الاعتماد"
+        ACTIVE = "ACTIVE", "نشط"
+        ENDED = "ENDED", "منتهي"
+        REPLACED = "REPLACED", "تم الاستبدال"
+
+    thesis = models.ForeignKey(
+        "theses.Thesis",
+        on_delete=models.PROTECT,
+        related_name="supervisor_assignments",
+    )
+
+    supervisor = models.ForeignKey(
+        SupervisorProfile,
+        on_delete=models.PROTECT,
+        related_name="thesis_assignments",
+    )
+
+    role = models.CharField(
+        max_length=50,
+        choices=SupervisorRole.choices,
+    )
+
+    status = models.CharField(
+        max_length=50,
+        choices=AssignmentStatus.choices,
+        default=AssignmentStatus.PENDING_APPROVAL,
+    )
+
+    start_date = models.DateField(
+        null=True,
+        blank=True,
+    )
+
+    end_date = models.DateField(
+        null=True,
+        blank=True,
+    )
+
+    approved_by = models.ForeignKey(
+        "accounts.User",
+        on_delete=models.PROTECT,
+        related_name="approved_supervision_assignments",
+        null=True,
+        blank=True,
+    )
+
+    approved_at = models.DateTimeField(
+        null=True,
+        blank=True,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    def __str__(self):
+        return f"{self.thesis_id} - {self.supervisor}"
+
