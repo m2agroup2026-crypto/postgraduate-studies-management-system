@@ -3,6 +3,7 @@ import AlertsPanel from "./AlertsPanel";
 import DepartmentOverview from "./DepartmentOverview";
 import MetricsCards from "./MetricsCards";
 import AcademicStructurePanel from "./AcademicStructurePanel";
+import AcademicIntelligencePanel from "./AcademicIntelligencePanel";
 import RecentStudentFiles from "./RecentStudentFiles";
 import ExecutiveHero from "../../components/ui/ExecutiveHero";
 import DashboardSection from "../../components/ui/DashboardSection";
@@ -47,6 +48,11 @@ export default function Dashboard({ data, language, onNavigate }) {
       <DashboardSection className="academicIntelligence">
         <AcademicStructurePanel
           structure={data.academic_structure || {}}
+          language={language}
+        />
+
+        <AcademicIntelligencePanel
+          intelligence={data.academic_intelligence || {}}
           language={language}
         />
       </DashboardSection>

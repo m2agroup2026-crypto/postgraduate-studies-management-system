@@ -6,7 +6,7 @@ from django.db.models import Count
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from apps.academics.models import AcademicDegree, Program
+from apps.academics.models import AcademicDegree, Program, Department
 from apps.committees.models import DefenseCommittee
 from apps.core.authorization import effective_permissions, effective_roles, has_permission
 from apps.students.models import Student
@@ -106,6 +106,54 @@ def dashboard_metrics(user):
         "pending": pending["definition"],
     }
     return values, definitions, pending
+
+
+
+
+def workflow_status_data():
+    status_labels = {
+        "COMPLETED": "الرسائل المكتملة",
+        "REGISTERED": "الرسائل المسجلة",
+        "FINAL_APPROVED": "الاعتماد النهائي",
+        "APPROVED": "الرسائل المعتمدة",
+    }
+
+    queryset = (
+        Thesis.objects
+        .values("status")
+        .annotate(total=Count("id"))
+        .order_by("-total")
+    )
+
+    return [
+        {
+            "label": status_labels.get(
+                item["status"],
+                item["status"],
+            ),
+            "value": item["total"],
+        }
+        for item in queryset
+    ]
+
+
+def ai_insights_data():
+    students = Student.objects.count()
+    theses = Thesis.objects.count()
+    completed = Thesis.objects.filter(
+        status="COMPLETED"
+    ).count()
+
+    completion_rate = round(
+        (completed / theses) * 100,
+        1
+    ) if theses else 0
+
+    return [
+        f"المنصة تدير {students} ملف طالب أكاديمي",
+        f"إجمالي الرسائل العلمية المسجلة {theses}",
+        f"نسبة الرسائل المكتملة {completion_rate}%",
+    ]
 
 
 def recent_student_records(user, limit=6):
@@ -219,6 +267,76 @@ class MeView(APIView):
         )
 
 
+def academic_intelligence_data():
+    degree_distribution = (
+        AcademicDegree.objects
+        .values("level")
+        .annotate(
+            programs_count=Count("programs")
+        )
+        .order_by("-programs_count")
+    )
+
+    degree_labels = {
+        "MASTER": {
+            "ar": "الماجستير",
+            "en": "Master Degree",
+        },
+        "PHD": {
+            "ar": "الدكتوراه",
+            "en": "Doctorate Degree",
+        },
+        "DIPLOMA": {
+            "ar": "الدبلومات المهنية",
+            "en": "Professional Diploma",
+        },
+    }
+
+    degrees = []
+
+    for item in degree_distribution:
+        level = item["level"]
+        label = degree_labels.get(
+            level,
+            {
+                "ar": level,
+                "en": level,
+            },
+        )
+
+        degrees.append(
+            {
+                "level": level,
+                "name_ar": label["ar"],
+                "name_en": label["en"],
+                "programs_count": item["programs_count"],
+            }
+        )
+
+    top_departments = list(
+        Student.objects
+        .values(
+            "department__name_ar",
+            "department__name_en",
+        )
+        .annotate(
+            students_count=Count("id")
+        )
+        .order_by("-students_count")[:10]
+    )
+
+    return {
+        "summary": {
+            "departments": Department.objects.count(),
+            "programs": Program.objects.count(),
+            "students": Student.objects.count(),
+            "theses": Thesis.objects.count(),
+        },
+        "degrees_distribution": degrees,
+        "top_departments": top_departments,
+    }
+
+
 class DashboardView(APIView):
     def get(self, request):
         roles = effective_roles(request.user)
@@ -296,8 +414,11 @@ class DashboardView(APIView):
                 "assistant": {"quick_actions": assistant_actions(request.user, navigation)},
                 "recent_students": recent_student_records(request.user),
                 "departments": departments,
+                "academic_intelligence": academic_intelligence_data(),
                 "academic_structure": {"degrees": degrees, "programs": programs, "students": Student.objects.count(), "theses": Thesis.objects.count()},
                 "alerts": alerts,
+                "workflow_status": workflow_status_data(),
+                "ai_insights": ai_insights_data(),
             }
         )
 
