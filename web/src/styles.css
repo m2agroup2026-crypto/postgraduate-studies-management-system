@@ -1047,3 +1047,178 @@ body,
     }
 
 }
+
+
+/* ==============================
+   Research Analytics Command Panel
+   ============================== */
+
+.researchAnalyticsPanel {
+  position: relative;
+  overflow: hidden;
+}
+
+
+.researchAnalyticsPanel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(14,89,100,.08),
+      transparent 45%
+    );
+  pointer-events: none;
+}
+
+
+.analyticsMetrics {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 14px;
+  margin: 18px 0;
+}
+
+
+.analyticsMetrics > div {
+  background: rgba(255,255,255,.65);
+  border: 1px solid rgba(14,89,100,.12);
+  border-radius: 18px;
+  padding: 18px;
+  display: grid;
+  gap: 6px;
+  transition: transform .35s ease, box-shadow .35s ease;
+}
+
+
+.analyticsMetrics > div:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(7,61,70,.12);
+}
+
+
+.analyticsMetrics strong {
+  font-size: 34px;
+  color: #073d46;
+  font-weight: 900;
+}
+
+
+.analyticsMetrics span {
+  color: #60717e;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+
+.analyticsSection {
+  margin-top: 24px;
+}
+
+
+.analyticsSection h4 {
+  margin-bottom: 14px;
+  color: #073d46;
+}
+
+
+
+.pipelineRow {
+  display: grid;
+  grid-template-columns: 170px 1fr 60px;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+
+.pipelineRow span {
+  font-size: 13px;
+  color: #425862;
+  font-weight: 700;
+}
+
+
+.pipelineBar {
+  height: 10px;
+  background: #edf3f4;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+
+.pipelineBar div {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #0e5964,
+    #cda64c
+  );
+  border-radius: inherit;
+  animation: pipelineReveal 1.4s ease forwards;
+  transform-origin: left;
+}
+
+
+.pipelineRow strong {
+  color: #073d46;
+  text-align: end;
+}
+
+
+
+@keyframes pipelineReveal {
+
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+
+}
+
+
+
+.departmentRow {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 14px;
+  margin-bottom:8px;
+  background:#f8fbfb;
+  border-radius:12px;
+  border:1px solid #e5eeee;
+}
+
+
+.departmentRow span {
+  color:#324d58;
+  font-size:14px;
+}
+
+
+.departmentRow strong {
+  color:#0e5964;
+  font-size:18px;
+}
+
+
+
+@media(max-width:900px){
+
+  .analyticsMetrics {
+    grid-template-columns:1fr;
+  }
+
+
+  .pipelineRow {
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+
+}
+

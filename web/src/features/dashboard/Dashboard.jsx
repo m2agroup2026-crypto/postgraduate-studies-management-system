@@ -4,6 +4,8 @@ import DepartmentOverview from "./DepartmentOverview";
 import MetricsCards from "./MetricsCards";
 import AcademicStructurePanel from "./AcademicStructurePanel";
 import AcademicIntelligencePanel from "./AcademicIntelligencePanel";
+import DecisionCenterPanel from "./DecisionCenterPanel";
+import ResearchAnalyticsPanel from "./ResearchAnalyticsPanel";
 import RecentStudentFiles from "./RecentStudentFiles";
 import ExecutiveHero from "../../components/ui/ExecutiveHero";
 import DashboardSection from "../../components/ui/DashboardSection";
@@ -23,6 +25,11 @@ export default function Dashboard({ data, language, onNavigate }) {
         <MetricsCards
           metrics={data.metrics || {}}
           config={data.ui?.metrics}
+          language={language}
+        />
+
+        <DecisionCenterPanel
+          decisions={data.pending_decisions || []}
           language={language}
         />
       </DashboardSection>
@@ -53,6 +60,11 @@ export default function Dashboard({ data, language, onNavigate }) {
 
         <AcademicIntelligencePanel
           intelligence={data.academic_intelligence || {}}
+          language={language}
+        />
+
+        <ResearchAnalyticsPanel
+          analytics={data.research_analytics || {}}
           language={language}
         />
       </DashboardSection>

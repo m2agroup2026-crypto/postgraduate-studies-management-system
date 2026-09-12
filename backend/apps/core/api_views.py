@@ -137,6 +137,115 @@ def workflow_status_data():
     ]
 
 
+
+def pending_decisions_data(user):
+    roles = effective_roles(user)
+
+    target_status = None
+    status_label = None
+
+    for role in PENDING_STATUS_BY_ROLE:
+        if role in roles:
+            target_status, status_label = PENDING_STATUS_BY_ROLE[role]
+            break
+
+    if not target_status:
+        return []
+
+    theses = (
+        Thesis.objects
+        .filter(status=target_status)
+        .select_related(
+            "student",
+            "student__department",
+        )
+        .order_by("id")[:10]
+    )
+
+    return [
+        {
+            "id": thesis.id,
+            "title_ar": thesis.title_ar,
+            "student_name": thesis.student.name_ar,
+            "university_id": thesis.student.university_id,
+            "department": thesis.student.department.name_ar,
+            "status": thesis.status,
+            "status_ar": status_label,
+        }
+        for thesis in theses
+    ]
+
+
+
+def research_analytics_data():
+    thesis_pipeline = list(
+        Thesis.objects
+        .values("status")
+        .annotate(total=Count("id"))
+        .order_by("-total")
+    )
+
+    status_labels = {
+        "REGISTERED": {
+            "ar": "رسائل مسجلة",
+            "en": "Registered"
+        },
+        "DIRECTOR_APPROVED": {
+            "ar": "اعتماد مدير الدراسات العليا",
+            "en": "Director Approved"
+        },
+        "APPROVED": {
+            "ar": "رسائل معتمدة",
+            "en": "Approved"
+        },
+        "FINAL_APPROVED": {
+            "ar": "اعتماد نهائي",
+            "en": "Final Approved"
+        },
+        "COMPLETED": {
+            "ar": "مكتملة",
+            "en": "Completed"
+        },
+    }
+
+    workflow = []
+
+    for item in thesis_pipeline:
+        label = status_labels.get(
+            item["status"],
+            {
+                "ar": item["status"],
+                "en": item["status"]
+            }
+        )
+
+        workflow.append(
+            {
+                "status": item["status"],
+                "label_ar": label["ar"],
+                "label_en": label["en"],
+                "count": item["total"],
+            }
+        )
+
+    departments = list(
+        Student.objects
+        .values("department__name_ar")
+        .annotate(total=Count("id"))
+        .order_by("-total")[:10]
+    )
+
+    return {
+        "summary": {
+            "students": Student.objects.count(),
+            "theses": Thesis.objects.count(),
+            "defenses": DefenseCommittee.objects.count(),
+        },
+        "workflow": workflow,
+        "departments": departments,
+    }
+
+
 def ai_insights_data():
     students = Student.objects.count()
     theses = Thesis.objects.count()
@@ -358,16 +467,88 @@ class DashboardView(APIView):
             .annotate(total=Count("id"))
             .order_by("-total")[:6]
         )
-        degrees = list(
-            AcademicDegree.objects.values(
-                "code",
-                "name_ar",
-                "name_en",
-                "level",
-            ).annotate(
-                programs_count=Count("programs")
+        degree_distribution = (
+            Program.objects
+            .values("degree__level")
+            .annotate(
+                programs_count=Count("id")
             )
+            .order_by("degree__level")
         )
+
+        degree_labels = {
+            "MASTER": {
+                "name_ar": "الماجستير",
+                "name_en": "Master Degree",
+            },
+            "PHD": {
+                "name_ar": "الدكتوراه",
+                "name_en": "Doctorate Degree",
+            },
+            "DIPLOMA": {
+                "name_ar": "الدبلومات المهنية",
+                "name_en": "Professional Diploma",
+            },
+        }
+
+        merged_degrees = {}
+
+        for item in degree_distribution:
+            level = item["degree__level"]
+
+            if level not in merged_degrees:
+                merged_degrees[level] = {
+                    "code": level,
+                    "name_ar": degree_labels[level]["name_ar"],
+                    "name_en": degree_labels[level]["name_en"],
+                    "level": level,
+                    "programs_count": 0,
+                }
+
+            merged_degrees[level]["programs_count"] += item["programs_count"]
+
+        degree_distribution = (
+            Program.objects
+            .values("degree__level")
+            .annotate(
+                programs_count=Count("id")
+            )
+            .order_by("degree__level")
+        )
+
+        degree_labels = {
+            "MASTER": {
+                "name_ar": "الماجستير",
+                "name_en": "Master Degree",
+            },
+            "PHD": {
+                "name_ar": "الدكتوراه",
+                "name_en": "Doctorate Degree",
+            },
+            "DIPLOMA": {
+                "name_ar": "الدبلومات المهنية",
+                "name_en": "Professional Diploma",
+            },
+        }
+
+        merged_degrees = {}
+
+        for item in degree_distribution:
+            level = item["degree__level"]
+
+            if level not in merged_degrees:
+                merged_degrees[level] = {
+                    "code": level,
+                    "name_ar": degree_labels[level]["name_ar"],
+                    "name_en": degree_labels[level]["name_en"],
+                    "level": level,
+                    "programs_count": 0,
+                }
+
+            merged_degrees[level]["programs_count"] += item["programs_count"]
+
+        degrees = list(merged_degrees.values())
+
         programs = list(
             Program.objects.values(
                 "code",
@@ -415,6 +596,8 @@ class DashboardView(APIView):
                 "recent_students": recent_student_records(request.user),
                 "departments": departments,
                 "academic_intelligence": academic_intelligence_data(),
+                "research_analytics": research_analytics_data(),
+                "pending_decisions": pending_decisions_data(request.user),
                 "academic_structure": {"degrees": degrees, "programs": programs, "students": Student.objects.count(), "theses": Thesis.objects.count()},
                 "alerts": alerts,
                 "workflow_status": workflow_status_data(),

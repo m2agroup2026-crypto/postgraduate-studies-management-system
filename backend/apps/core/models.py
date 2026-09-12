@@ -110,3 +110,47 @@ class WorkflowStatus(models.Model):
 
     def __str__(self):
         return self.name_ar
+
+
+class PlatformConfiguration(models.Model):
+    key = models.CharField(
+        max_length=100,
+        unique=True,
+    )
+
+    label_ar = models.CharField(
+        max_length=150,
+    )
+
+    label_en = models.CharField(
+        max_length=150,
+        blank=True,
+    )
+
+    category = models.CharField(
+        max_length=50,
+        default="system",
+    )
+
+    is_enabled = models.BooleanField(
+        default=True,
+    )
+
+    description_ar = models.TextField(
+        blank=True,
+    )
+
+    description_en = models.TextField(
+        blank=True,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    class Meta:
+        ordering = ["category", "key"]
+
+    def __str__(self):
+        return self.label_ar
+

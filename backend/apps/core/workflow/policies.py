@@ -16,7 +16,7 @@ WORKFLOW_POLICIES = {
             "REVIEWER",
         ],
         "DIRECTOR_APPROVE": [
-            "POSTGRADUATE_DIRECTOR",
+            "PROGRAM_DIRECTOR",
         ],
         "VICE_DEAN_APPROVE": [
             "VICE_DEAN_POSTGRADUATE",
