@@ -14,3 +14,4 @@ data/legacy/
 
 # Local migration tools output
 tools/__pycache__/
+backend/data/imports/*
