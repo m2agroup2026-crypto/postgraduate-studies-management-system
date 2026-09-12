@@ -19,6 +19,25 @@ class DocumentType(models.Model):
 
 
 class AcademicDocument(models.Model):
+
+    class Status(models.TextChoices):
+        UPLOADED = "UPLOADED", "تم الرفع"
+        UNDER_REVIEW = "UNDER_REVIEW", "قيد المراجعة"
+        APPROVED = "APPROVED", "معتمد"
+        REJECTED = "REJECTED", "مرفوض"
+
+    class UploadSource(models.TextChoices):
+        STAFF = "STAFF", "موظف"
+        STUDENT = "STUDENT", "طالب"
+        MOBILE = "MOBILE", "تطبيق الهاتف"
+
+    student = models.ForeignKey(
+        "students.Student",
+        on_delete=models.PROTECT,
+        related_name="documents",
+        null=True,
+        blank=True,
+    )
     document_type = models.ForeignKey(
         DocumentType,
         on_delete=models.PROTECT,
@@ -38,6 +57,18 @@ class AcademicDocument(models.Model):
 
     is_confidential = models.BooleanField(
         default=False,
+    )
+
+    status = models.CharField(
+        max_length=30,
+        choices=Status.choices,
+        default=Status.UPLOADED,
+    )
+
+    upload_source = models.CharField(
+        max_length=30,
+        choices=UploadSource.choices,
+        default=UploadSource.STAFF,
     )
 
     reference_number = models.CharField(

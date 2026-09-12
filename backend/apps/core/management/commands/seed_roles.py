@@ -9,6 +9,9 @@ STANDARD_PERMISSIONS = {
     "roles.manage": "إدارة الأدوار",
     "permissions.manage": "إدارة الصلاحيات",
     "users.manage": "إدارة المستخدمين",
+    "configuration.manage": "إدارة إعدادات المنصة",
+    "features.manage": "إدارة خصائص وتشغيل وحدات المنصة",
+    "audit.view": "عرض سجل تغييرات المنصة",
     "students.view": "عرض الطلاب",
     "students.create": "إضافة الطلاب",
     "students.update": "تعديل بيانات الطلاب",
@@ -34,6 +37,9 @@ PLATFORM_PERMISSIONS = {
     "roles.manage",
     "permissions.manage",
     "users.manage",
+    "configuration.manage",
+    "features.manage",
+    "audit.view",
 }
 
 PROGRAM_PERMISSIONS = {

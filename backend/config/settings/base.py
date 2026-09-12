@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "apps.accounts",
     "apps.core",
+    "apps.platform_config",
     "apps.academics",
     "apps.students",
     "apps.theses",
