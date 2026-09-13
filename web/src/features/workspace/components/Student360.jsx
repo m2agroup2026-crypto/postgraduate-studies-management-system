@@ -1,3 +1,4 @@
+import { label } from "../../../i18n/labels";
 import React, { useEffect, useState } from "react";
 
 export default function Student360({
@@ -115,11 +116,11 @@ export default function Student360({
                 </strong>
 
                 <p>
-                  {item.degree}
+                  {label("degrees", item.degree, language)}
                 </p>
 
                 <small>
-                  {item.status}
+                  {label("statuses", item.status, language)}
                 </small>
               </div>
             ))
@@ -144,7 +145,7 @@ export default function Student360({
               </p>
 
               <small>
-                {student.thesis.status}
+                {label("statuses", student.thesis.status, language)}
               </small>
             </>
           ) : (
@@ -168,7 +169,7 @@ export default function Student360({
               </p>
 
               <small>
-                {data.defense_history.status}
+                {label("statuses", data.defense_history.status, language)}
               </small>
             </>
           ) : (

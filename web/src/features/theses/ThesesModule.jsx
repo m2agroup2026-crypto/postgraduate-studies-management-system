@@ -1,3 +1,4 @@
+import { label } from "../../i18n/labels";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   BookOpenCheck,
@@ -119,7 +120,7 @@ function ThesisDetail({ api, thesisId, language, onClose, onChanged }) {
               <BookOpenCheck size={17} />
               <span>{ar ? "الحالة الحالية" : "Current status"}</span>
               <strong>{textFor(STATUS_LABELS, thesis.status, language)}</strong>
-              <small>{thesis.status}</small>
+              
             </div>
             <div>
               <ShieldCheck size={17} />
@@ -135,7 +136,7 @@ function ThesisDetail({ api, thesisId, language, onClose, onChanged }) {
               <strong>
                 {thesis.defense?.defense_date || (ar ? "غير مجدولة" : "Not scheduled")}
               </strong>
-              <small>{thesis.defense?.status || "—"}</small>
+              <small>{thesis.defense?.status ? label("statuses", thesis.defense.status, language) : "—"}</small>
             </div>
           </div>
 
@@ -206,7 +207,7 @@ function ThesisDetail({ api, thesisId, language, onClose, onChanged }) {
                       {textFor(STATUS_LABELS, item.to_status, language)}
                     </p>
                     <small>
-                      {item.performed_by.name} · {item.performed_by.role}
+                      {item.performed_by.name} · {label("roles", item.performed_by.role, language)}
                     </small>
                     {item.notes && <blockquote>{item.notes}</blockquote>}
                   </div>

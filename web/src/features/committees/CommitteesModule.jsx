@@ -1,3 +1,4 @@
+import { label } from "../../i18n/labels";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   CalendarCheck,
@@ -109,8 +110,8 @@ function CommitteeDetail({ api, thesisId, language, onClose, onChanged }) {
           <div className="committeeDetailGrid">
             <div><span>{ar ? "الرقم الجامعي" : "University ID"}</span><strong>{record.student.university_id}</strong></div>
             <div><span>{ar ? "القسم" : "Department"}</span><strong>{ar ? record.department.name_ar : record.department.name_en || record.department.name_ar}</strong></div>
-            <div><span>{ar ? "حالة الرسالة" : "Thesis status"}</span><strong>{record.thesis.status}</strong></div>
-            <div><span>{ar ? "حالة المناقشة" : "Defense status"}</span><strong>{record.defense?.status || (ar ? "غير مجدولة" : "Not scheduled")}</strong></div>
+            <div><span>{ar ? "حالة الرسالة" : "Thesis status"}</span><strong>{label("statuses", record.thesis.status, language)}</strong></div>
+            <div><span>{ar ? "حالة المناقشة" : "Defense status"}</span><strong>{record.defense?.status ? label("statuses", record.defense.status, language) : (ar ? "غير مجدولة" : "Not scheduled")}</strong></div>
           </div>
 
           <div className="committeeScheduleCard">
