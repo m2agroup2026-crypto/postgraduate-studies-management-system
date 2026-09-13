@@ -13,6 +13,7 @@ import StudentsModule from "./features/students/StudentsModule";
 import ThesesModule from "./features/theses/ThesesModule";
 import ReportsModule from "./features/reports/ReportsModule";
 import DashboardLayout from "./layouts/DashboardLayout";
+import EmployeeWorkspace from "./features/workspace/EmployeeWorkspace";
 
 import "./styles.css";
 import "./auth.css";
@@ -108,10 +109,60 @@ function DashboardPage() {
     return <div className="loading" dir="rtl">جارٍ تحميل لوحة التحكم…</div>;
   }
 
+  const roles = new Set(user.roles || []);
+  const permissions = new Set(user.permissions || []);
+
+  const isPlatformAdmin =
+    user.can_manage_dashboard ||
+    roles.has("PLATFORM_ADMIN");
+
+  const leadershipRoles = [
+    "DEAN",
+    "VICE_DEAN",
+    "VICE_DEAN_POSTGRADUATE",
+    "VP_POSTGRADUATE_RESEARCH",
+    "PROGRAM_DIRECTOR",
+    "POSTGRADUATE_DIRECTOR",
+  ];
+
+  const operationalPermissions = [
+    "students.view",
+    "students.create",
+    "students.update",
+    "students.manage",
+    "theses.view",
+    "theses.create",
+    "theses.manage",
+    "committees.view",
+    "committees.manage",
+    "reports.view",
+  ];
+
+  const isAcademicLeader =
+    leadershipRoles.some(r => roles.has(r));
+
+  const hasOperationalAccess =
+    operationalPermissions.some(p => permissions.has(p));
+
+  const useEmployeeWorkspace =
+    hasOperationalAccess &&
+    !isPlatformAdmin &&
+    !isAcademicLeader;
+
   const navigation = data.ui?.navigation || [];
 
   let content;
-  if (activeSection === "settings" && user.can_manage_dashboard) {
+
+  if (useEmployeeWorkspace && activeSection === "overview") {
+    content = (
+      <EmployeeWorkspace
+        api={api}
+        language={lang}
+        data={data}
+        onNavigate={setActiveSection}
+      />
+    );
+  } else if (activeSection === "settings" && user.can_manage_dashboard) {
     content = (
       <DashboardSettings
         api={api}
