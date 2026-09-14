@@ -172,7 +172,7 @@ export default function AcademicStructurePanel({
         {degrees.map((degree) => (
           <AcademicDegreeCard
             key={degree.code}
-            name={ar ? degree.name_ar : pickText(degree.name_ar, degree.name_en)}
+            name={ar ? localized(degree, "name", language) : pickText(localized(degree, "name", language), degree.name_en)}
             programsCount={degree.programs_count || 0}
             programsLabel={ar ? "برامج" : "Programs"}
           />
@@ -184,16 +184,16 @@ export default function AcademicStructurePanel({
       <div className="programGrid">
         {programs.map((program) => {
           const programName = ar
-            ? program.name_ar
-            : pickText(program.name_ar, program.name_en);
+            ? localized(program, "name", language)
+            : pickText(localized(program, "name", language), program.name_en);
 
           const deptName = ar
-            ? program.department__name_ar
-            : pickText(program.department__name_ar, program.department__name_en);
+            ? localizedFlat(program, "department__name", language)
+            : pickText(localizedFlat(program, "department__name", language), program.department__name_en);
 
           const degreeName = ar
-            ? program.degree__name_ar
-            : pickText(program.degree__name_ar, program.degree__name_en);
+            ? localizedFlat(program, "degree__name", language)
+            : pickText(localizedFlat(program, "degree__name", language), program.degree__name_en);
 
           return (
             <AcademicProgramCard

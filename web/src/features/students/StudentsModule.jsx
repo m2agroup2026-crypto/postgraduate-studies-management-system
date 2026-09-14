@@ -1,3 +1,4 @@
+import { localized } from "../../i18n";
 import React, { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Search, ShieldCheck, UserRound, X } from "lucide-react";
 
@@ -35,7 +36,7 @@ function StudentDetail({ api, studentId, language, onClose }) {
       <div className="studentDetailHeader">
         <div>
           <small>{ar ? "الملف الأكاديمي" : "Academic record"}</small>
-          <h3>{data?.student?.name_ar || (ar ? "جارٍ تحميل الطالب…" : "Loading student…")}</h3>
+          <h3>{localized(data?.student, "name", language) || (ar ? "جارٍ تحميل الطالب…" : "Loading student…")}</h3>
         </div>
         <button className="iconButton" type="button" onClick={onClose} aria-label="close">
           <X size={18} />
@@ -47,9 +48,9 @@ function StudentDetail({ api, studentId, language, onClose }) {
         <>
           <div className="studentDetailGrid">
             <div><span>{ar ? "الرقم الجامعي" : "University ID"}</span><strong>{data.student.university_id}</strong></div>
-            <div><span>{ar ? "القسم" : "Department"}</span><strong>{ar ? data.student.department.name_ar : data.student.department.name_en || data.student.department.name_ar}</strong></div>
+            <div><span>{ar ? "القسم" : "Department"}</span><strong>{ar ? localized(data.student.department, "name", language) : data.student.department.name_en || localized(data.student.department, "name", language)}</strong></div>
             <div><span>{ar ? "الرقم القومي" : "National ID"}</span><strong>{data.student.national_id || data.student.national_id_masked || "—"}</strong></div>
-            <div><span>{ar ? "الكلية" : "Faculty"}</span><strong>{data.student.department.faculty ? (ar ? data.student.department.faculty.name_ar : data.student.department.faculty.name_en || data.student.department.faculty.name_ar) : "—"}</strong></div>
+            <div><span>{ar ? "الكلية" : "Faculty"}</span><strong>{data.student.department.faculty ? localized(data.student.department.faculty, "name", language) : "—"}</strong></div>
           </div>
 
           <div className="studentThesisCard">
@@ -59,7 +60,7 @@ function StudentDetail({ api, studentId, language, onClose }) {
             </div>
             {data.student.thesis ? (
               <>
-                <p>{data.student.thesis.title_ar}</p>
+                <p>{localized(data.student.thesis, "title", language)}</p>
                 <span className={`statusBadge status-${data.student.thesis.status.toLowerCase()}`}>
                   {statusLabel(data.student.thesis.status, language)}
                 </span>
@@ -152,7 +153,7 @@ export default function StudentsModule({ api, language }) {
             <option value="">{ar ? "كل الأقسام" : "All departments"}</option>
             {(data?.filters?.departments || []).map((item) => (
               <option key={item.department_id} value={item.department_id}>
-                {ar ? item.department__name_ar : item.department__name_en || item.department__name_ar}
+                {ar ? localizedFlat(item, "department__name", language) : item.department__name_en || localizedFlat(item, "department__name", language)}
               </option>
             ))}
           </select>
@@ -188,9 +189,9 @@ export default function StudentsModule({ api, language }) {
                 {(data?.results || []).map((student) => (
                   <tr key={student.id}>
                     <td><strong>{student.university_id}</strong></td>
-                    <td>{student.name_ar}</td>
-                    <td>{ar ? student.department.name_ar : student.department.name_en || student.department.name_ar}</td>
-                    <td className="thesisCell">{student.thesis?.title_ar || "—"}</td>
+                    <td>{localized(student, "name", language)}</td>
+                    <td>{ar ? localized(student.department, "name", language) : student.department.name_en || localized(student.department, "name", language)}</td>
+                    <td className="thesisCell">{localized(student.thesis, "title", language) || "—"}</td>
                     <td>
                       <span className={`statusBadge status-${(student.thesis?.status || "no-thesis").toLowerCase()}`}>
                         {statusLabel(student.thesis?.status || "NO_THESIS", language)}

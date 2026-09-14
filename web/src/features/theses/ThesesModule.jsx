@@ -1,3 +1,4 @@
+import { localized } from "../../i18n";
 import { label } from "../../i18n/labels";
 import React, { useEffect, useMemo, useState } from "react";
 import {
@@ -98,7 +99,7 @@ function ThesisDetail({ api, thesisId, language, onClose, onChanged }) {
       <div className="thesisDetailHeader">
         <div>
           <small>{ar ? "ملف الرسالة وسير الاعتماد" : "Thesis record and approval workflow"}</small>
-          <h3>{thesis?.title_ar || (ar ? "جارٍ تحميل الرسالة…" : "Loading thesis…")}</h3>
+          <h3>{localized(thesis, "title", language) || (ar ? "جارٍ تحميل الرسالة…" : "Loading thesis…")}</h3>
         </div>
         <button className="iconButton" type="button" onClick={onClose} aria-label="close">
           <X size={18} />
@@ -113,7 +114,7 @@ function ThesisDetail({ api, thesisId, language, onClose, onChanged }) {
             <div>
               <UserRound size={17} />
               <span>{ar ? "الطالب" : "Student"}</span>
-              <strong>{thesis.student.name_ar}</strong>
+              <strong>{localized(thesis.student, "name", language)}</strong>
               <small>{thesis.student.university_id}</small>
             </div>
             <div>
@@ -126,7 +127,7 @@ function ThesisDetail({ api, thesisId, language, onClose, onChanged }) {
               <ShieldCheck size={17} />
               <span>{ar ? "القسم" : "Department"}</span>
               <strong>
-                {ar ? thesis.department.name_ar : thesis.department.name_en || thesis.department.name_ar}
+                {ar ? localized(thesis.department, "name", language) : thesis.department.name_en || localized(thesis.department, "name", language)}
               </strong>
               <small>{thesis.department.code}</small>
             </div>
@@ -299,8 +300,8 @@ export default function ThesesModule({ api, language }) {
             {(data?.filters?.departments || []).map((item) => (
               <option key={item.student__department_id} value={item.student__department_id}>
                 {ar
-                  ? item.student__department__name_ar
-                  : item.student__department__name_en || item.student__department__name_ar}
+                  ? localizedFlat(item, "student__department__name", language)
+                  : item.student__department__name_en || localizedFlat(item, "student__department__name", language)}
               </option>
             ))}
           </select>
@@ -341,11 +342,11 @@ export default function ThesesModule({ api, language }) {
                 {(data?.results || []).map((thesis) => (
                   <tr key={thesis.id}>
                     <td>
-                      <strong>{thesis.student.name_ar}</strong>
+                      <strong>{localized(thesis.student, "name", language)}</strong>
                       <small>{thesis.student.university_id}</small>
                     </td>
-                    <td className="thesisTitleCell">{thesis.title_ar}</td>
-                    <td>{ar ? thesis.department.name_ar : thesis.department.name_en || thesis.department.name_ar}</td>
+                    <td className="thesisTitleCell">{localized(thesis, "title", language)}</td>
+                    <td>{ar ? localized(thesis.department, "name", language) : thesis.department.name_en || localized(thesis.department, "name", language)}</td>
                     <td>
                       <span className={`workflowStatus status-${thesis.status.toLowerCase()}`}>
                         {textFor(STATUS_LABELS, thesis.status, language)}

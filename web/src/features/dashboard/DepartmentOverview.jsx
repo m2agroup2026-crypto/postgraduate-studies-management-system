@@ -57,8 +57,8 @@ export default function DepartmentDistributionPanel({
       <div className="departmentsList">
         {departments.map((item, index) => {
           const label = ar
-            ? item.department__name_ar
-            : pick(item.department__name_ar, item.department__name_en);
+            ? localizedFlat(item, "department__name", language)
+            : pick(localizedFlat(item, "department__name", language), item.department__name_en);
 
           const total = Number(item.total) || 0;
           const width = `${Math.max((total / max) * 100, 8)}%`;

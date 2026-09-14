@@ -1,3 +1,4 @@
+import { localized } from "../../i18n";
 import React from "react";
 import Panel from "../../components/ui/Panel";
 
@@ -42,7 +43,7 @@ export default function DecisionCenterPanel({
           >
             <div>
               <strong>
-                {ar ? item.title_ar : item.title_en}
+                {localized(item, "title", language)}
               </strong>
 
               <small>

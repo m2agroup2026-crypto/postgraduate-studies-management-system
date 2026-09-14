@@ -90,7 +90,7 @@ export default function ResearchAnalyticsPanel({
         {departments.slice(0,5).map((item,index)=>(
           <div className="departmentRow" key={index}>
             <span>
-              {item.department__name_ar}
+              {localizedFlat(item, "department__name", language)}
             </span>
 
             <strong>

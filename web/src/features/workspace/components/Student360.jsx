@@ -1,3 +1,4 @@
+import { localized } from "../../../i18n";
 import { label } from "../../../i18n/labels";
 import React, { useEffect, useState } from "react";
 
@@ -71,7 +72,7 @@ export default function Student360({
         </small>
 
         <h2>
-          {student.name_ar}
+          {localized(student, "name", language)}
         </h2>
 
         <p>
@@ -88,7 +89,7 @@ export default function Student360({
           </h4>
 
           <p>
-            {student.name_ar}
+            {localized(student, "name", language)}
           </p>
 
           <p>
@@ -98,7 +99,7 @@ export default function Student360({
 
           <p>
             {ar ? "القسم: " : "Department: "}
-            {student.department?.name_ar}
+            {localized(student.department, "name", language)}
           </p>
         </article>
 
@@ -141,7 +142,7 @@ export default function Student360({
           {student.thesis ? (
             <>
               <p>
-                {student.thesis.title_ar}
+                {localized(student.thesis, "title", language)}
               </p>
 
               <small>

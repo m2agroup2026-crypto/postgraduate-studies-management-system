@@ -1,3 +1,4 @@
+import { localized } from "../../../i18n";
 import React, { useState } from "react";
 
 export default function UniversalSearch({
@@ -24,12 +25,12 @@ export default function UniversalSearch({
       setResults([
         ...(students.results || []).map((item) => ({
           type: ar ? "طالب" : "Student",
-          title: item.name_ar,
+          title: localized(item, "name", language),
           id: item.id,
         })),
         ...(theses.results || []).map((item) => ({
           type: ar ? "رسالة" : "Thesis",
-          title: item.title_ar,
+          title: localized(item, "title", language),
           id: item.id,
         })),
       ]);

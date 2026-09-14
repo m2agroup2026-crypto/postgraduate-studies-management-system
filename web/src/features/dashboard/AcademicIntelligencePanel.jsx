@@ -55,7 +55,7 @@ export default function AcademicIntelligencePanel({
         {degrees.map((item) => (
           <div key={item.level} className="intelligenceRow">
             <span>
-              {ar ? item.name_ar : item.name_en}
+              {ar ? localized(item, "name", language) : item.name_en}
             </span>
 
             <strong>
@@ -77,7 +77,7 @@ export default function AcademicIntelligencePanel({
           >
             <span>
               {ar
-                ? item.department__name_ar
+                ? localizedFlat(item, "department__name", language)
                 : item.department__name_en}
             </span>
 
