@@ -1,20 +1,8 @@
-import { localized } from "../../i18n";
 import React, { useEffect, useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight, Search, ShieldCheck, UserRound, X } from "lucide-react";
+import { displayValue, localized, localizedFlat, statusLabel } from "../../i18n";
 
 import "./students.css";
-
-const STATUS_LABELS = {
-  REGISTERED: { ar: "مسجلة", en: "Registered" },
-  COMPLETED: { ar: "مكتملة", en: "Completed" },
-  PENDING: { ar: "قيد المراجعة", en: "Pending" },
-  NO_THESIS: { ar: "بدون رسالة", en: "No thesis" },
-};
-
-function statusLabel(status, language) {
-  const labels = STATUS_LABELS[status];
-  return labels?.[language] || labels?.ar || status || "—";
-}
 
 function StudentDetail({ api, studentId, language, onClose }) {
   const [data, setData] = useState(null);
@@ -36,7 +24,7 @@ function StudentDetail({ api, studentId, language, onClose }) {
       <div className="studentDetailHeader">
         <div>
           <small>{ar ? "الملف الأكاديمي" : "Academic record"}</small>
-          <h3>{localized(data?.student, "name", language) || (ar ? "جارٍ تحميل الطالب…" : "Loading student…")}</h3>
+          <h3>{data?.student ? localized(data.student, "name", language) : (ar ? "جارٍ تحميل الطالب…" : "Loading student…")}</h3>
         </div>
         <button className="iconButton" type="button" onClick={onClose} aria-label="close">
           <X size={18} />
@@ -47,10 +35,10 @@ function StudentDetail({ api, studentId, language, onClose }) {
       {data && (
         <>
           <div className="studentDetailGrid">
-            <div><span>{ar ? "الرقم الجامعي" : "University ID"}</span><strong>{data.student.university_id}</strong></div>
-            <div><span>{ar ? "القسم" : "Department"}</span><strong>{ar ? localized(data.student.department, "name", language) : data.student.department.name_en || localized(data.student.department, "name", language)}</strong></div>
+            <div><span>{ar ? "الرقم الجامعي" : "University ID"}</span><strong>{displayValue(data.student.university_id)}</strong></div>
+            <div><span>{ar ? "القسم" : "Department"}</span><strong>{localized(data.student.department, "name", language)}</strong></div>
             <div><span>{ar ? "الرقم القومي" : "National ID"}</span><strong>{data.student.national_id || data.student.national_id_masked || "—"}</strong></div>
-            <div><span>{ar ? "الكلية" : "Faculty"}</span><strong>{data.student.department.faculty ? localized(data.student.department.faculty, "name", language) : "—"}</strong></div>
+            <div><span>{ar ? "الكلية" : "Faculty"}</span><strong>{localized(data.student.department.faculty, "name", language)}</strong></div>
           </div>
 
           <div className="studentThesisCard">
@@ -153,7 +141,7 @@ export default function StudentsModule({ api, language }) {
             <option value="">{ar ? "كل الأقسام" : "All departments"}</option>
             {(data?.filters?.departments || []).map((item) => (
               <option key={item.department_id} value={item.department_id}>
-                {ar ? localizedFlat(item, "department__name", language) : item.department__name_en || localizedFlat(item, "department__name", language)}
+                {localizedFlat(item, "department__name", language)}
               </option>
             ))}
           </select>
@@ -190,8 +178,8 @@ export default function StudentsModule({ api, language }) {
                   <tr key={student.id}>
                     <td><strong>{student.university_id}</strong></td>
                     <td>{localized(student, "name", language)}</td>
-                    <td>{ar ? localized(student.department, "name", language) : student.department.name_en || localized(student.department, "name", language)}</td>
-                    <td className="thesisCell">{localized(student.thesis, "title", language) || "—"}</td>
+                    <td>{localized(student.department, "name", language)}</td>
+                    <td className="thesisCell">{localized(student.thesis, "title", language)}</td>
                     <td>
                       <span className={`statusBadge status-${(student.thesis?.status || "no-thesis").toLowerCase()}`}>
                         {statusLabel(student.thesis?.status || "NO_THESIS", language)}

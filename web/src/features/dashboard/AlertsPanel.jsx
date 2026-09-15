@@ -1,6 +1,7 @@
 import React from "react";
 import Panel from "../../components/ui/Panel";
 import SectionHeader from "../../components/ui/SectionHeader";
+import { localized } from "../../i18n";
 
 export default function AlertsPanel({ alerts = [], language = "ar" }) {
   const ar = language === "ar";
@@ -14,9 +15,7 @@ export default function AlertsPanel({ alerts = [], language = "ar" }) {
       <div className="alertsList">
         {alerts.length ? (
           alerts.map((alert, index) => {
-            const text = ar
-              ? alert.text_ar || alert.text || ""
-              : alert.text_en || alert.text || alert.text_ar || "";
+            const text = localized(alert, "text", language);
 
             return (
               <div

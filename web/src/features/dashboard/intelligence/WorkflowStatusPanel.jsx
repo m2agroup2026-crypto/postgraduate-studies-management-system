@@ -1,5 +1,7 @@
 import React from "react";
 import Panel from "../../../components/ui/Panel";
+import AcademicBarChart from "../charts/AcademicBarChart";
+import { localized } from "../../../i18n";
 
 export default function WorkflowStatusPanel({
   language,
@@ -21,32 +23,13 @@ export default function WorkflowStatusPanel({
         </span>
       </div>
 
-      <div className="workflowList">
-        {workflow.length > 0 ? (
-          workflow.map((item, index) => (
-            <div
-              key={index}
-              className="workflowItem"
-            >
-              <strong>
-                {item.label}
-              </strong>
-
-              <span>
-                {item.value}
-              </span>
-            </div>
-          ))
-        ) : (
-          <div className="workflowItem">
-            <strong>
-              {ar
-                ? "لا توجد بيانات تشغيلية حالياً"
-                : "No operational data available"}
-            </strong>
-          </div>
-        )}
-      </div>
+      <AcademicBarChart
+        data={workflow}
+        language={language}
+        labelFor={(item) => localized(item, "label", language)}
+        valueFor={(item) => item.count}
+        emptyLabel={ar ? "لا توجد بيانات تشغيلية حاليًا" : "No operational data available"}
+      />
     </Panel>
   );
 }

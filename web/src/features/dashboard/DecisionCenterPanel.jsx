@@ -8,17 +8,6 @@ export default function DecisionCenterPanel({
 }) {
   const ar = language === "ar";
 
-  const items = decisions.length
-    ? decisions
-    : [
-        {
-          title_ar: "لا توجد طلبات تحتاج قرار حاليًا",
-          title_en: "No pending decisions currently",
-          status_ar: "النظام يعمل بكفاءة",
-          status_en: "System operating normally",
-        },
-      ];
-
   return (
     <Panel className="decisionCenterPanel">
       <div className="paneltitle">
@@ -36,7 +25,7 @@ export default function DecisionCenterPanel({
       </div>
 
       <div className="decisionList">
-        {items.map((item, index) => (
+        {decisions.length ? decisions.map((item, index) => (
           <div
             key={index}
             className="decisionItem"
@@ -47,11 +36,18 @@ export default function DecisionCenterPanel({
               </strong>
 
               <small>
-                {ar ? item.status_ar : item.status_en}
+                {localized(item, "status", language)}
               </small>
             </div>
           </div>
-        ))}
+        )) : (
+          <div className="decisionItem">
+            <div>
+              <strong>{ar ? "لا توجد طلبات تحتاج قرار حاليًا" : "No pending decisions currently"}</strong>
+              <small>{ar ? "النظام يعمل بكفاءة" : "System operating normally"}</small>
+            </div>
+          </div>
+        )}
       </div>
     </Panel>
   );

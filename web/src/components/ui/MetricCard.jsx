@@ -1,10 +1,12 @@
 import React from "react";
+import AnimatedNumber from "./AnimatedNumber";
 
 export default function MetricCard({
   icon: Icon,
   label,
   value,
   description,
+  language = "ar",
 }) {
   return (
     <article className="metricCard">
@@ -16,7 +18,7 @@ export default function MetricCard({
 
       <span>{label}</span>
 
-      <strong>{value}</strong>
+      <strong><AnimatedNumber value={value} language={language} /></strong>
 
       <small>
         {description}

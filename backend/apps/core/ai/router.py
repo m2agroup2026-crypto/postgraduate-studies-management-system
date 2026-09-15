@@ -1,33 +1,62 @@
-def detect_intent(question):
+"""Deterministic bilingual intent routing for academic intelligence."""
 
-    text = question.lower()
-
-    academic_words = [
-        "student",
-        "students",
-        "طالب",
-        "طلاب",
-        "thesis",
-        "رسالة",
-        "committee",
-        "لجنة",
-        "defense",
-        "مناقشة",
+INTENT_RULES = (
+    (
+        "analytics",
+        (
+            "academic kpi",
+            "executive summary",
+            "department statistics",
+            "statistics",
+            "kpi",
+            "ملخص تنفيذي",
+            "مؤشرات",
+            "إحصائيات الأقسام",
+            "احصائيات الأقسام",
+            "تحليلات",
+        ),
+    ),
+    (
         "workflow",
-        "approval",
-        "موافقة",
-    ]
+        (
+            "pending approval",
+            "pending approvals",
+            "waiting review",
+            "workflow",
+            "bottleneck",
+            "approval",
+            "اعتماد",
+            "موافقة",
+            "مراجعة",
+            "اختناق",
+            "قراري",
+            "قرار",
+        ),
+    ),
+    (
+        "committees",
+        ("committee", "committees", "defense", "defenses", "لجنة", "لجان", "مناقشة", "مناقشات"),
+    ),
+    ("theses", ("thesis", "theses", "رسالة", "رسائل", "أطروحة", "اطروحة")),
+    ("students", ("student", "students", "طالب", "طلاب", "university id", "رقم جامعي")),
+)
 
-    if any(word in text for word in academic_words):
-        return "academic"
 
+def detect_intent(question):
+    text = (question or "").casefold()
+    for intent, keywords in INTENT_RULES:
+        if any(keyword in text for keyword in keywords):
+            return intent
     return "general"
 
 
-def general_ai_answer(question):
-
+def general_ai_answer(question, language="en"):
+    if language == "ar":
+        return (
+            "يمكنني تحليل الطلاب والرسائل واللجان والمناقشات ومسارات الاعتماد "
+            "والمؤشرات الأكاديمية وفق صلاحيات حسابك."
+        )
     return (
-        "AI General Knowledge Mode\n\n"
-        f"Your question: {question}\n\n"
-        "The AI knowledge engine will answer medical, academic, and general questions here."
+        "I can analyze students, theses, committees, defenses, approval workflows, "
+        "and academic KPIs within your account permissions."
     )

@@ -1,5 +1,7 @@
 import React from "react";
 import Panel from "../../components/ui/Panel";
+import AcademicBarChart from "./charts/AcademicBarChart";
+import { localized, localizedFlat } from "../../i18n";
 
 export default function AcademicIntelligencePanel({
   intelligence = {},
@@ -51,42 +53,23 @@ export default function AcademicIntelligencePanel({
         {ar ? "توزيع الدرجات العلمية" : "Degree Distribution"}
       </h4>
 
-      <div className="intelligenceList">
-        {degrees.map((item) => (
-          <div key={item.level} className="intelligenceRow">
-            <span>
-              {ar ? localized(item, "name", language) : item.name_en}
-            </span>
-
-            <strong>
-              {item.programs_count}
-            </strong>
-          </div>
-        ))}
-      </div>
+      <AcademicBarChart
+        data={degrees}
+        language={language}
+        labelFor={(item) => localized(item, "name", language)}
+        valueFor={(item) => item.programs_count}
+      />
 
       <h4>
         {ar ? "أكثر الأقسام نشاطًا" : "Top Departments"}
       </h4>
 
-      <div className="intelligenceList">
-        {departments.map((item, index) => (
-          <div
-            key={index}
-            className="intelligenceRow"
-          >
-            <span>
-              {ar
-                ? localizedFlat(item, "department__name", language)
-                : item.department__name_en}
-            </span>
-
-            <strong>
-              {item.students_count}
-            </strong>
-          </div>
-        ))}
-      </div>
+      <AcademicBarChart
+        data={departments}
+        language={language}
+        labelFor={(item) => localizedFlat(item, "department__name", language)}
+        valueFor={(item) => item.students_count}
+      />
     </Panel>
   );
 }

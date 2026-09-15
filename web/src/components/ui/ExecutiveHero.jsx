@@ -1,8 +1,9 @@
 import React from "react";
 import { Clock3, Landmark, ShieldCheck } from "lucide-react";
 
-export default function ExecutiveHero({ data, language = "ar" }) {
+export default function ExecutiveHero({ data, user, language = "ar", mode = "academicLeader" }) {
   const ar = language === "ar";
+  const isPlatformDirector = mode === "platformDirector";
 
   const pendingMetric = data.ui?.metrics?.find(
     (item) => item.key === "pending"
@@ -14,20 +15,16 @@ export default function ExecutiveHero({ data, language = "ar" }) {
         <span className="executiveEyebrow">
           <Landmark size={16} />
           {ar
-            ? "مركز القيادة الأكاديمي التنفيذي"
-            : "Executive academic command center"}
+            ? isPlatformDirector ? "مركز قيادة البرنامج والمنصة" : "مركز القيادة الأكاديمي التنفيذي"
+            : isPlatformDirector ? "Program & Platform Command Center" : "Executive Academic Command Center"}
         </span>
 
         <h2>
-          {ar
-            ? data.identity?.name
-            : "Prof. Dr. Mohamed Abdel Baset Khalaf"}
+          {user?.name || data.identity?.name || (ar ? "المستخدم" : "User")}
         </h2>
 
         <p>
-          {ar
-            ? data.identity?.title
-            : "Vice Dean for Postgraduate Studies and Research"}
+          {user?.title || data.identity?.title || (ar ? "الدراسات العليا" : "Postgraduate Studies")}
         </p>
 
         <div className="executiveTrust">

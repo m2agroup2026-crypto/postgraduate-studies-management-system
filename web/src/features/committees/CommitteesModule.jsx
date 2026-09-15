@@ -1,5 +1,3 @@
-import { localized } from "../../i18n";
-import { label } from "../../i18n/labels";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   CalendarCheck,
@@ -11,12 +9,7 @@ import {
   Search,
   X,
 } from "lucide-react";
-
-const EVENT_LABELS = {
-  SCHEDULED: { ar: "تمت الجدولة", en: "Scheduled" },
-  RESCHEDULED: { ar: "إعادة جدولة", en: "Rescheduled" },
-  DATE_CLEARED: { ar: "إلغاء التاريخ", en: "Date cleared" },
-};
+import { actionLabel, displayValue, localized, localizedFlat, statusLabel } from "../../i18n";
 
 function formatDate(value, language) {
   if (!value) return "—";
@@ -26,11 +19,6 @@ function formatDate(value, language) {
     month: "short",
     day: "numeric",
   }).format(parsed);
-}
-
-function eventLabel(value, language) {
-  const labels = EVENT_LABELS[value];
-  return labels?.[language] || labels?.ar || value;
 }
 
 function CommitteeDetail({ api, thesisId, language, onClose, onChanged }) {
@@ -96,8 +84,8 @@ function CommitteeDetail({ api, thesisId, language, onClose, onChanged }) {
       <div className="committeeDetailHeader">
         <div>
           <small>{ar ? "ملف المناقشة" : "Defense record"}</small>
-          <h3>{localized(record?.student, "name", language) || "—"}</h3>
-          <p>{localized(record?.thesis, "title", language) || ""}</p>
+          <h3>{localized(record?.student, "name", language)}</h3>
+          <p>{localized(record?.thesis, "title", language)}</p>
         </div>
         <button className="iconButton" type="button" onClick={onClose} aria-label="close">
           <X size={18} />
@@ -109,10 +97,10 @@ function CommitteeDetail({ api, thesisId, language, onClose, onChanged }) {
       {record && (
         <>
           <div className="committeeDetailGrid">
-            <div><span>{ar ? "الرقم الجامعي" : "University ID"}</span><strong>{record.student.university_id}</strong></div>
-            <div><span>{ar ? "القسم" : "Department"}</span><strong>{ar ? localized(record.department, "name", language) : record.department.name_en || localized(record.department, "name", language)}</strong></div>
-            <div><span>{ar ? "حالة الرسالة" : "Thesis status"}</span><strong>{label("statuses", record.thesis.status, language)}</strong></div>
-            <div><span>{ar ? "حالة المناقشة" : "Defense status"}</span><strong>{record.defense?.status ? label("statuses", record.defense.status, language) : (ar ? "غير مجدولة" : "Not scheduled")}</strong></div>
+            <div><span>{ar ? "الرقم الجامعي" : "University ID"}</span><strong>{displayValue(record.student.university_id)}</strong></div>
+            <div><span>{ar ? "القسم" : "Department"}</span><strong>{localized(record.department, "name", language)}</strong></div>
+            <div><span>{ar ? "حالة الرسالة" : "Thesis status"}</span><strong>{statusLabel(record.thesis.status, language)}</strong></div>
+            <div><span>{ar ? "حالة المناقشة" : "Defense status"}</span><strong>{record.defense ? statusLabel(record.defense.status, language) : (ar ? "غير مجدولة" : "Not scheduled")}</strong></div>
           </div>
 
           <div className="committeeScheduleCard">
@@ -171,11 +159,11 @@ function CommitteeDetail({ api, thesisId, language, onClose, onChanged }) {
                   <article key={event.id}>
                     <div className="timelineDot" />
                     <div>
-                      <strong>{eventLabel(event.event_type, language)}</strong>
+                      <strong>{actionLabel(event.event_type, language)}</strong>
                       <span>
                         {formatDate(event.old_date, language)} → {formatDate(event.new_date, language)}
                       </span>
-                      <small>{event.performed_by.name || event.performed_by.username}</small>
+                      <small>{displayValue(event.performed_by?.name || event.performed_by?.username)}</small>
                       {event.notes && <p>{event.notes}</p>}
                     </div>
                   </article>
@@ -264,7 +252,7 @@ export default function CommitteesModule({ api, language }) {
             <option value="">{ar ? "كل الأقسام" : "All departments"}</option>
             {(data?.filters?.departments || []).map((item) => (
               <option key={item.student__department_id} value={item.student__department_id}>
-                {ar ? localizedFlat(item, "student__department__name", language) : item.student__department__name_en || localizedFlat(item, "student__department__name", language)}
+                {localizedFlat(item, "student__department__name", language)}
               </option>
             ))}
           </select>
@@ -299,9 +287,9 @@ export default function CommitteesModule({ api, language }) {
               <tbody>
                 {(data?.results || []).map((record) => (
                   <tr key={record.thesis.id}>
-                    <td><strong>{localized(record.student, "name", language)}</strong><small>{record.student.university_id}</small></td>
+                    <td><strong>{localized(record.student, "name", language)}</strong><small>{displayValue(record.student.university_id)}</small></td>
                     <td className="committeeThesisCell">{localized(record.thesis, "title", language)}</td>
-                    <td>{ar ? localized(record.department, "name", language) : record.department.name_en || localized(record.department, "name", language)}</td>
+                    <td>{localized(record.department, "name", language)}</td>
                     <td>{formatDate(record.defense?.defense_date, language)}</td>
                     <td>
                       <span className={record.defense?.defense_date ? "scheduleBadge scheduled" : "scheduleBadge unscheduled"}>

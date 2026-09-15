@@ -6,6 +6,7 @@ import {
   GraduationCap,
   Users,
 } from "lucide-react";
+import { localized } from "../../i18n";
 
 const iconMap = {
   Users,
@@ -22,7 +23,7 @@ export default function MetricsCards({ metrics, config = [], language = "ar" }) 
     <div className="metrics">
       {cards.map((card) => {
         const Icon = iconMap[card.icon] || GraduationCap;
-        const label = ar ? card.label_ar : (card.label_en || card.label_ar);
+        const label = localized(card, "label", language);
         return (
           <MetricCard
             key={card.key}
@@ -32,6 +33,7 @@ export default function MetricsCards({ metrics, config = [], language = "ar" }) 
             description={
               ar ? "بيانات مباشرة" : "Live system data"
             }
+            language={language}
           />
         );
       })}

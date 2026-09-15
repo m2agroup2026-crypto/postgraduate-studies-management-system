@@ -1,25 +1,9 @@
-export function localized(item, field, language = "ar") {
-  if (!item) return "—";
+import { localizedField } from "./labels";
 
-  const arabic = item[`${field}_ar`];
-  const english = item[`${field}_en`];
-
-  if (language === "en") {
-    return english || arabic || "—";
-  }
-
-  return arabic || english || "—";
+export function localized(record, field, language = "ar", fallback = "—") {
+  return localizedField(record, field, language, fallback);
 }
 
-export function localizedFlat(item, field, language = "ar") {
-  if (!item) return "—";
-
-  const arabic = item[`${field}_ar`];
-  const english = item[`${field}_en`];
-
-  if (language === "en") {
-    return english || arabic || "—";
-  }
-
-  return arabic || english || "—";
+export function localizedFlat(record, field, language = "ar", fallback = "—") {
+  return localized(record, field, language, fallback);
 }

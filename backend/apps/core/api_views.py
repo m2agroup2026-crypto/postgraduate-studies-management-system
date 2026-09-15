@@ -13,7 +13,7 @@ from apps.students.models import Student
 from apps.theses.models import Thesis
 
 from .models import DashboardMetricCard, DashboardNavigationItem
-from .ai.executive_assistant import executive_brief, process_command
+from .ai.executive_assistant import executive_brief, process_request
 
 ROLE_IDENTITIES = {
     "DEAN": {"name": "الأستاذ الدكتور علاء عطية", "title": "عميد كلية الطب"},
@@ -706,17 +706,18 @@ class AssistantView(APIView):
                 status=400
             )
 
-        answer = process_command(
+        result = process_request(
             question,
             request.user
         )
 
         return Response(
             {
-                "answer": answer,
+                "answer": result["answer"],
+                "intent": result["intent"],
+                "data": result["data"],
                 "role": request.user.role,
                 "requires_confirmation": False,
                 "source": "executive_ai_engine",
             }
         )
-

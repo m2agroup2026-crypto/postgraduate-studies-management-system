@@ -18,6 +18,7 @@ import EmployeeWorkspace from "./features/workspace/EmployeeWorkspace";
 import "./styles.css";
 import "./auth.css";
 import "./features/committees/committees.css";
+import "./styles/mission-control.css";
 
 
 function Login({ onSuccess }) {
@@ -157,8 +158,8 @@ function DashboardPage() {
     content = (
       <EmployeeWorkspace
         api={api}
+        user={user}
         language={lang}
-        data={data}
         onNavigate={setActiveSection}
       />
     );
@@ -179,7 +180,7 @@ function DashboardPage() {
   } else if (activeSection === "reports") {
     content = <ReportsModule api={api} language={lang} />;
   } else {
-    content = <Dashboard data={data} language={lang} onNavigate={setActiveSection} />;
+    content = <Dashboard data={data} user={user} language={lang} onNavigate={setActiveSection} />;
   }
 
   return (
@@ -201,6 +202,7 @@ function DashboardPage() {
       <AIAssistant
         api={api}
         actions={data.assistant?.quick_actions || []}
+        language={lang}
         onNavigate={setActiveSection}
       />
     </DashboardLayout>

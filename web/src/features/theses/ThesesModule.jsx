@@ -1,5 +1,3 @@
-import { localized } from "../../i18n";
-import { label } from "../../i18n/labels";
 import React, { useEffect, useMemo, useState } from "react";
 import {
   BookOpenCheck,
@@ -13,37 +11,9 @@ import {
   X,
 } from "lucide-react";
 
+import { actionLabel, displayValue, localized, localizedFlat, roleLabel, statusLabel } from "../../i18n";
+
 import "./theses.css";
-
-const STATUS_LABELS = {
-  REGISTERED: { ar: "مسجلة", en: "Registered" },
-  DRAFT: { ar: "مسودة", en: "Draft" },
-  SUBMITTED: { ar: "مقدمة للمراجعة", en: "Submitted" },
-  UNDER_REVIEW: { ar: "تحت المراجعة", en: "Under review" },
-  DIRECTOR_APPROVED: { ar: "اعتماد مدير الدراسات العليا", en: "Director approved" },
-  VICE_DEAN_APPROVED: { ar: "اعتماد الوكيل", en: "Vice Dean approved" },
-  DEAN_APPROVED: { ar: "اعتماد العميد", en: "Dean approved" },
-  FINAL_APPROVED: { ar: "اعتماد نهائي", en: "Final approved" },
-  RETURNED: { ar: "معادة للاستكمال", en: "Returned" },
-  REJECTED: { ar: "مرفوضة", en: "Rejected" },
-  COMPLETED: { ar: "مكتملة", en: "Completed" },
-};
-
-const ACTION_LABELS = {
-  SUBMIT: { ar: "تقديم", en: "Submit" },
-  REVIEW: { ar: "بدء المراجعة", en: "Start review" },
-  DIRECTOR_APPROVE: { ar: "اعتماد مدير الدراسات العليا", en: "Director approve" },
-  VICE_DEAN_APPROVE: { ar: "اعتماد وكيل الدراسات العليا", en: "Vice Dean approve" },
-  DEAN_APPROVE: { ar: "اعتماد العميد", en: "Dean approve" },
-  FINAL_APPROVE: { ar: "الاعتماد النهائي", en: "Final approve" },
-  REJECT: { ar: "رفض", en: "Reject" },
-  RETURN: { ar: "إعادة للاستكمال", en: "Return" },
-};
-
-function textFor(dictionary, key, language) {
-  const item = dictionary[key];
-  return item?.[language] || item?.ar || key || "—";
-}
 
 function formatDateTime(value, language) {
   if (!value) return "—";
@@ -99,7 +69,7 @@ function ThesisDetail({ api, thesisId, language, onClose, onChanged }) {
       <div className="thesisDetailHeader">
         <div>
           <small>{ar ? "ملف الرسالة وسير الاعتماد" : "Thesis record and approval workflow"}</small>
-          <h3>{localized(thesis, "title", language) || (ar ? "جارٍ تحميل الرسالة…" : "Loading thesis…")}</h3>
+          <h3>{thesis ? localized(thesis, "title", language) : (ar ? "جارٍ تحميل الرسالة…" : "Loading thesis…")}</h3>
         </div>
         <button className="iconButton" type="button" onClick={onClose} aria-label="close">
           <X size={18} />
@@ -115,21 +85,20 @@ function ThesisDetail({ api, thesisId, language, onClose, onChanged }) {
               <UserRound size={17} />
               <span>{ar ? "الطالب" : "Student"}</span>
               <strong>{localized(thesis.student, "name", language)}</strong>
-              <small>{thesis.student.university_id}</small>
+              <small>{displayValue(thesis.student.university_id)}</small>
             </div>
             <div>
               <BookOpenCheck size={17} />
               <span>{ar ? "الحالة الحالية" : "Current status"}</span>
-              <strong>{textFor(STATUS_LABELS, thesis.status, language)}</strong>
-              
+              <strong>{statusLabel(thesis.status, language)}</strong>
             </div>
             <div>
               <ShieldCheck size={17} />
               <span>{ar ? "القسم" : "Department"}</span>
               <strong>
-                {ar ? localized(thesis.department, "name", language) : thesis.department.name_en || localized(thesis.department, "name", language)}
+                {localized(thesis.department, "name", language)}
               </strong>
-              <small>{thesis.department.code}</small>
+              <small>{displayValue(thesis.department.code)}</small>
             </div>
             <div>
               <CalendarDays size={17} />
@@ -137,7 +106,7 @@ function ThesisDetail({ api, thesisId, language, onClose, onChanged }) {
               <strong>
                 {thesis.defense?.defense_date || (ar ? "غير مجدولة" : "Not scheduled")}
               </strong>
-              <small>{thesis.defense?.status ? label("statuses", thesis.defense.status, language) : "—"}</small>
+              <small>{statusLabel(thesis.defense?.status, language)}</small>
             </div>
           </div>
 
@@ -166,7 +135,7 @@ function ThesisDetail({ api, thesisId, language, onClose, onChanged }) {
                     >
                       {busyAction === action
                         ? (ar ? "جارٍ التنفيذ…" : "Processing…")
-                        : textFor(ACTION_LABELS, action, language)}
+                        : actionLabel(action, language)}
                     </button>
                   ))}
                 </div>
@@ -199,16 +168,16 @@ function ThesisDetail({ api, thesisId, language, onClose, onChanged }) {
                   <div className="workflowEventMarker" />
                   <div>
                     <div className="workflowEventTitle">
-                      <strong>{textFor(ACTION_LABELS, item.action, language)}</strong>
+                      <strong>{actionLabel(item.action, language)}</strong>
                       <span>{formatDateTime(item.created_at, language)}</span>
                     </div>
                     <p>
-                      {textFor(STATUS_LABELS, item.from_status, language)}
+                      {statusLabel(item.from_status, language)}
                       {" → "}
-                      {textFor(STATUS_LABELS, item.to_status, language)}
+                      {statusLabel(item.to_status, language)}
                     </p>
                     <small>
-                      {item.performed_by.name} · {label("roles", item.performed_by.role, language)}
+                      {displayValue(item.performed_by?.name || item.performed_by?.username)} · {roleLabel(item.performed_by?.role, language)}
                     </small>
                     {item.notes && <blockquote>{item.notes}</blockquote>}
                   </div>
@@ -299,9 +268,7 @@ export default function ThesesModule({ api, language }) {
             <option value="">{ar ? "كل الأقسام" : "All departments"}</option>
             {(data?.filters?.departments || []).map((item) => (
               <option key={item.student__department_id} value={item.student__department_id}>
-                {ar
-                  ? localizedFlat(item, "student__department__name", language)
-                  : item.student__department__name_en || localizedFlat(item, "student__department__name", language)}
+                {localizedFlat(item, "student__department__name", language)}
               </option>
             ))}
           </select>
@@ -309,7 +276,7 @@ export default function ThesesModule({ api, language }) {
           <select value={status} onChange={(event) => { setStatus(event.target.value); setPage(1); }}>
             <option value="">{ar ? "كل الحالات" : "All statuses"}</option>
             {(data?.filters?.statuses || []).map((item) => (
-              <option key={item} value={item}>{textFor(STATUS_LABELS, item, language)}</option>
+              <option key={item} value={item}>{statusLabel(item, language)}</option>
             ))}
           </select>
 
@@ -343,13 +310,13 @@ export default function ThesesModule({ api, language }) {
                   <tr key={thesis.id}>
                     <td>
                       <strong>{localized(thesis.student, "name", language)}</strong>
-                      <small>{thesis.student.university_id}</small>
+                      <small>{displayValue(thesis.student.university_id)}</small>
                     </td>
                     <td className="thesisTitleCell">{localized(thesis, "title", language)}</td>
-                    <td>{ar ? localized(thesis.department, "name", language) : thesis.department.name_en || localized(thesis.department, "name", language)}</td>
+                    <td>{localized(thesis.department, "name", language)}</td>
                     <td>
                       <span className={`workflowStatus status-${thesis.status.toLowerCase()}`}>
-                        {textFor(STATUS_LABELS, thesis.status, language)}
+                        {statusLabel(thesis.status, language)}
                       </span>
                     </td>
                     <td>{thesis.defense?.defense_date || "—"}</td>

@@ -1,63 +1,36 @@
 import React from "react";
+import { BookOpen, CalendarClock, FileSearch, Search, UserRoundX } from "lucide-react";
 
-export default function QuickActions({
-  language,
-  onNavigate,
-}) {
+const ACTIONS = [
+  { key: "search_student", permission: "students.view", icon: Search, ar: "البحث عن طالب", en: "Find a student" },
+  { key: "search_thesis", permission: "theses.view", icon: BookOpen, ar: "البحث عن رسالة", en: "Find a thesis" },
+  { key: "no_thesis", permission: "students.view", icon: UserRoundX, ar: "طلاب بدون رسالة", en: "Students without thesis" },
+  { key: "pending_review", permission: "theses.view", icon: FileSearch, ar: "رسائل تنتظر المراجعة", en: "Theses awaiting review" },
+  { key: "upcoming_defenses", permission: "committees.view", icon: CalendarClock, ar: "مناقشات قادمة", en: "Upcoming defenses" },
+];
+
+export default function QuickActions({ language = "ar", permissions = [], activeAction, onAction }) {
   const ar = language === "ar";
-
-  const actions = [
-    {
-      key: "students",
-      label_ar: "إدارة الطلاب",
-      label_en: "Student Registry",
-    },
-    {
-      key: "theses",
-      label_ar: "الرسائل العلمية",
-      label_en: "Thesis Management",
-    },
-    {
-      key: "committees",
-      label_ar: "اللجان والمناقشات",
-      label_en: "Committees & Defenses",
-    },
-    {
-      key: "reports",
-      label_ar: "التقارير",
-      label_en: "Reports",
-    },
-  ];
-
+  const allowed = new Set(permissions);
+  const actions = ACTIONS.filter((action) => allowed.has(action.permission));
 
   return (
-    <section className="quickActions">
-      <header>
-        <h3>
-          {ar ? "إجراءات سريعة" : "Quick Actions"}
-        </h3>
-
-        <p>
-          {ar
-            ? "الوصول المباشر إلى وحدات التشغيل"
-            : "Quick access to operational modules"}
-        </p>
-      </header>
-
-
-      <div className="quickActionsGrid">
-        {actions.map((action) => (
+    <div className="workspaceQuickActions" aria-label={ar ? "إجراءات سريعة" : "Quick actions"}>
+      {actions.map((action) => {
+        const Icon = action.icon;
+        return (
           <button
             key={action.key}
             type="button"
-            onClick={() => onNavigate(action.key)}
+            className={activeAction === action.key ? "active" : ""}
+            onClick={() => onAction(action.key)}
+            aria-pressed={activeAction === action.key}
           >
-            {ar
-              ? action.label_ar
-              : action.label_en}
+            <span aria-hidden="true"><Icon size={18} /></span>
+            <strong>{ar ? action.ar : action.en}</strong>
           </button>
-        ))}
-      </div>
-    </section>
+        );
+      })}
+    </div>
   );
 }
