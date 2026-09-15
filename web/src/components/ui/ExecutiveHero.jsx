@@ -1,5 +1,6 @@
 import React from "react";
 import { Clock3, Landmark, ShieldCheck } from "lucide-react";
+import { localized } from "../../i18n";
 
 export default function ExecutiveHero({ data, user, language = "ar", mode = "academicLeader" }) {
   const ar = language === "ar";
@@ -20,11 +21,11 @@ export default function ExecutiveHero({ data, user, language = "ar", mode = "aca
         </span>
 
         <h2>
-          {user?.name || data.identity?.name || (ar ? "المستخدم" : "User")}
+          {localized(user, "name", language, localized(data.identity, "name", language, ar ? "المستخدم" : "User"))}
         </h2>
 
         <p>
-          {user?.title || data.identity?.title || (ar ? "الدراسات العليا" : "Postgraduate Studies")}
+          {localized(user, "title", language, localized(data.identity, "title", language, ar ? "الدراسات العليا" : "Postgraduate Studies"))}
         </p>
 
         <div className="executiveTrust">
@@ -48,7 +49,7 @@ export default function ExecutiveHero({ data, user, language = "ar", mode = "aca
         <Clock3 size={22} />
 
         <span>
-          {pendingMetric?.label_ar ||
+          {(ar ? pendingMetric?.label_ar : pendingMetric?.label_en) ||
             (ar
               ? "طلبات تنتظر قرارك"
               : "Awaiting your decision")}

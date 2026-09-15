@@ -43,12 +43,14 @@ def students(db, department, second_department):
     first = Student.objects.create(
         university_id="PG0001",
         name_ar="أحمد علي",
+        name_en="Ahmed Ali",
         national_id="29901011234567",
         department=department,
     )
     second = Student.objects.create(
         university_id="PG0002",
         name_ar="منى حسن",
+        name_en="Mona Hassan",
         national_id="29802021234567",
         department=second_department,
     )
@@ -109,6 +111,18 @@ def test_search_department_and_thesis_status_filters(client, students, departmen
     assert response.data["pagination"]["total"] == 1
     assert response.data["results"][0]["university_id"] == "PG0001"
     assert response.data["results"][0]["thesis"]["status"] == "REGISTERED"
+
+
+@pytest.mark.django_db
+def test_search_and_serialize_student_english_name(client, students):
+    user = create_user("english_name_reader", User.Role.REVIEWER)
+    client.force_authenticate(user)
+
+    response = client.get("/api/v1/students/", {"q": "Ahmed Ali"})
+
+    assert response.status_code == 200
+    assert response.data["pagination"]["total"] == 1
+    assert response.data["results"][0]["name_en"] == "Ahmed Ali"
 
 
 @pytest.mark.django_db

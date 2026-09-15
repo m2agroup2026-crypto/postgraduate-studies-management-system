@@ -86,6 +86,7 @@ def serialize_student(student, include_sensitive=False):
         "id": student.id,
         "university_id": student.university_id,
         "name_ar": student.name_ar,
+        "name_en": student.name_en,
         "national_id_masked": mask_national_id(student.national_id),
         "department": serialize_department(student.department),
         "thesis": (
@@ -126,6 +127,7 @@ class StudentCollectionView(APIView):
             queryset = queryset.filter(
                 Q(university_id__icontains=search)
                 | Q(name_ar__icontains=search)
+                | Q(name_en__icontains=search)
                 | Q(national_id__icontains=search)
                 | Q(department__name_ar__icontains=search)
                 | Q(department__name_en__icontains=search)
@@ -144,6 +146,8 @@ class StudentCollectionView(APIView):
             "-university_id": "-university_id",
             "name": "name_ar",
             "-name": "-name_ar",
+            "name_en": "name_en",
+            "-name_en": "-name_en",
             "department": "department__name_ar",
             "-department": "-department__name_ar",
         }

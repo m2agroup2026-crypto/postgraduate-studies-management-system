@@ -35,7 +35,11 @@ def handle(question, user, language):
 
     student = (
         Student.objects.select_related("department", "thesis")
-        .filter(Q(university_id__iexact=term) | Q(name_ar__icontains=term))
+        .filter(
+            Q(university_id__iexact=term)
+            | Q(name_ar__icontains=term)
+            | Q(name_en__icontains=term)
+        )
         .first()
     )
     if not student:
@@ -62,7 +66,7 @@ def handle(question, user, language):
     else:
         department = student.department.name_en or department
         answer = (
-            f"Student: {student.name_ar}\nUniversity ID: {student.university_id}\n"
+            f"Student: {student.name_en or '—'}\nUniversity ID: {student.university_id}\n"
             f"Department: {department}\nThesis: {thesis_title}\nThesis status: {thesis_status}"
         )
     return response(

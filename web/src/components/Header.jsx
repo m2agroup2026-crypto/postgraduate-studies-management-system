@@ -1,5 +1,6 @@
 import React from "react";
 import { Languages, LogOut } from "lucide-react";
+import { localized } from "../i18n";
 
 export default function Header({
   user,
@@ -36,10 +37,10 @@ export default function Header({
 
         <div className="profile">
           <b>
-            {user?.name}
+            {localized(user, "name", language)}
           </b>
           <small>
-            {user?.title}
+            {localized(user, "title", language)}
           </small>
         </div>
       </div>

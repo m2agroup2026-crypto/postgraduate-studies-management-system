@@ -12,6 +12,7 @@ from apps.academics.models import AcademicDegree, Department, Program
 from apps.committees.models import DefenseCommittee
 from apps.data_migration.models import LegacyImportBatch, LegacyImportRow
 from apps.students.models import AcademicEnrollment, Student
+from apps.students.names import transliterate_arabic_name
 from apps.theses.models import Thesis
 
 SOURCE_ID_PREFIX = "LEGACY-"
@@ -294,7 +295,12 @@ class StudentWorkbookImporter:
         )
         student, created = Student.objects.update_or_create(
             university_id=f"{SOURCE_ID_PREFIX}{source_id}",
-            defaults={"name_ar": clean(row.get("الاسم")), "department": department},
+            defaults={
+                "name_ar": clean(row.get("الاسم")),
+                "name_en": clean(row.get("Name") or row.get("Student Name"))
+                or transliterate_arabic_name(clean(row.get("الاسم"))),
+                "department": department,
+            },
         )
 
         degree_code, degree_ar, degree_en, degree_level = degree_definition(

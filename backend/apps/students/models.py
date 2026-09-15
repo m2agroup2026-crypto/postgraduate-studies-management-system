@@ -6,6 +6,7 @@ from apps.academics.models import AcademicYear, Department, Program
 class Student(models.Model):
     university_id = models.CharField(max_length=50, unique=True)
     name_ar = models.CharField(max_length=200)
+    name_en = models.CharField(max_length=200, blank=True, db_index=True)
     national_id = models.CharField(max_length=14, blank=True)
     department = models.ForeignKey(Department, on_delete=models.PROTECT)
 

@@ -16,18 +16,29 @@ from .models import DashboardMetricCard, DashboardNavigationItem
 from .ai.executive_assistant import executive_brief, process_request
 
 ROLE_IDENTITIES = {
-    "DEAN": {"name": "الأستاذ الدكتور علاء عطية", "title": "عميد كلية الطب"},
+    "DEAN": {
+        "name_ar": "الأستاذ الدكتور علاء عطية",
+        "name_en": "Prof. Dr. Alaa Attia",
+        "title_ar": "عميد كلية الطب",
+        "title_en": "Dean of the Faculty of Medicine",
+    },
     "VICE_DEAN_POSTGRADUATE": {
-        "name": "الأستاذ الدكتور محمد عبد الباسط خلاف",
-        "title": "وكيل الكلية لشئون الدراسات العليا والبحوث",
+        "name_ar": "الأستاذ الدكتور محمد عبد الباسط خلاف",
+        "name_en": "Prof. Dr. Mohamed Abdel Baset Khalaf",
+        "title_ar": "وكيل الكلية لشئون الدراسات العليا والبحوث",
+        "title_en": "Vice Dean for Postgraduate Studies and Research",
     },
     "POSTGRADUATE_DIRECTOR": {
-        "name": "مدير الدراسات العليا",
-        "title": "مدير إدارة الدراسات العليا",
+        "name_ar": "مدير الدراسات العليا",
+        "name_en": "Postgraduate Director",
+        "title_ar": "مدير إدارة الدراسات العليا",
+        "title_en": "Director of Postgraduate Administration",
     },
     "PROGRAM_DIRECTOR": {
-        "name": "مدير البرنامج",
-        "title": "مدير برنامج الدراسات العليا",
+        "name_ar": "مدير البرنامج",
+        "name_en": "Program Director",
+        "title_ar": "مدير برنامج الدراسات العليا",
+        "title_en": "Postgraduate Program Director",
     },
 }
 
@@ -167,6 +178,8 @@ def pending_decisions_data(user):
             "id": thesis.id,
             "title_ar": thesis.title_ar,
             "student_name": thesis.student.name_ar,
+            "student_name_ar": thesis.student.name_ar,
+            "student_name_en": thesis.student.name_en,
             "university_id": thesis.student.university_id,
             "department": thesis.student.department.name_ar,
             "status": thesis.status,
@@ -285,6 +298,7 @@ def recent_student_records(user, limit=6):
                 "id": student.id,
                 "university_id": student.university_id,
                 "name_ar": student.name_ar,
+                "name_en": student.name_en,
                 "department": student.department.name_ar,
                 "enrollments_count": student.enrollments_count,
                 "thesis_status": thesis_status,
@@ -366,10 +380,20 @@ class MeView(APIView):
                 "role": request.user.role,
                 "roles": sorted(roles),
                 "permissions": sorted(effective_permissions(request.user)),
-                "name": request.user.effective_name
-                if request.user.display_name_ar
-                else identity.get("name"),
-                "title": request.user.job_title_ar or identity.get("title"),
+                "name_ar": (
+                    request.user.effective_name
+                    if request.user.display_name_ar
+                    else identity.get("name_ar")
+                ),
+                "name_en": identity.get("name_en"),
+                "title_ar": request.user.job_title_ar or identity.get("title_ar"),
+                "title_en": identity.get("title_en"),
+                "name": (
+                    request.user.effective_name
+                    if request.user.display_name_ar
+                    else identity.get("name_ar")
+                ),
+                "title": request.user.job_title_ar or identity.get("title_ar"),
                 "language": request.user.preferred_language or "ar",
                 "can_manage_dashboard": can_manage_dashboard(request.user),
             }
@@ -454,6 +478,11 @@ class DashboardView(APIView):
             request.user.role,
         )
         identity = ROLE_IDENTITIES.get(identity_role, ROLE_IDENTITIES["PROGRAM_DIRECTOR"])
+        identity = {
+            **identity,
+            "name": identity.get("name_ar"),
+            "title": identity.get("title_ar"),
+        }
         navigation = serialize_navigation(request.user)
         metrics, metric_definitions, pending = dashboard_metrics(request.user)
         today = date.today()

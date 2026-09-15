@@ -94,6 +94,7 @@ def serialize_record(thesis):
             "id": thesis.student.id,
             "university_id": thesis.student.university_id,
             "name_ar": thesis.student.name_ar,
+            "name_en": thesis.student.name_en,
         },
         "department": serialize_department(thesis.student.department),
         "defense": (
@@ -169,6 +170,7 @@ class CommitteeCollectionView(APIView):
             queryset = queryset.filter(
                 Q(title_ar__icontains=search)
                 | Q(student__name_ar__icontains=search)
+                | Q(student__name_en__icontains=search)
                 | Q(student__university_id__icontains=search)
                 | Q(student__department__name_ar__icontains=search)
                 | Q(student__department__name_en__icontains=search)

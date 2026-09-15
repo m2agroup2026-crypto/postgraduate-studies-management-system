@@ -80,7 +80,7 @@ export default function EmployeeWorkspace({ api, user, language = "ar", onNaviga
         <div className="workspaceHeroCopy">
           <span>{ar ? "مركز العمليات الأكاديمية" : "Academic operations center"}</span>
           <h2>{ar ? "مساحة عمل الموظف" : "Employee Workspace"}</h2>
-          <p>{user?.name || user?.username} · {user?.title || (ar ? "موظف الدراسات العليا" : "Postgraduate staff")}</p>
+          <p>{localized(user, "name", language, user?.username)} · {localized(user, "title", language, ar ? "موظف الدراسات العليا" : "Postgraduate staff")}</p>
         </div>
         <div className="workspaceHeroStatus"><ShieldCheck size={17} /><span>{ar ? "ملفات تحتاج إجراء" : "Files requiring action"}</span><strong>{actionCount ?? "—"}</strong></div>
       </section>

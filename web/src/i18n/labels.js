@@ -54,7 +54,7 @@ export function displayValue(value, fallback = EMPTY_VALUE) {
 export function localizedField(record, field, language = "ar", fallback = EMPTY_VALUE) {
   if (!record) return fallback;
   const primary = language === "en" ? record[`${field}_en`] : record[`${field}_ar`];
-  const secondary = language === "en" ? record[`${field}_ar`] : record[`${field}_en`];
+  const secondary = language === "en" ? record[field] : record[`${field}_en`];
   return displayValue(primary || secondary || record[field], fallback);
 }
 
